@@ -1,0 +1,14 @@
+.div-panel-emp {
+     background-color: #ffffff;
+    -webkit-box-shadow: 3px 4px 3px rgba(119, 119, 119, 0.73);
+    -moz-box-shadow: 3px 4px 3px rgba(119, 119, 119, 0.73);
+    box-shadow: 2px 2px 2px 2px rgba(119, 119, 119, 0.73);
+
+}
+
+.panel-rodal-empresa{
+    margin: auto;
+    float: none;
+    text-align: center;
+    border-bottom: solid 1px #36755b;
+}

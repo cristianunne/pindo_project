@@ -1,0 +1,23 @@
+
+.box-purple{
+
+     border-top-color: #555299 !important;
+
+}
+
+
+.btn-purple {
+    background-color: #555299;
+    border-color: #555299;
+    color: #ffffff;
+}
+
+.btn-default:hover, .btn-default:active, .btn-default.hover {
+    background-color: #8c86ea ;
+}
+
+.btn-default:hover {
+    color: #555299;
+    background-color: #8c86ea;
+    border-color: #8c86ea;
+}

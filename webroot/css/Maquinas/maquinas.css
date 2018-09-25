@@ -1,0 +1,42 @@
+
+
+.center-img{
+    width: 128px;
+    height: 128px;
+}
+
+
+.div-panel{
+    border: solid 1px  #555299 !important;
+}
+.strong-color{
+    color:  #555299 !important;
+}
+
+.form-group {
+    margin-bottom: 0px;
+}
+
+.form-horizontal .form-group {
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-bottom: 0px;
+}
+.control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+.row-label{
+    width: 180px;
+}
+
+.row-form{
+    width: 250px;
+}
+
+
+#margin-button-addcostos{
+    margin-right: 20px;
+}

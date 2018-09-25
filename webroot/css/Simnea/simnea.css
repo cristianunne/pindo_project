@@ -1,0 +1,50 @@
+
+.form-group{
+    margin-bottom: 0px;
+}
+
+
+/*
+Generic Styling, for Desktops/Laptops
+*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #0c9657;
+    color: white;
+    font-weight: bold;
+
+}
+td, th {
+    padding: 6px;
+    text-align: center;
+
+}
+thead, th {
+    text-align: center;
+    border: 1px solid #999;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+    border: 1px solid #999;
+}
+.table-bordered {
+    border: 1px solid #999;
+}
+
+.color-first{
+    color: green;
+    font-weight: bold;
+}
+
+#label-units{
+    vertical-align: middle;
+    text-align: inherit;
+
+}
+#label-units > label{
+    font-weight: 100;
+}

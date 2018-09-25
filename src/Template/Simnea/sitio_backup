@@ -1,0 +1,11 @@
+       <tr>
+                                                        <td class="row-label" style="vertical-align: middle;" > <label for="intensidad_n">Intensidad N:</label></td>
+
+                                                        <td > <?= $this->Form->input('intensidad_n', ['type' => 'number', 'class' => 'form-control', 'label' => false, 'id' => 'intensidad_n', 'required']) ?> </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td class="row-label" style="vertical-align: middle;" > <label for="intensidad_ab">Intensidad AB:</label></td>
+
+                                                        <td > <?= $this->Form->input('intensidad_ab', ['type' => 'number', 'class' => 'form-control', 'label' => false, 'id' => 'intensidad_ab', 'required']) ?> </td>
+                                                    </tr>
