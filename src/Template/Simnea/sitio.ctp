@@ -272,7 +272,7 @@
                                                     <tr>
                                                         <td class="row-label" style="vertical-align: middle;" > <label for="prop_vol_ap">Proporcion Volumen Aprovechado (%):</label></td>
 
-                                                        <td > <?= $this->Form->input('prop_vol_ap', ['type' => 'number', 'class' => 'form-control', 'label' => false, 'id' => 'prop_vol_ap', 'required']) ?> </td>
+                                                        <td > <?= $this->Form->input('prop_vol_ap', ['type' => 'number', 'step' => '0.01', 'class' => 'form-control', 'label' => false, 'id' => 'prop_vol_ap', 'required']) ?> </td>
 
                                                         <td id="label-units"><label for="prop_vol_ap">Decimal</label></td>
                                                     </tr>
@@ -300,7 +300,7 @@
                                                     <tr>
                                                         <td class="row-label" style="vertical-align: middle;" > <label for="vol_cos">Volumen Total a Cosechar:</label></td>
 
-                                                        <td > <?= $this->Form->input('vol_cos', ['type' => 'number', 'class' => 'form-control', 'label' => false, 'id' => 'vol_cos', 'required']) ?> </td>
+                                                        <td > <?= $this->Form->input('vol_cos', ['type' => 'number', 'step' => '0.01', 'class' => 'form-control', 'label' => false, 'id' => 'vol_cos', 'required']) ?> </td>
 
                                                         <td id="label-units"><label for="vol_cos">m³/rodal</label></td>
                                                     </tr>

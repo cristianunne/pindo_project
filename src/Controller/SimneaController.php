@@ -40,7 +40,7 @@ class SimneaController extends AppController
         $this->set('categoria', $categoria);
 
         //1ro verifico que los parametos Insumos se hayan cargado
-        $varInsumosTable = $this->loadModel('VariablesGlobales');
+        $varInsumosTable = $this->loadModel('Insumos');
 
         $varInsumoa = $varInsumosTable->find('all', [
             'contain' => []
