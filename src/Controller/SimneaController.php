@@ -608,7 +608,9 @@ class SimneaController extends AppController
         $varGlobalesData = $parametrosGlobalesTable->find('all', [])->first();
         $insumosData = $insumosTable->find('all', [])->first();
 
+        //Calculo de costos
         $array_result = $this->calcularCostos();
+        debug($array_result);
 
         //WNVIO ARRAY RESULT QUE CONTIENE LAS SIMULACIONES DE LAS MAQUINAS
         $this->set('array_result', $array_result);

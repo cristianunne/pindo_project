@@ -242,8 +242,7 @@
                 </div>
 
              <?php
-            if(is_array($plantaciones->plantacione)){
-                if(count($plantaciones->plantacione) > 0){ ?>
+            if(!empty($plantaciones->plantacione)){ ?>
                     <div class="row">
 
                         <div class="col-md-5">
@@ -307,7 +306,7 @@
                         </div>
 
                     </div>
-            <?php }} ?>
+            <?php } ?>
 
             </div> <!-- /div md-9 -->
 

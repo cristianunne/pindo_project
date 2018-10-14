@@ -52,7 +52,6 @@ class RodalesTable extends Table
         $this->hasOne('Plantaciones', [
 
                  'foreignKey' => 'rodales_idrodales',
-                 'dependent' => true,
                 'joinType' => 'INNER'
             ]);
 

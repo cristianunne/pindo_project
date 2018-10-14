@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * Rodales Controller
@@ -77,11 +78,12 @@ class RodalesController extends AppController
         $this->set('id_rodal', $id);
 
 
-        $rodale = $this->Rodales->get($id, [
-            'contain' => []
-        ]);
 
 
+        /*$rodale = $this->Rodales->find('all', [
+        ])->where(['idrodales' => $id]);*/
+
+        $rodale = $this->Rodales->get($id, []);
 
         $empresa = $this->Rodales->Empresa->get($rodale->empresa_idempresa, [
             'contain' => []
@@ -100,12 +102,21 @@ class RodalesController extends AppController
             'contain' => []
         ])->toArray();*/
 
-        $plantaciones = $this->Rodales->get($id, [
-            'contain' => ['Plantaciones']
-        ]);
+        try{
+            $plantaciones = $this->Rodales->get($id, [
+                'contain' => ['Plantaciones']
+            ]);
+        } catch (RecordNotFoundException $e){
+            $plantaciones = null;
+        }
 
 
-        //debug($plantaciones);
+        /*$plantaciones = $this->Rodales->find('all', [])
+            ->where(['idrodales' => $id])
+            ->contain(['Plantaciones'])->toArray();*/
+
+
+
         $plant_count = 0;
         if (isset($plantaciones->plantacione)) {
             $array = (array) $plantaciones->plantacione;
