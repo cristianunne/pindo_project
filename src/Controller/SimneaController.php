@@ -608,9 +608,7 @@ class SimneaController extends AppController
         $varGlobalesData = $parametrosGlobalesTable->find('all', [])->first();
         $insumosData = $insumosTable->find('all', [])->first();
 
-        //Calculo de costos
         $array_result = $this->calcularCostos();
-        debug($array_result);
 
         //WNVIO ARRAY RESULT QUE CONTIENE LAS SIMULACIONES DE LAS MAQUINAS
         $this->set('array_result', $array_result);
@@ -748,7 +746,7 @@ class SimneaController extends AppController
 
         $VOL_TOTAL_LOTE = $superficie * $vol_total;
 
-        $DIAS_PARA_COSECHAR = round($VOL_TOTAL_LOTE * ($sitio['prop_vol_ap'] / 100) / $PRODUCCION_TOTAL_LIMITANTE * $session->read('Datos.dias_mes'));
+        $DIAS_PARA_COSECHAR = round(($VOL_TOTAL_LOTE * ($sitio['prop_vol_ap'] / 100) / $PRODUCCION_TOTAL_LIMITANTE) * $session->read('Datos.dias_mes'));
 
 
         $PROD_PUNTO_EQUILIBRIO = $SUMA_COSTO_FIJO / ($sitio['precio_cont'] - ($SUMA_COSTO_VARIABLE_TOTAL / $PRODUCCION_TOTAL_LIMITANTE));
@@ -790,6 +788,8 @@ class SimneaController extends AppController
 
         $array_result_general['ACTIVIDAD_LIMITANTE_CORTE'] = $ACTIVIDAD_LIMITANTE_CORTE;
         $array_result_general['ACTIVIDAD_LIMITANTE_EXTRACCION'] = $ACTIVIDAD_LIMITANTE_EXTRACCION;
+        $array_result_general['ACTIVIDAD_LIMITANTE_PROCESO'] = null;
+        $array_result_general['ACTIVIDAD_LIMITANTE_CARGA'] = null;
 
         $array_result_general['BALANCE_CORTE'] = $BALANCE_CORTE;
         $array_result_general['BALANCE_EXTRACCION'] = $BALANCE_EXTRACCION;
@@ -817,6 +817,10 @@ class SimneaController extends AppController
         $array_result_general['BENEFICIO'] = $BENEFICIO;
 
         $this->set('array_result_general', $array_result_general);
+
+        $session->write([
+            'ResSimulacion' => $array_result_general
+        ]);
 
 
         //debug($array_result);
@@ -1309,11 +1313,11 @@ class SimneaController extends AppController
 
             $HABERES = $maqespCatopData->sal_basico_mes * (1 + ($laboralData->aguinaldo + $laboralData->feriado + $laboralData->vacaciones + ($maq_esp->ant_operario * $laboralData->ant_sup)) / 100
                 ) * (1 + $laboralData->presentismo / 100);
-
-            $CONTRIBUCIONES_EMPLEADOR = $HABERES * (1 + ($laboralData->empleador_jub + $laboralData->empleador_asignacion + $laboralData->empleador_fondo_des + $laboralData->empleador_inssjp +
-                        $laboralData->empleador_obra_social + $laboralData->empleador_seguro_vida + $laboralData->empleador_renatea + $laboralData->art_prop) / 100) + $laboralData->art_fijo;
-
-            $PREVISIONES = $HABERES * (1 + ($laboralData->prev_enfermedad + $laboralData->prev_despido + $laboralData->exam_preocup + $laboralData->seguro_colectivo) / 100) ;
+			////Ruben- a la linea 1311 se le resta sueldo basico
+            $CONTRIBUCIONES_EMPLEADOR = ($HABERES * (1 + ($laboralData->empleador_jub + $laboralData->empleador_asignacion + $laboralData->empleador_fondo_des + $laboralData->empleador_inssjp +
+                        $laboralData->empleador_obra_social + $laboralData->empleador_seguro_vida + $laboralData->empleador_renatea + $laboralData->art_prop) / 100) + $laboralData->art_fijo)-$HABERES;
+			////Ruben- Linea 1314, le restamos HABERES 
+            $PREVISIONES = ($HABERES * (1 + ($laboralData->prev_enfermedad + $laboralData->prev_despido + $laboralData->exam_preocup + $laboralData->seguro_colectivo) / 100)-$HABERES) ;
 
             //Calculo de la tabla 3
             $N_operarios = $maq_esp->n_turnos;
@@ -1353,10 +1357,10 @@ class SimneaController extends AppController
             $SISTEMA_HIDRAULICO_HORA = $maq_esp->con_aceite_hidra * $insumosData->pres_aceite_hidra;
             $GRASAS_HORA = $maq_esp->con_grasa * $insumosData->pres_grasa;
             $ACEITE_CADENA_HORA = $maq_esp->aceite_cadena_hora * $insumosData->precio_aceite_cadena;
-            //Estos costos se agregan
+            //Estos costos se agregan// linea 1356* $insumosData->precio_espada; //Ruben modeifico //1357*  $insumosData->precio_cadena; //Ruben modifico
             $COSTO_HORA_FILTROS = $maq_esp->costo_hora_filtros;
-            $ESPADA_HORA = $maq_esp->espada_hora * $insumosData->precio_espada;
-            $CADENA_HORA = $maq_esp->cadena_hora + $insumosData->precio_cadena;
+            $ESPADA_HORA = $maq_esp->espada_hora;
+            $CADENA_HORA = $maq_esp->cadena_hora;
             $MANGUERAS_HORA = $maq_esp->mangueras_horas;
 
 
@@ -1373,18 +1377,20 @@ class SimneaController extends AppController
             $array_maquina['MANGUERAS_HORA'] = $MANGUERAS_HORA;
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            $COSTO_VARIABLE_HORA_TOTAL = $DEPRE_SROD_MAQ_HORAS + $DEPRE_SROD_IMP_HORAS + $REP_MAQ_HORA + $REP_IMP_HORA + $COST_COMB_HORA + $MOTOR_HORA + $TANSMISION_HORA + $SISTEMA_HIDRAULICO_HORA
+			//$DEPRE_SROD_MAQ_HORAS + $DEPRE_SROD_IMP_HORAS + $REP_MAQ_HORA + $REP_IMP_HORA +// 
+			//Ruben- se quito de calculo de costos variables
+            $COSTO_VARIABLE_HORA_TOTAL =  $COST_COMB_HORA + $MOTOR_HORA + $TANSMISION_HORA + $SISTEMA_HIDRAULICO_HORA
                 + $GRASAS_HORA + $COSTO_HORA_FILTROS + $ACEITE_CADENA_HORA + $ESPADA_HORA + $CADENA_HORA + $MANGUERAS_HORA;
 
             //CALCULO DEL COSTO FIJO
+			//Ruben- se agrega  $REP_MAQ_HORA + $REP_IMP_HORA a linea1387
 
             $COSTO_FIJO_MES_TOTAL = 0;
 
             if ($maq_esp->leasing_credito == false && $maq_esp->leas_imp == false){
 
                 $COSTO_FIJO_MES_TOTAL = $interes_maq_mes + $interes_imp_mes + $seguro_maq_mes + $seguro_imp_mes + $DEPRE_MAQ_MES_vida +
-                    $DEPRE_IMP_MES_vida + $SALARIO_CON_CARGAS_MES + $COSTO_VESTIMENTA_MES + $COSTO_MES_COMIDA_ALOJAMIENTO;
+                    $DEPRE_IMP_MES_vida + $SALARIO_CON_CARGAS_MES + $COSTO_VESTIMENTA_MES + $COSTO_MES_COMIDA_ALOJAMIENTO +  $REP_MAQ_HORA + $REP_IMP_HORA;
 
             } elseif ($maq_esp->leasing_credito == true && $maq_esp->leas_imp == false){
                 $COSTO_FIJO_MES_TOTAL = $CUOTA_LEASING_CREDITO_MENSUAL + $interes_imp_mes + $seguro_maq_mes + $seguro_imp_mes + $DEPRE_IMP_MES_vida +

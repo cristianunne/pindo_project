@@ -36,8 +36,7 @@ class SimulacionesTable extends Table
 
         $this->hasOne('Rodales', [
             'bindingKey' => 'rodales_idrodales',
-            'foreignKey' => 'idrodales',
-            'joinType' => 'INNER'
+            'foreignKey' => 'idrodales'
         ]);
 
         $this->hasMany('SimulacionResumen', [

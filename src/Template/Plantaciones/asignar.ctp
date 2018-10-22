@@ -33,7 +33,7 @@
                                 <h3 class="box-title">Asignar Plantación a Rodal</h3>
                             </div>
                             <div class="box-body">
-                                <?= $this->Form->input('fecha', ['class' => 'form-control', 'placeholder' => 'Fecha:', 'label' => 'Fecha:', 'required']) ?>
+                                <?= $this->Form->control('fecha', ['type' => 'date', 'class' => 'form-control', 'placeholder' => 'Fecha:', 'label' => 'Fecha:', 'minYear'=>1940, 'required']) ?>
                                 <br>
                                 <?= $this->Form->input('superficie', ['value' => '', 'class' => 'form-control', 'placeholder' => 'Superficie', 'label' => 'Superficie:', 'required']) ?>
                                 <br>

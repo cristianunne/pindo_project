@@ -274,7 +274,7 @@
 
                                                         <td > <?= $this->Form->input('prop_vol_ap', ['type' => 'number', 'step' => '0.01', 'class' => 'form-control', 'label' => false, 'id' => 'prop_vol_ap', 'required']) ?> </td>
 
-                                                        <td id="label-units"><label for="prop_vol_ap">Decimal</label></td>
+                                                        <td id="label-units"><label for="prop_vol_ap">%</label></td>
                                                     </tr>
 
                                                     <tr>

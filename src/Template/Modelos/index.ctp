@@ -86,25 +86,18 @@
         $('#example1').DataTable({
             'language' : {
                 'search': "Buscar:",
-
                 'paginate': {
                     'first':      "Primer",
                     'previous':   "Anterior",
                     'next':       "Siguiente",
                     'last':       "Anterior"
-                }}
+                }},
+            "pageLength": 50,
+            'lengthChange': false,
+            'searching'   : true,
+            'ordering'    : true,
 
         });
 
-
-
-        $('#example2').DataTable({
-            'paging'      : true,
-            'lengthChange': false,
-            'searching'   : false,
-            'ordering'    : true,
-            'info'        : true,
-            'autoWidth'   : false,
-        })
     })
 </script>
