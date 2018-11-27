@@ -38,17 +38,18 @@ class SimulacionesTable extends Table
             'bindingKey' => 'rodales_idrodales',
             'foreignKey' => 'idrodales'
         ]);
-
+        $this->hasOne('Emsefor', [
+            'bindingKey' => 'emsefor_idemsefor',
+            'foreignKey' => 'idemsefor'
+        ]);
         $this->hasMany('SimulacionResumen', [
             'bindingKey' => 'idsimulaciones',
             'foreignKey' => 'idsimulacion'
         ]);
-
         $this->hasMany('SimulacionesMaqesp', [
             'bindingKey' => 'idsimulaciones',
             'foreignKey' => 'simulaciones_idsimulaciones'
         ]);
-
     }
 
     /**
@@ -82,23 +83,23 @@ class SimulacionesTable extends Table
             ->allowEmpty('sistema_cosecha');
 
         $validator
-            ->numeric('superficie')
+            ->decimal('superficie')
             ->allowEmpty('superficie');
 
         $validator
-            ->numeric('vol_medio')
+            ->decimal('vol_medio')
             ->allowEmpty('vol_medio');
 
         $validator
-            ->numeric('dist_extraccion')
+            ->decimal('dist_extraccion')
             ->allowEmpty('dist_extraccion');
 
         $validator
-            ->numeric('produccion_total')
+            ->decimal('produccion_total')
             ->allowEmpty('produccion_total');
 
         $validator
-            ->numeric('vol_total')
+            ->decimal('vol_total')
             ->allowEmpty('vol_total');
 
         $validator
@@ -106,32 +107,36 @@ class SimulacionesTable extends Table
             ->allowEmpty('dias_cosecha');
 
         $validator
-            ->numeric('produccion_equilibrio')
+            ->decimal('produccion_equilibrio')
             ->allowEmpty('produccion_equilibrio');
 
         $validator
-            ->numeric('costo_prod_bruta')
+            ->decimal('costo_prod_bruta')
             ->allowEmpty('costo_prod_bruta');
 
         $validator
-            ->numeric('costo_prod_admin')
+            ->decimal('costo_prod_admin')
             ->allowEmpty('costo_prod_admin');
 
         $validator
-            ->numeric('margen_ganancia')
+            ->decimal('margen_ganancia')
             ->allowEmpty('margen_ganancia');
 
         $validator
-            ->numeric('tarifa_sin_imp')
+            ->decimal('tarifa_sin_imp')
             ->allowEmpty('tarifa_sin_imp');
 
         $validator
-            ->numeric('tarifa_con_imp')
+            ->decimal('tarifa_con_imp')
             ->allowEmpty('tarifa_con_imp');
 
         $validator
-            ->numeric('beneficio')
+            ->decimal('beneficio')
             ->allowEmpty('beneficio');
+
+        $validator
+            ->integer('emsefor_idemsefor')
+            ->allowEmpty('emsefor_idemsefor');
 
         return $validator;
     }

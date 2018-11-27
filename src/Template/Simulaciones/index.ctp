@@ -33,9 +33,12 @@
                             <tr>
                                 <th scope="col"><?= $this->Paginator->sort('N° de Simulación') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Fecha') ?></th>
+                                <th scope="col"><?= $this->Paginator->sort('Operación') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Rodal') ?></th>
+                                <th scope="col"><?= $this->Paginator->sort('COD_SAP') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Tipo de Simulación') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Sistema de Cosecha') ?></th>
+                                <th scope="col"><?= $this->Paginator->sort('Emsefor') ?></th>
                                 <th scope="col"><?= __('Acciones') ?></th>
 
                             </tr>
@@ -47,14 +50,23 @@
                                     <tr>
                                             <td style="font-weight: bold; vertical-align: middle;"><?= h($sim->idsimulaciones) ?></td>
                                             <td style="font-weight: bold; vertical-align: middle;"><?= h($sim->fecha->format('d-m-Y')) ?></td>
+                                            <td style="vertical-align: middle;"><?= h($sim->sistema_cosecha) ?></td>
+
                                             <td style="font-weight: bold; vertical-align: middle;">
                                                 <?= $this->Html->link($sim->rodales_idrodales, ['controller' => 'Rodales', 'action' => 'view','?' =>
                                                     ['Accion' => 'Ver Rodales', 'Categoria' => 'Rodales', 'id' => $sim->rodales_idrodales]]) ?>
                                             </td>
 
+                                            <td style="vertical-align: middle;"><?= h($sim->rodale->cod_sap) ?></td>
+
                                             <td style="vertical-align: middle;"><?= h($sim->tipo_simulacion) ?></td>
 
                                             <td style="vertical-align: middle;"><?= h($sim->sistema_cosecha) ?></td> <!--pruebaa-->
+
+                                            <td style="font-weight: bold; vertical-align: middle;">
+                                                <?= $this->Html->link($sim->emsefor->nombre, ['controller' => 'Emsefor', 'action' => 'view','?' =>
+                                                    ['Accion' => 'Ver Emsefor', 'Categoria' => 'Emsefor', 'id_ems' => $sim->emsefor_idemsefor]]) ?>
+                                            </td>
                                             <td align="center" valign="middle">
 
                                                 <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-search', 'aria-hidden' => 'true']),

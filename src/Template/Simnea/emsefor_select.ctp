@@ -21,6 +21,13 @@
                 <div class="row" id="contenedor_principal_simnea">
 
                     <div id="simnea_seleccion_sis_cosecha" class="col-md-10 col-xs-10 col-sm-10" style="float: none; margin: auto auto; background-color: #ececec;padding: 15px 15px 15px 15px;">
+                        <div class="callout callout-success">
+                            <h4>Rodal: <?= h($idrodal). " ---- Cod_Sap: ". h($cod_sap)?> </h4>
+                            <h4>Operación: <?= h($operacion) ?> </h4>
+                            <h4>Sistema de Cosecha: <?= h($sist_cos) ?> </h4>
+
+                        </div>
+
                         <div class="callout callout-info">
                             <h4>SELECCIONE LAS EMSEFOR:</h4>
 

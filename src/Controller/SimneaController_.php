@@ -610,7 +610,7 @@ class SimneaController extends AppController
 
         //Calculo de costos
         $array_result = $this->calcularCostos();
-        debug($array_result);
+
 
         //WNVIO ARRAY RESULT QUE CONTIENE LAS SIMULACIONES DE LAS MAQUINAS
         $this->set('array_result', $array_result);
@@ -821,6 +821,14 @@ class SimneaController extends AppController
         $session->write([
             'ResSimulacion' => $array_result_general
         ]);
+
+        $emsefor_data = $session->read('Datos.emsefor');
+        $emsefor = $emsefor_data['ems_check'];
+
+        $session->write([
+            'cacacacac' => $emsefor
+        ]);
+        debug("Id de la emsefor ".$emsefor);
 
 
         //debug($array_result);
@@ -1481,6 +1489,8 @@ class SimneaController extends AppController
 
         $datos = $session->read('Datos');
         $res_simunlacion = $session->read('ResSimulacion');
+        $emsefor = $datos['emsefor']['ems_check'];
+
 
 
         //Creo las entidades para guardar los datos
@@ -1504,7 +1514,7 @@ class SimneaController extends AppController
         $simulaciones_entity->tarifa_sin_imp = $res_simunlacion['TARIFA_SERVICIO'];
         $simulaciones_entity->tarifa_con_imp = $res_simunlacion['TARIFA_SERVICIO_CON_IMP'];
         $simulaciones_entity->beneficio = $res_simunlacion['BENEFICIO'];
-
+        $simulaciones_entity->emsefor_idemsefor = $emsefor;
 
 
         if($this->request->is('post')){

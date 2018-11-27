@@ -156,6 +156,11 @@ class UsersController extends AppController
 
     public function logout()
     {
+        $session = $this->request->getSession();
+        $session->delete('Datos');
+        $session->delete('Maquinas');
+        $session->delete('ResSimulacion');
+
         return $this->redirect($this->Auth->logout());
 
     }

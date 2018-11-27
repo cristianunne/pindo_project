@@ -38,7 +38,7 @@ class SimulacionesController extends AppController
         $this->set('categoria', $categoria);
 
 
-        $simulaciones = $this->Simulaciones->find('all', []);
+        $simulaciones = $this->Simulaciones->find('all', ['contain' => ['Rodales', 'Emsefor']]);
 
         $this->set('simulaciones', $simulaciones);
 
@@ -55,8 +55,9 @@ class SimulacionesController extends AppController
         $this->set('action', $action);
         $this->set('categoria', $categoria);
 
-        $simulaciones = $this->Simulaciones->get($id, ['contain' => ['Rodales', 'SimulacionResumen', 'SimulacionesMaqesp' => 'MaquinaEspecifica']]);
+        $simulaciones = $this->Simulaciones->get($id, ['contain' => ['Rodales', 'Emsefor', 'SimulacionResumen', 'SimulacionesMaqesp' => 'MaquinaEspecifica']]);
         $this->set('simulaciones', $simulaciones);
+
 
         //Cargo el Modelo Plantaciones
         $plantacionesTable = $this->loadModel('Plantaciones');

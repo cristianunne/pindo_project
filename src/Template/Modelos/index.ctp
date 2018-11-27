@@ -21,7 +21,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table id="example1" class="table table-bordered table-hover dataTable">
+                        <table id="example2" class="table table-bordered table-hover dataTable">
                             <thead>
                             <tr>
                                 <th scope="col"><?= $this->Paginator->sort('Modelo N°') ?></th>
@@ -83,7 +83,7 @@
 
 <script>
     $(function () {
-        $('#example1').DataTable({
+        $('#example2').DataTable({
             'language' : {
                 'search': "Buscar:",
                 'paginate': {
@@ -92,12 +92,13 @@
                     'next':       "Siguiente",
                     'last':       "Anterior"
                 }},
-            "pageLength": 50,
-            'lengthChange': false,
+            "pageLength": 40,
+            'lengthChange': true,
             'searching'   : true,
-            'ordering'    : true,
+            'ordering'    : true
 
         });
+
 
     })
 </script>

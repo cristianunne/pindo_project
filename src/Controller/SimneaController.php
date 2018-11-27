@@ -155,6 +155,9 @@ class SimneaController extends AppController
         $session = $this->request->session();
         $datos_sitio = $session->read('Datos.sitio');
 
+        $this->set('idrodal', $datos_sitio['idrodal']);
+        $this->set('cod_sap', $datos_sitio['cod_sap']);
+
         //compruebo que los datos de la session no esten vacios
         if (empty($datos_sitio)){
 
@@ -205,6 +208,13 @@ class SimneaController extends AppController
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $session = $this->request->session();
         $datos_sitio = $session->read('Datos.sitio');
+        $datos_sistema_cos = $session->read('Datos.sistema_cosecha');
+
+        $this->set('idrodal', $datos_sitio['idrodal']);
+        $this->set('cod_sap', $datos_sitio['cod_sap']);
+
+        $this->set('operacion', $datos_sistema_cos['cosecha']);
+        $this->set('sist_cos', $datos_sistema_cos['sistema_cosecha']);
 
         //compruebo que los datos de la session no esten vacios
         if (empty($datos_sitio)){
@@ -295,10 +305,23 @@ class SimneaController extends AppController
         $this->set('action', $action);
         $this->set('categoria', $categoria);
 
+        $tablaEmsefor = $this->loadModel('Emsefor');
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $session = $this->request->session();
         $emsefor_select = $session->read('Datos.emsefor');
         $datos_sitio = $session->read('Datos.sitio');
+
+        $datos_sistema_cos = $session->read('Datos.sistema_cosecha');
+
+        $this->set('idrodal', $datos_sitio['idrodal']);
+        $this->set('cod_sap', $datos_sitio['cod_sap']);
+
+        $this->set('operacion', $datos_sistema_cos['cosecha']);
+        $this->set('sist_cos', $datos_sistema_cos['sistema_cosecha']);
+
+
+
 
         //compruebo que los datos de la session no esten vacios
         if (empty($datos_sitio)){
@@ -310,7 +333,7 @@ class SimneaController extends AppController
 
         $id_emsefor = [];
 
-        $tablaEmsefor = $this->loadModel('Emsefor');
+
 
         foreach ($emsefor_select as $ems){
 
@@ -340,6 +363,13 @@ class SimneaController extends AppController
 
         $varMaqespCatop = $maqespCatopTable->find('all', []);
         $this->set('varMaqespCatop', $varMaqespCatop);
+
+
+        $emsefor_data = $tablaEmsefor->get($id_emsefor[0], []);
+        $this->set('ems_nombre', $emsefor_data->nombre);
+        //hago el write de la session
+        $session->write([
+            'Datos.emsefor.nombre' => $emsefor_data->nombre]);
 
 
         if($this->request->is('post')){
@@ -391,6 +421,14 @@ class SimneaController extends AppController
         $emsefor_select = $session->read('Datos.emsefor');
         $datos_sitio = $session->read('Datos.sitio');
 
+        $datos_sistema_cos = $session->read('Datos.sistema_cosecha');
+
+        $this->set('idrodal', $datos_sitio['idrodal']);
+        $this->set('cod_sap', $datos_sitio['cod_sap']);
+
+        $this->set('operacion', $datos_sistema_cos['cosecha']);
+        $this->set('sist_cos', $datos_sistema_cos['sistema_cosecha']);
+
         //compruebo que los datos de la session no esten vacios
         if (empty($datos_sitio)){
 
@@ -430,6 +468,12 @@ class SimneaController extends AppController
 
         $varMaqespCatop = $maqespCatopTable->find('all', []);
         $this->set('varMaqespCatop', $varMaqespCatop);
+
+        $emsefor_data = $tablaEmsefor->get($id_emsefor[0], []);
+        $this->set('ems_nombre', $emsefor_data->nombre);
+        //hago el write de la session
+        $session->write([
+            'Datos.emsefor.nombre' => $emsefor_data->nombre]);
 
 
         if($this->request->is('post')){
@@ -481,6 +525,18 @@ class SimneaController extends AppController
         //Obtengo los id de la maquina especifica guardad en la session
         $session = $this->request->session();
         $datos_sitio = $session->read('Datos.sitio');
+
+        $datos_sistema_cos = $session->read('Datos.sistema_cosecha');
+
+        $this->set('idrodal', $datos_sitio['idrodal']);
+        $this->set('cod_sap', $datos_sitio['cod_sap']);
+
+        $this->set('operacion', $datos_sistema_cos['cosecha']);
+        $this->set('sist_cos', $datos_sistema_cos['sistema_cosecha']);
+
+        $datos_emsefor = $session->read('Datos.emsefor');
+        $this->set('ems_nombre', $datos_emsefor['nombre']);
+
 
         //compruebo que los datos de la session no esten vacios
         if (empty($datos_sitio)){
@@ -593,6 +649,18 @@ class SimneaController extends AppController
         //$this->calcularCostos();
         $session = $this->request->session();
         $sitio = $session->read('Datos.sitio');
+
+        $datos_sistema_cos = $session->read('Datos.sistema_cosecha');
+
+        $this->set('idrodal', $sitio['idrodal']);
+        $this->set('cod_sap', $sitio['cod_sap']);
+
+        $this->set('operacion', $datos_sistema_cos['cosecha']);
+        $this->set('sist_cos', $datos_sistema_cos['sistema_cosecha']);
+
+        $datos_emsefor = $session->read('Datos.emsefor');
+        $this->set('ems_nombre', $datos_emsefor['nombre']);
+
 
         $superficie = $sitio['superficie'];
         $vol_medio = $sitio['vol_medio'];
@@ -841,6 +909,17 @@ class SimneaController extends AppController
         //Obtengo los id de la maquina especifica guardad en la session
         $session = $this->request->session();
         $sitio = $session->read('Datos.sitio');
+
+        $datos_sistema_cos = $session->read('Datos.sistema_cosecha');
+
+        $this->set('idrodal', $sitio['idrodal']);
+        $this->set('cod_sap', $sitio['cod_sap']);
+
+        $this->set('operacion', $datos_sistema_cos['cosecha']);
+        $this->set('sist_cos', $datos_sistema_cos['sistema_cosecha']);
+
+        $datos_emsefor = $session->read('Datos.emsefor');
+        $this->set('ems_nombre', $datos_emsefor['nombre']);
 
         //compruebo que los datos de la session no esten vacios
         if (empty($sitio)){
@@ -1483,6 +1562,7 @@ class SimneaController extends AppController
 
         $datos = $session->read('Datos');
         $res_simunlacion = $session->read('ResSimulacion');
+        $emsefor = $datos['emsefor']['ems_check'];
 
 
         //Creo las entidades para guardar los datos
@@ -1506,6 +1586,7 @@ class SimneaController extends AppController
         $simulaciones_entity->tarifa_sin_imp = $res_simunlacion['TARIFA_SERVICIO'];
         $simulaciones_entity->tarifa_con_imp = $res_simunlacion['TARIFA_SERVICIO_CON_IMP'];
         $simulaciones_entity->beneficio = $res_simunlacion['BENEFICIO'];
+        $simulaciones_entity->emsefor_idemsefor = $emsefor;
 
 
 

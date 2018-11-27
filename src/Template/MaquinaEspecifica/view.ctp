@@ -43,15 +43,22 @@
                                     <tr>
                                         <td class="row-label" style="vertical-align: middle;"><label for="eficiencia">Tipo de Operario:</label></td>
 
-                                        <td> <?= $this->Form->input('cat_operarios_idcat_operarios', ['options' => $cat_operarios, 'empty' => '(Elija un Operario)', 'type' => 'select',
-                                                'class' => 'form-control', 'placeholder' => 'Tipo Operario', 'disabled' => True, 'label' => false, 'required', 'value' =>  $maquina_esp->maqesp_catop->cat_operarios_idcat_operarios]) ?>
-                                        </td>
+                                        <?php if(!empty($maquina_esp->maqesp_catop->cat_operarios_idcat_operarios)): ?>
+
+                                            <td> <?= $this->Form->input('cat_operarios_idcat_operarios', ['options' => $cat_operarios, 'empty' => '(Elija un Operario)', 'type' => 'select',
+                                                    'class' => 'form-control', 'placeholder' => 'Tipo Operario', 'disabled' => True, 'label' => false, 'required', 'value' =>  $maquina_esp->maqesp_catop->cat_operarios_idcat_operarios]) ?>
+                                            </td>
+                                        <?php endif; ?>
                                     </tr>
 
                                     <tr>
                                         <td class="row-label" style="vertical-align: middle;" > <label for="nombre">Sueldo:</label></td>
+                                        <?php if(!empty($maquina_esp->maqesp_catop->sal_basico_mes)): ?>
 
-                                        <td> <?= $this->Form->input('sal_basico_mes', ['class' => 'form-control', 'disabled' => True, 'label' => false, 'required', 'id' => 'nombre', 'value' => $maquina_esp->maqesp_catop->sal_basico_mes]) ?> </td>
+                                            <td> <?= $this->Form->input('sal_basico_mes', ['class' => 'form-control', 'disabled' => True, 'label' => false, 'required', 'id' => 'nombre', 'value' => $maquina_esp->maqesp_catop->sal_basico_mes]) ?> </td>
+
+                                        <?php endif; ?>
+
                                     </tr>
                                     </tbody>
                                 </table>

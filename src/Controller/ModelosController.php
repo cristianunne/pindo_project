@@ -29,7 +29,7 @@ class ModelosController extends AppController
         $this->set('categoria', $categoria);
 
 
-        $modelos = $this->paginate($this->Modelos);
+        $modelos = $this->Modelos->find('all', []);
 
         $this->set(compact('modelos'));
     }

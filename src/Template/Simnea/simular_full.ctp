@@ -21,6 +21,13 @@
                     <h4>RESULTADO DE LA SIMULACIÓN:</h4>
                 </div>
 
+                <div class="callout callout-success">
+                    <h4>Rodal: <?= h($idrodal). " ---- Cod_Sap: ". h($cod_sap)?> </h4>
+                    <h4>Operación: <?= h($operacion) ?> </h4>
+                    <h4>Sistema de Cosecha: <?= h($sist_cos) ?> </h4>
+                    <h4>Emsefor: <?= h($ems_nombre) ?> </h4>
+                </div>
+
                 <div class="box box-success">
                     <div  class="box-body table-responsive" style="border: solid 1px #cecece;">
                         <table id="example1" class="table table-bordered table-hover dataTable">
@@ -71,9 +78,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD_REAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCCION_MES'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD'], '1', 2)  ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD_REAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCCION_MES'], '1', 2) ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -85,9 +92,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD_REAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCCION_MES'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD'], '1', 2)  ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD_REAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCCION_MES'], '1', 2) ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -99,9 +106,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD_REAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCCION_MES'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD'], '1', 2)  ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD_REAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCCION_MES'], '1', 2) ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -113,9 +120,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCTIVIDAD_REAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['PRODUCCION_MES'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD'], '1', 2)  ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCTIVIDAD_REAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['PRODUCCION_MES'], '1', 2) ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -150,9 +157,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_FIJO_MES_TOTAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_VARIABLE_MES'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_TOTAL'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_FIJO_MES_TOTAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_VARIABLE_MES'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_TOTAL'], '1', 2)  ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -164,9 +171,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_FIJO_MES_TOTAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_VARIABLE_MES'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_TOTAL'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_FIJO_MES_TOTAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_VARIABLE_MES'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_TOTAL'], '1', 2)  ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -178,9 +185,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_FIJO_MES_TOTAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_VARIABLE_MES'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_TOTAL'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_FIJO_MES_TOTAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_VARIABLE_MES'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_TOTAL'], '1', 2)  ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -192,9 +199,9 @@
                                     <tr>
                                         <td class="color-first" align="center" style="vertical-align: middle;"><?= $maquinas['tarea'] ?></td>
                                         <td align="center" style="vertical-align: middle;"><?= $maquinas['nombre']. " ".$maquinas['modelo'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_FIJO_MES_TOTAL'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_VARIABLE_MES'] ?></td>
-                                        <td align="center" style="vertical-align: middle;"><?= $maquinas['COSTO_TOTAL'] ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_FIJO_MES_TOTAL'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_VARIABLE_MES'], '1', 2) ?></td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($maquinas['COSTO_TOTAL'], '1', 2)  ?></td>
                                     </tr>
                                 <?php endif;?>
                             <?php endforeach;?>
@@ -223,10 +230,10 @@
 
                                 <tr>
                                     <td class="color-first" align="center" style="vertical-align: middle;">Corte</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['PRODUCCION_MES_CORTE'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['ACTIVIDAD_LIMITANTE_CORTE'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['BALANCE_CORTE'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['COSTO_TOTAL_CORTE'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['PRODUCCION_MES_CORTE'], '1', 2) ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['ACTIVIDAD_LIMITANTE_CORTE']  ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['BALANCE_CORTE'], '1', 2) ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['COSTO_TOTAL_CORTE'], '1', 2) ?></td>
                                 </tr>
                             <?php endif;?>
 
@@ -234,10 +241,10 @@
 
                                 <tr>
                                     <td class="color-first" align="center" style="vertical-align: middle;">Extracción</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['PRODUCCION_MES_EXTRACCION'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['PRODUCCION_MES_EXTRACCION'], '1', 2) ?></td>
                                     <td align="center" style="vertical-align: middle;"><?= $array_result_general['ACTIVIDAD_LIMITANTE_EXTRACCION'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['BALANCE_EXTRACCION'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['COSTO_TOTAL_EXTRACCION'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['BALANCE_EXTRACCION'], '1', 2) ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['COSTO_TOTAL_EXTRACCION'], '1', 2) ?></td>
                                 </tr>
                             <?php endif;?>
 
@@ -245,10 +252,10 @@
 
                                 <tr>
                                     <td class="color-first" align="center" style="vertical-align: middle;">Proceso</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['PRODUCCION_MES_PROCESO'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['PRODUCCION_MES_PROCESO'], '1', 2) ?></td>
                                     <td align="center" style="vertical-align: middle;"><?= $array_result_general['ACTIVIDAD_LIMITANTE_PROCESO'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['BALANCE_PROCESO'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['COSTO_TOTAL_PROCESO'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['BALANCE_PROCESO'], '1', 2)  ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['COSTO_TOTAL_PROCESO'], '1', 2) ?></td>
                                 </tr>
                             <?php endif;?>
 
@@ -256,10 +263,10 @@
 
                                 <tr>
                                     <td class="color-first" align="center" style="vertical-align: middle;">Carga</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['PRODUCCION_MES_CARGA'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['PRODUCCION_MES_CARGA'], '1', 2) ?></td>
                                     <td align="center" style="vertical-align: middle;"><?= $array_result_general['ACTIVIDAD_LIMITANTE_CARGA'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['BALANCE_CARGA'] ?></td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['COSTO_TOTAL_CARGA'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['BALANCE_CARGA'], '1', 2) ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['COSTO_TOTAL_CARGA'], '1', 2) ?></td>
                                 </tr>
                             <?php endif;?>
 
@@ -281,47 +288,47 @@
                                 <tbody>
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Producción total [m³/mes]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['PRODUCCION_TOTAL_LIMITANTE'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['PRODUCCION_TOTAL_LIMITANTE'], '1', 2) ?></td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Volumen total del lote (bruto) [m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['VOL_TOTAL_LOTE'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['VOL_TOTAL_LOTE'], '1', 2) ?></td>
                                 </tr>
 
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Días necesarios para cosechar el lote [Días]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['DIAS_PARA_COSECHAR'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['DIAS_PARA_COSECHAR'], '1', 2) ?></td>
                                 </tr>
 
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Producción en el punto de equilibrio [m³/mes]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['PROD_PUNTO_EQUILIBRIO'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['PROD_PUNTO_EQUILIBRIO'], '1', 2) ?></td>
                                 </tr>
 
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Costo de Producción Bruto [$/m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['COSTO_PRODUCCION_BRUTO'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['COSTO_PRODUCCION_BRUTO'], '1', 2) ?></td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Costo de Producción y Administración [$/m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['COSTO_PRODUCCION_ADMINISTRACION'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['COSTO_PRODUCCION_ADMINISTRACION'], '1', 2) ?></td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Margen de ganancia antes de impuestos [$/m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['MARGEN_GANANCIA'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['MARGEN_GANANCIA'], '1', 2) ?></td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Tarifa del servicio antes de impuestos [$/m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['TARIFA_SERVICIO'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['TARIFA_SERVICIO'], '1', 2) ?></td>
                                 </tr>
 
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Tarifa del servicio con impuestos [$/m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['TARIFA_SERVICIO_CON_IMP'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['TARIFA_SERVICIO_CON_IMP'], '1', 2) ?></td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Beneficio respecto al precio del contratante [$/m³]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['BENEFICIO'] ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['BENEFICIO'], '1', 2) ?></td>
                                 </tr>
                                 </tbody>
                             </table>
