@@ -36,6 +36,7 @@ class SimulacionesFixture extends TestFixture
         'tarifa_con_imp' => ['type' => 'decimal', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null],
         'beneficio' => ['type' => 'decimal', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null],
         'emsefor_idemsefor' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'operacion' => ['type' => 'string', 'length' => 50, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['idsimulaciones'], 'length' => []],
             'fk_sim_ems' => ['type' => 'foreign', 'columns' => ['emsefor_idemsefor'], 'references' => ['emsefor', 'idemsefor'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
@@ -52,7 +53,7 @@ class SimulacionesFixture extends TestFixture
     public $records = [
         [
             'idsimulaciones' => 1,
-            'fecha' => '2018-11-27',
+            'fecha' => '2018-12-10',
             'rodales_idrodales' => 1,
             'tipo_simulacion' => 'Lore',
             'sistema_cosecha' => 'Lorem ipsum d',
@@ -69,7 +70,8 @@ class SimulacionesFixture extends TestFixture
             'tarifa_sin_imp' => 1.5,
             'tarifa_con_imp' => 1.5,
             'beneficio' => 1.5,
-            'emsefor_idemsefor' => 1
+            'emsefor_idemsefor' => 1,
+            'operacion' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

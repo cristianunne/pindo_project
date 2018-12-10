@@ -138,6 +138,11 @@ class SimulacionesTable extends Table
             ->integer('emsefor_idemsefor')
             ->allowEmpty('emsefor_idemsefor');
 
+        $validator
+            ->scalar('operacion')
+            ->maxLength('operacion', 50)
+            ->allowEmpty('operacion');
+
         return $validator;
     }
 }

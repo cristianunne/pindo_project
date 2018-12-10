@@ -1587,6 +1587,7 @@ class SimneaController extends AppController
         $simulaciones_entity->tarifa_con_imp = $res_simunlacion['TARIFA_SERVICIO_CON_IMP'];
         $simulaciones_entity->beneficio = $res_simunlacion['BENEFICIO'];
         $simulaciones_entity->emsefor_idemsefor = $emsefor;
+        $simulaciones_entity->operacion = $datos['sistema_cosecha']['sistema_cosecha'];;
 
 
 

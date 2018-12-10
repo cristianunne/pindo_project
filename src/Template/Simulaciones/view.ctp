@@ -21,7 +21,7 @@
 
                 <div class="callout callout-success">
                     <h4>Tipo de Simulación: <?= h($simulaciones->tipo_simulacion) ?> </h4>
-                    <h4>Operación: <?= h($simulaciones->sistema_cosecha) ?> </h4>
+                    <h4>Sistema de Cosecha: <?= h($simulaciones->sistema_cosecha) ?> </h4>
                     <h4>Emsefor: <?= h($simulaciones->emsefor->nombre) ?> </h4>
                 </div>
 

@@ -50,7 +50,7 @@
                                     <tr>
                                             <td style="font-weight: bold; vertical-align: middle;"><?= h($sim->idsimulaciones) ?></td>
                                             <td style="font-weight: bold; vertical-align: middle;"><?= h($sim->fecha->format('d-m-Y')) ?></td>
-                                            <td style="vertical-align: middle;"><?= h($sim->sistema_cosecha) ?></td>
+                                            <td style="vertical-align: middle;"><?= h($sim->operacion) ?></td>
 
                                             <td style="font-weight: bold; vertical-align: middle;">
                                                 <?= $this->Html->link($sim->rodales_idrodales, ['controller' => 'Rodales', 'action' => 'view','?' =>

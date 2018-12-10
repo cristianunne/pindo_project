@@ -25,8 +25,10 @@ use Cake\ORM\Entity;
  * @property float $tarifa_con_imp
  * @property float $beneficio
  * @property int $emsefor_idemsefor
+ * @property string $operacion
  *
  * @property \App\Model\Entity\Rodale $rodale
+ * @property \App\Model\Entity\Emsefor $emsefor
  * @property \App\Model\Entity\SimulacionResuman[] $simulacion_resumen
  * @property \App\Model\Entity\SimulacionesMaqesp[] $simulaciones_maqesp
  */
@@ -61,7 +63,9 @@ class Simulacione extends Entity
         'tarifa_con_imp' => true,
         'beneficio' => true,
         'emsefor_idemsefor' => true,
+        'operacion' => true,
         'rodale' => true,
+        'emsefor' => true,
         'simulacion_resumen' => true,
         'simulaciones_maqesp' => true
     ];
