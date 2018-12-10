@@ -302,6 +302,15 @@
                     </div>
                 </div>
 
+                <div class="col-md-12" style="background-color: inherit; border-top: inherit;">
+
+                    <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon far fa-file-excel', 'aria-hidden' => 'true']). ' Descargar',
+                        ['controller' => 'Simulaciones', 'action' => 'downloadAsExcel', '?' => ['Accion' => 'Ver Simulación', 'Categoria' => 'SIMNEA', 'id' => $simulaciones->idsimulaciones]],
+                        ['class' => 'btn btn-success btn-lg pull-right', 'escape' => false]) ?>
+
+
+                </div>
+
             </div>
         </div>
     </section>
