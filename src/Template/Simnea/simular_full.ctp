@@ -297,7 +297,7 @@
 
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Días necesarios para cosechar el lote [Días]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['DIAS_PARA_COSECHAR'], '1', 2) ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= $array_result_general['DIAS_PARA_COSECHAR'] ?></td>
                                 </tr>
 
                                 <tr>
