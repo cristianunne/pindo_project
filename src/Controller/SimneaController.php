@@ -1575,7 +1575,7 @@ class SimneaController extends AppController
         $simulaciones_entity->sistema_cosecha = $datos['sistema_cosecha']['cosecha'];
         $simulaciones_entity->superficie = $datos['sitio']['superficie'];
         $simulaciones_entity->vol_medio = $datos['sitio']['vol_medio'];
-        $simulaciones_entity->dist_extraccion = $datos['sitio']['dist_vias'];
+        $simulaciones_entity->dist_extraccion = $datos['sitio']['dme'];
         $simulaciones_entity->produccion_total = $res_simunlacion['PRODUCCION_TOTAL_LIMITANTE'];
         $simulaciones_entity->vol_total = $res_simunlacion['VOL_TOTAL_LOTE'];
         $simulaciones_entity->dias_cosecha = $res_simunlacion['DIAS_PARA_COSECHAR'];
