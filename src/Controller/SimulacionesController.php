@@ -542,13 +542,11 @@ class SimulacionesController extends AppController
             $spreadsheet->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
         }
-
-
+        
         $path = WWW_ROOT . '/files/simulacion.xlsx';
 
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);
-
 
         $this->response->file($path,
             ['download' => true]
