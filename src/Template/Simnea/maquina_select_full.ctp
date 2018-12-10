@@ -23,8 +23,8 @@
 
                         <div class="callout callout-success">
                             <h4>Rodal: <?= h($idrodal). " ---- Cod_Sap: ". h($cod_sap)?> </h4>
-                            <h4>Operación: <?= h($operacion) ?> </h4>
-                            <h4>Sistema de Cosecha: <?= h($sist_cos) ?> </h4>
+                            <h4>Sistema de Cosecha: <?= h($operacion) ?> </h4>
+                            <h4>Operación: <?= h($sist_cos) ?> </h4>
                             <h4>Emsefor: <?= h($ems_nombre) ?> </h4>
                         </div>
                         <div class="callout callout-info">
