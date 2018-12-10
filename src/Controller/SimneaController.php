@@ -812,9 +812,9 @@ class SimneaController extends AppController
         $costo_admin = $session->read('Datos.costo_admin');
         $margen_ganancia = $session->read('Datos.margen_ganancia');
 
-        $VOL_TOTAL_LOTE = $superficie * $vol_total * $sitio['intensidad_v'];
+        $VOL_TOTAL_LOTE = $superficie * $vol_total * $sitio['intensidad_v'] * ($sitio['prop_vol_ap'] / 100);
 
-        $DIAS_PARA_COSECHAR = round(($VOL_TOTAL_LOTE * ($sitio['prop_vol_ap'] / 100) / $PRODUCCION_TOTAL_LIMITANTE) * $session->read('Datos.dias_mes'));
+        $DIAS_PARA_COSECHAR = round(($VOL_TOTAL_LOTE / $PRODUCCION_TOTAL_LIMITANTE) * $session->read('Datos.dias_mes'));
 
 
         $PROD_PUNTO_EQUILIBRIO = $SUMA_COSTO_FIJO / ($sitio['precio_cont'] - ($SUMA_COSTO_VARIABLE_TOTAL / $PRODUCCION_TOTAL_LIMITANTE));
@@ -1080,9 +1080,9 @@ class SimneaController extends AppController
         $costo_admin = $session->read('Datos.costo_admin');
         $margen_ganancia = $session->read('Datos.margen_ganancia');
 
-        $VOL_TOTAL_LOTE = $superficie * $vol_total;
+        $VOL_TOTAL_LOTE = $superficie * $vol_total * $sitio['intensidad_v'] * ($sitio['prop_vol_ap'] / 100);
 
-        $DIAS_PARA_COSECHAR = round($VOL_TOTAL_LOTE * ($sitio['prop_vol_ap'] / 100) / $PRODUCCION_TOTAL_LIMITANTE * $session->read('Datos.dias_mes'));
+        $DIAS_PARA_COSECHAR = round(($VOL_TOTAL_LOTE / $PRODUCCION_TOTAL_LIMITANTE) * $session->read('Datos.dias_mes'));
 
 
         $PROD_PUNTO_EQUILIBRIO = $SUMA_COSTO_FIJO / ($sitio['precio_cont'] - ($SUMA_COSTO_VARIABLE_TOTAL / $PRODUCCION_TOTAL_LIMITANTE));
