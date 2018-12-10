@@ -188,60 +188,63 @@ class SimulacionesController extends AppController
         //Set Propiedades
         $sheet->setCellValue('A1', 'Tipo de Simulación');
         $sheet->setCellValue('A2', 'Sistema de Cosecha');
-        $sheet->setCellValue('A3', 'Emsefor');
-        $sheet->setCellValue('A4', 'Fecha de Simulacion');
+        $sheet->setCellValue('A3', 'Sistema de Cosecha');
+        $sheet->setCellValue('A4', 'Emsefor');
+        $sheet->setCellValue('A5', 'Fecha de Simulacion');
 
         $spreadsheet->getActiveSheet()->getStyle('A1')->applyFromArray($font_bold);
         $spreadsheet->getActiveSheet()->getStyle('A2')->applyFromArray($font_bold);
         $spreadsheet->getActiveSheet()->getStyle('A3')->applyFromArray($font_bold);
         $spreadsheet->getActiveSheet()->getStyle('A4')->applyFromArray($font_bold);
+        $spreadsheet->getActiveSheet()->getStyle('A5')->applyFromArray($font_bold);
 
 
         //Cargo las propiedades
         $sheet->setCellValue('B1', $simulaciones->tipo_simulacion);
         $sheet->setCellValue('B2', $simulaciones->sistema_cosecha);
-        $sheet->setCellValue('B3', $simulaciones->emsefor->nombre);
-        $sheet->setCellValue('B4', $simulaciones->fecha);
+        $sheet->setCellValue('B3', $simulaciones->operacion);
+        $sheet->setCellValue('B4', $simulaciones->emsefor->nombre);
+        $sheet->setCellValue('B5', $simulaciones->fecha);
 
 
         //Seteo los datos del sitio
-        $sheet->setCellValue('A6', 'ID Rodal');
-        $sheet->setCellValue('B6', 'Código SAP');
-        $sheet->setCellValue('C6', 'Especie');
-        $sheet->setCellValue('D6', 'Superficie [ha]');
-        $sheet->setCellValue('E6', 'Volumen Medio [m3]');
-        $sheet->setCellValue('F6', 'Distancia Extracción [m]');
-        $spreadsheet->getActiveSheet()->getStyle('A6')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('B6')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('C6')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('D6')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('E6')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('F6')->applyFromArray($styleHeaderCell);
+        $sheet->setCellValue('A7', 'ID Rodal');
+        $sheet->setCellValue('B7', 'Código SAP');
+        $sheet->setCellValue('C7', 'Especie');
+        $sheet->setCellValue('D7', 'Superficie [ha]');
+        $sheet->setCellValue('E7', 'Volumen Medio [m3]');
+        $sheet->setCellValue('F7', 'Distancia Extracción [m]');
+        $spreadsheet->getActiveSheet()->getStyle('A7')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('B7')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('C7')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('D7')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('E7')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('F7')->applyFromArray($styleHeaderCell);
 
 
 
-        $sheet->setCellValue('A7', $simulaciones->rodale->idrodales);
-        $sheet->setCellValue('B7', $simulaciones->rodale->cod_sap);
-        $sheet->setCellValue('C7', $plantacionesData[0]->procedencia->especie);
-        $sheet->setCellValue('D7', $simulaciones['superficie']);
-        $sheet->setCellValue('E7', $simulaciones['vol_medio']);
-        $sheet->setCellValue('F7', $simulaciones['dist_extraccion']);
+        $sheet->setCellValue('A8', $simulaciones->rodale->idrodales);
+        $sheet->setCellValue('B8', $simulaciones->rodale->cod_sap);
+        $sheet->setCellValue('C8', $plantacionesData[0]->procedencia->especie);
+        $sheet->setCellValue('D8', $simulaciones['superficie']);
+        $sheet->setCellValue('E8', $simulaciones['vol_medio']);
+        $sheet->setCellValue('F8', $simulaciones['dist_extraccion']);
 
-        $spreadsheet->getActiveSheet()->getStyle('A7:F7')->applyFromArray($styleCellCenterWithBorder);
+        $spreadsheet->getActiveSheet()->getStyle('A8:F8')->applyFromArray($styleCellCenterWithBorder);
 
         //Cargo los datos de las maquinas individuales
         //Seteo los datos del sitio
-        $sheet->setCellValue('A9', 'Actividad');
-        $sheet->setCellValue('B9', 'Máquina');
-        $sheet->setCellValue('C9', 'Productividad [m³/hs.ef]');
-        $sheet->setCellValue('D9', 'Productividad Real [m³/hs]');
-        $sheet->setCellValue('E9', 'Producción Mes [m³/mes]');
+        $sheet->setCellValue('A10', 'Actividad');
+        $sheet->setCellValue('B10', 'Máquina');
+        $sheet->setCellValue('C10', 'Productividad [m³/hs.ef]');
+        $sheet->setCellValue('D10', 'Productividad Real [m³/hs]');
+        $sheet->setCellValue('E10', 'Producción Mes [m³/mes]');
 
-        $spreadsheet->getActiveSheet()->getStyle('A9')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('B9')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('C9')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('D9')->applyFromArray($styleHeaderCell);
-        $spreadsheet->getActiveSheet()->getStyle('E9')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('A10')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('B10')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('C10')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('D10')->applyFromArray($styleHeaderCell);
+        $spreadsheet->getActiveSheet()->getStyle('E10')->applyFromArray($styleHeaderCell);
 
 
         //Inicio de fila es 9 = A9
@@ -538,7 +541,7 @@ class SimulacionesController extends AppController
 
 
         //autoajusta las columnas
-        foreach(range('A6','F6') as $columnID) {
+        foreach(range('A7','F7') as $columnID) {
             $spreadsheet->getActiveSheet()->getColumnDimension($columnID)
                 ->setAutoSize(true);
         }

@@ -812,7 +812,7 @@ class SimneaController extends AppController
         $costo_admin = $session->read('Datos.costo_admin');
         $margen_ganancia = $session->read('Datos.margen_ganancia');
 
-        $VOL_TOTAL_LOTE = $superficie * $vol_total;
+        $VOL_TOTAL_LOTE = $superficie * $vol_total * $sitio['intensidad_v'];
 
         $DIAS_PARA_COSECHAR = round(($VOL_TOTAL_LOTE * ($sitio['prop_vol_ap'] / 100) / $PRODUCCION_TOTAL_LIMITANTE) * $session->read('Datos.dias_mes'));
 

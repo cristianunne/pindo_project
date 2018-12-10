@@ -262,7 +262,7 @@
 
                                 <tr>
                                     <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Días necesarios para cosechar el lote [Días]</td>
-                                    <td align="center" style="vertical-align: middle;"><?= bcdiv($simulaciones['dias_cosecha'], '1', 2)  ?></td>
+                                    <td align="center" style="vertical-align: middle;"><?= $simulaciones['dias_cosecha'] ?></td>
                                 </tr>
 
                                 <tr>
