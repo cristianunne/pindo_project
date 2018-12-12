@@ -243,6 +243,15 @@
                                         <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Tarifa del servicio antes de impuestos [$/m³]</td>
                                         <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['TARIFA_SERVICIO'], '1', 2)  ?></td>
                                     </tr>
+
+                                    <tr>
+                                        <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Tarifa del servicio con impuestos [$/m³]</td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['TARIFA_SERVICIO_CON_IMP'], '1', 2) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: middle; font-weight: bold; text-align: left; color:darkgreen;">Beneficio respecto al precio del contratante [$/m³]</td>
+                                        <td align="center" style="vertical-align: middle;"><?= bcdiv($array_result_general['BENEFICIO'], '1', 2) ?></td>
+                                    </tr>
                                 </tbody>
                             </table>
 
