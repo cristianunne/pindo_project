@@ -183,7 +183,8 @@ class SimulacionesController extends AppController
             ->where(['rodales_idrodales' => $simulaciones->rodale->idrodales])->toArray();
 
         $spreadsheet = new Spreadsheet();
-        $spreadsheet->getActiveSheet()->setTitle("Simulacion");
+        $nombre = $simulaciones->emsefor->nombre . '_' . $simulaciones->rodale->cod_sap;
+        $spreadsheet->getActiveSheet()->setTitle($nombre);
         $sheet = $spreadsheet->getActiveSheet();
         //Set Propiedades
         $sheet->setCellValue('A1', 'Tipo de Simulación');
@@ -247,8 +248,8 @@ class SimulacionesController extends AppController
         $spreadsheet->getActiveSheet()->getStyle('E10')->applyFromArray($styleHeaderCell);
 
 
-        //Inicio de fila es 9 = A9
-        $row_current = 10;
+        //Inicio de fila es 10 = A9
+        $row_current = 11;
 
         //Porceso de a unos las maquinas
         foreach ($simulaciones->simulaciones_maqesp as $maquinas){
@@ -546,7 +547,8 @@ class SimulacionesController extends AppController
                 ->setAutoSize(true);
         }
 
-        $path = WWW_ROOT . '/files/simulacion.xlsx';
+
+        $path = WWW_ROOT . '/files/' . $nombre .'.xlsx';
 
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);
