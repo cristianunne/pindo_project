@@ -145,6 +145,34 @@
 
     <?php endif ?>
 
+    <?php if($categoria == 'Relevamientos'):  ?>
+
+        <h1>
+            Relevamientos
+            <small>Manejo de Relevamientos</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-tree"></i> RELEVAMIENTOS</a></li>
+
+            <li class="active"><?php echo $action ?></li>
+        </ol>
+
+    <?php endif ?>
+
+    <?php if($categoria == 'Florexcel'):  ?>
+
+        <h1>
+            Florexcel
+            <small>Manejo de Florexcel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-puzzle-piece"></i> Florexcel</a></li>
+
+            <li class="active"><?php echo $action ?></li>
+        </ol>
+
+    <?php endif ?>
+
 
 
 </section>

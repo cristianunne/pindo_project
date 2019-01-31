@@ -70,7 +70,7 @@ class RodalesController extends AppController
         $data_url = $this->request->query;
 
         $action = $data_url['Accion'];
-        $categoria= $data_url['Categoria'];
+        $categoria = $data_url['Categoria'];
         $id = $data_url['id'];
 
         $this->set('action', $action);

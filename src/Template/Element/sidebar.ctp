@@ -145,10 +145,32 @@
 
             </li>
 
+            <li class="header">RELEVAMIENTOS</li>
+
+            <li id="li_Procedencias" class="treeview">
+                <a href="#">
+                    <i class="fa fa-tree"></i> <span>Relevamientos</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li class="active">
+                        <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Relevamientos', ['controller' => 'Relevamientos', 'action' => 'index', '?' => ['Accion' => 'Ver Relevamientos', 'Categoria' => 'Relevamientos']], ['escape' => false]) ?>
+                    </li>
+
+                </ul>
+
+            </li>
+
+
+
             <li class="header">SIMULADORES</li>
              <li>
 
-                  <?= $this->Html->link('<i class="fa fa-puzzle-piece"></i> Flor-Excel', ['controller' => 'Index', 'action' => 'index'], [ 'escape' => false]) ?>
+                  <?= $this->Html->link('<i class="fa fa-puzzle-piece"></i> Flor-Excel', ['controller' => 'Florexcel', 'action' => 'index', '?' =>
+                      ['Accion' => 'Agregar Modelo', 'Categoria' => 'Florexcel']], [ 'escape' => false]) ?>
              </li>
 
             <li id="li_SIMNEA" class="treeview">

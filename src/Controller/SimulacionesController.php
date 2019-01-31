@@ -182,6 +182,7 @@ class SimulacionesController extends AppController
             ->contain(['Procedencias'])
             ->where(['rodales_idrodales' => $simulaciones->rodale->idrodales])->toArray();
 
+
         $spreadsheet = new Spreadsheet();
         $nombre = $simulaciones->emsefor->nombre . '_' . $simulaciones->rodale->cod_sap;
         $spreadsheet->getActiveSheet()->setTitle($nombre);

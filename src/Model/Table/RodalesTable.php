@@ -51,7 +51,7 @@ class RodalesTable extends Table
 
         $this->hasOne('Plantaciones', [
 
-                 'foreignKey' => 'rodales_idrodales',
+                'foreignKey' => 'rodales_idrodales',
                 'joinType' => 'INNER'
             ]);
 
@@ -62,6 +62,10 @@ class RodalesTable extends Table
         $this->hasMany('Inventario', [
                 'foreignKey' => 'rodales_idrodales'
             ]);
+
+        $this->hasMany('ParcelasRel', [
+            'foreignKey' => 'rodales_idrodales'
+        ]);
 
 
     }
