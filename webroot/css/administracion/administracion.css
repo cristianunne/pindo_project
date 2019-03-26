@@ -1,0 +1,52 @@
+
+/*
+    Estilos para los botones de operadores
+ */
+
+#variables_category{
+    padding-top: 10px;
+    height: 250px;
+}
+.margin-boton{
+    margin-top: 10px;
+}
+
+.query_construct{
+    min-height: 120px;
+    margin: 0 auto;
+    display: -webkit-box;
+    float: inherit;
+    padding: 10px 10px 10px 10px;
+}
+.text_info_fecha{
+    padding-left: 48px;
+    font-size: 12px;
+    color:red;
+}
+
+.panel_filtros{
+    padding: 15px 15px 15px 15px;
+}
+
+.div_etiqueta_query{
+    border: solid 0.5px #99bbe8;
+    background-color: #d0def0;
+    padding: 3px 3px 3px 3px;
+    width: fit-content;
+    font: normal 13px arial,tahoma,helvetica,sans-serif;
+    color: #15428b;
+    display: -webkit-inline-box;
+    margin: 3px 3px 3px 3px;
+}
+.div_etiqueta_query:hover{
+    background-color: #15428b;
+    color: #d0def0;
+    cursor: pointer;
+}
+#text_area_query{
+    color: #15428b;
+}
+
+p{
+    margin: 0px;
+}

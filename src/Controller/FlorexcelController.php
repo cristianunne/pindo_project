@@ -185,7 +185,7 @@ class FlorexcelController extends AppController
             ->where(['id_parcelas_rel IN' => $parcelas_select])
             ->orderAsc('rodales_idrodales, id_parcelas_rel');
 
-        
+
         $this->set('action', $action);
         $this->set('categoria', $categoria);
 

@@ -50,7 +50,8 @@
       					            }?>
                                 </td>
                                 <td>
-                                     <?= $this->Html->link($rodal->empresa->nombre, ['controller' => 'Empresa', 'action' => 'view','?' => ['Accion' => 'Ver Empresa', 'Categoria' => 'Empresa', 'id' => $rodal->empresa->idempresa]]) ?>
+                                     <?= $this->Html->link($rodal->empresa->nombre, ['controller' => 'Empresa', 'action' => 'view','?' =>
+                                         ['Accion' => 'Ver Empresa', 'Categoria' => 'Empresa', 'id' => $rodal->empresa->idempresa]]) ?>
 
                                 </td>
                                 <td align="center" valign="middle">

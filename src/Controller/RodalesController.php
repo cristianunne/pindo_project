@@ -250,6 +250,7 @@ class RodalesController extends AppController
                 'valueField' => 'nombre'
             ])->toArray();
 
+
         //$empresa = $empre->find('all')->select(['idempresa, nombre'])->toArray();
 
        /* $query = $empre->find('list', [

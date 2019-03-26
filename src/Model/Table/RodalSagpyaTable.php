@@ -33,6 +33,9 @@ class RodalSagpyaTable extends Table
         $this->table('rodal_sagpya');
         $this->displayField('rodales_idrodales');
         $this->primaryKey(['rodales_idrodales', 'sagpya_idsagpya']);
+
+
+
     }
 
     /**

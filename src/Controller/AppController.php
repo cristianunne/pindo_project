@@ -39,6 +39,9 @@ class AppController extends Controller
      * @return void
      */
 
+    //Genero los arreglos con las relaciones para no buscar en la DB
+
+
     public function initialize()
     {
         parent::initialize();
@@ -111,4 +114,21 @@ class AppController extends Controller
         return false;
 
     }
+
+    public function json($data){
+
+        $json_data = json_encode($data);
+        $response = $this->response->withType('json')->withStringBody($json_data);
+        return $response;
+
+    }
+
+    protected $RODALES_RELATIONS = ['empresa', 'sagpyas', 'plantaciones', 'intervenciones', 'inventario', 'parcelas_rel'];
+    protected $EMPRESA_RELATIONS = ['rodales'];
+    protected $plantaciones_rel = ['rodales', 'procedencias'];
+    protected $procedencias_rel = ['plantaciones'];
+    protected $sagpyas = ['rodales'];
+
+
+
 }

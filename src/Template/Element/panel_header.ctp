@@ -173,6 +173,20 @@
 
     <?php endif ?>
 
+    <?php if($categoria == 'Administracion'):  ?>
+
+        <h1>
+            Administracion
+            <small>Filtros de Rodales</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-puzzle-piece"></i> Administracion</a></li>
+
+            <li class="active"><?php echo $action ?></li>
+        </ol>
+
+    <?php endif ?>
+
 
 
 </section>

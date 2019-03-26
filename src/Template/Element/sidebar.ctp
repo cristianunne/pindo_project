@@ -240,7 +240,7 @@
 
             </li>
 
-            <li class="header">ADMINISTRACIÓN</li>
+            <li class="header">CONFIG. GENERALES</li>
 
             <li id="li_Laboral" class="treeview">
                 <a href="#">
@@ -315,6 +315,30 @@
                     </li>
 
                 </ul>
+            </li>
+
+
+            <li class="header">ADMINISTRACION</li>
+
+            <li id="li_Administracion" class="treeview">
+                <a href="#">
+                    <i class="fas fa-money-bill-alt"></i> <span>Filtro de Rodales</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <?= $this->Html->link('<i class="fa fa-eye"></i> Ver', ['controller' => 'Administracion', 'action' => 'index', '?' => ['Accion' => 'Filtro de Rodales', 'Categoria' => 'Administracion']], ['escape' => false]) ?>
+                    </li>
+                    <li class="active">
+                        <?= $this->Html->link('<i class="fa fa-fw fa-cog"></i> Configuración', ['controller' => 'Administracion', 'action' => 'config', '?' => ['Accion' => 'Filtro de Rodales', 'Categoria' => 'Administracion']], ['escape' => false]) ?>
+                    </li>
+
+                </ul>
+
+
             </li>
 
 
