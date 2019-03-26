@@ -263,7 +263,10 @@ class AdministracionController extends AppController
 
                 }
 
-                if($bool_present_emsefor == true){
+
+
+                if($bool_present_emsefor == false){
+
 
                     foreach ($new_columns as $col_filtros){
 
@@ -284,16 +287,23 @@ class AdministracionController extends AppController
 
                 } else {
 
+                    //Si esta emsefor ya asignada debo reccorer y eliminar emsefor_idemsefor porque aparece de lo contrario
                     foreach ($new_columns as $col_filtros){
+
+                        //Pregunto si la columna es la emsefor
 
                         if($col_filtros != 'emsefor_idemsefor'){
 
                             //elimino el objeto
                             array_push($arreglo_final, $col_filtros);
+
                         }
 
                     }
+
                     $this->set('options', $arreglo_final);
+
+
                 }
 
                 //Se trata de cualquier tabla que no debo evaluar EMSEFOR
