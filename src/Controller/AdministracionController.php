@@ -228,108 +228,78 @@ class AdministracionController extends AppController
             //Realizo la eliminacion de las columnas que ya estan y compruebo para los casos de PLANTACIONES, etc si la columna se llama EMSEFOR
             $new_columns = array();
 
-
-
             foreach ($columnas as $col){
                 $bool_present =  false;
 
                 foreach ($tabla_columns_filtro as $tbl_col_f){
 
-
-
                     if ($col == $tbl_col_f->name_column && $table_name == $tbl_col_f->tablas_filtro->tabla_name){
                         $bool_present = true;
-
                     }
-
                 }
 
                 if($bool_present === false){
                     array_push($new_columns, $col);
 
                 }
-
             }
 
-       ;
-            //Bolean emsefor presente
-            $bool_present_emsefor = false;
-
-            foreach ($tabla_columns_filtro as $tbl_col_f){
-
-
-                if  ($tbl_col_f->tablas_filtro->tabla_name === $table_name && $tbl_col_f->name_column === 'emsefor'){
-                    $bool_present_emsefor = true;
-
-                }
-
-            }
-
+            //Realizo la comprobacion si la Tabla que estoy consultando es PLANTACIONES, INVENTARIO O INFO_PLANTACIONES
+            //Solo si son esas hago la verificacion de EMSEFOR
             $arreglo_final = array();
-            if($bool_present_emsefor == false){
 
-                //Recorro la tabla de nombres de columnas y reemplazo la de emsefor
-                if($table_name == 'Plantaciones'){
+            if($table_name == 'Plantaciones' || $table_name == 'Intervenciones' || $table_name == 'Inventario' || $table_name == 'Intervenciones'){
 
-                    foreach ($new_columns as $col_filtros){
+                //Bolean emsefor presente
+                $bool_present_emsefor = false;
 
-                        //Pregunto si la columna es la emsefor
+                foreach ($tabla_columns_filtro as $tbl_col_f){
 
-                        if($col_filtros == 'emsefor_idemsefor'){
 
-                            //elimino el objeto
-                            array_push($arreglo_final, 'emsefor');
+                    if  ($tbl_col_f->tablas_filtro->tabla_name == $table_name && $tbl_col_f->name_column == 'emsefor'){
+                        $bool_present_emsefor = true;
 
-                        } else {
-                            array_push($arreglo_final, $col_filtros);
-                        }
-
-                    }
-
-                } elseif ($table_name == 'Intervenciones'){
-
-                    foreach ($new_columns as $col_filtros){
-
-                        //Pregunto si la columna es la emsefor
-                        if($col_filtros == 'emsefor_idemsefor'){
-                            //elimino el objeto
-                            array_push($arreglo_final, 'emsefor');
-
-                        } else {
-                            array_push($arreglo_final, $col_filtros);
-                        }
-                    }
-                } elseif ($table_name == 'Inventario'){
-
-                    foreach ($new_columns as $col_filtros){
-
-                        //Pregunto si la columna es la emsefor
-                        if($col_filtros == 'emsefor_idemsefor'){
-                            //elimino el objeto
-                            array_push($arreglo_final, 'emsefor');
-
-                        } else {
-                            array_push($arreglo_final, $col_filtros);
-                        }
                     }
 
                 }
-                $this->set('options', $arreglo_final);
+
+                if($bool_present_emsefor == true){
+
+                    foreach ($new_columns as $col_filtros){
+
+                        //Pregunto si la columna es la emsefor
+
+                        if($col_filtros == 'emsefor_idemsefor'){
+
+                            //elimino el objeto
+                            array_push($arreglo_final, 'emsefor');
+
+                        } else {
+                            array_push($arreglo_final, $col_filtros);
+                        }
+
+                    }
+
+                    $this->set('options', $arreglo_final);
+
+                } else {
+
+                    foreach ($new_columns as $col_filtros){
+
+                        if($col_filtros != 'emsefor_idemsefor'){
+
+                            //elimino el objeto
+                            array_push($arreglo_final, $col_filtros);
+                        }
+
+                    }
+                    $this->set('options', $arreglo_final);
+                }
+
+                //Se trata de cualquier tabla que no debo evaluar EMSEFOR
             } else {
 
-                //Si encuentro a emsefor dentro de la lista de columnas ya insertadas elimino el campo emsefor_idemsefor
-
-                foreach ($new_columns as $col_filtros){
-
-                    if($col_filtros != 'emsefor_idemsefor'){
-
-                        //elimino el objeto
-                        array_push($arreglo_final, $col_filtros);
-                    }
-
-                }
-
-                $this->set('options', $arreglo_final);
+                $this->set('options', $new_columns);
             }
 
 
