@@ -102,7 +102,6 @@
                                             <button attr="Or" class="btn btn-default margin-boton" onclick="buttonOperatorPut(this)">Or</button>
                                             <button attr="Not" class="btn btn-default margin-boton" onclick="buttonOperatorPut(this)">Not</button>
                                             <button attr="Like" class="btn btn-default margin-boton" onclick="buttonOperatorPut(this)">Like</button>
-                                            <button attr="FIRST" class="btn btn-default margin-boton" onclick="buttonOperatorPut(this)">First</button>
                                             <button attr="LAST" class="btn btn-default margin-boton" onclick="buttonOperatorPut(this)">Last</button>
 
                                         </div>

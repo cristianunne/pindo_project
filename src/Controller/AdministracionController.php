@@ -88,6 +88,10 @@ class AdministracionController extends AppController
     private $TABLAS_YES_FITROS = ['Rodales', 'Empresa', 'Plantaciones', 'Procedencias', 'Sagpyas', 'Intervenciones', 'Inventario', 'gis',
         'Info_intervencion', 'Emsefor'];
 
+    private $FUNCIONES = ['LAST'];
+
+
+
     public function addTableFiltro()
     {
         //Recupero los datos de la URL
@@ -361,6 +365,7 @@ class AdministracionController extends AppController
     }
 
 
+
     public function viewColumnsFiltros()
     {
 
@@ -560,252 +565,354 @@ class AdministracionController extends AppController
 
     public function applyFiltro()
     {
-
         $this->autoRender = false;
-
         if($this->request->is('ajax')){
 
             //Obtengo el arreglo para mandar la consulta
             $datos = json_decode(stripslashes( $_POST['data']));
 
-            //1ro Obtengo todas las tablas que van a participar de la consulta
+            //Lo que primero haria es evaluar si hay FUNCIONES aplicada a los rodales
+            //Creo un arreglo y voy guardando los rodales obtenidos de las funciones
+            $rodal_function = [];
+            $rodal_function_final = [];
 
-            //Como es un arreglo lo recorro con un foreach y luego hago la consulta
-            //Obtengo todas las sentencias realizadas para la tabla rodales y creo un arreglo de referencias
+            if(!empty($datos)){
 
-            $tablas_consultas = [];
+                foreach ($datos as $dat){
 
-            //Creo 2 variables: $bolean_plantacion y $bolean_inventario y $bolean_intervencion y verifico desde donde hago la conexion
-            $boolean_inventario = false;
-            $boolean_plantaciones = false;
-            $boolean_intervencion = false;
-
-            //Al realizar la verificacion de las tablas busco una tabla que se llame false y no la incluyo
-
-            foreach ($datos as $dat){
-                $is_present = false;
-
-                if(!$dat->tabla === 'false'){
-
-                    foreach ($tablas_consultas as $tbl_csl){
-
-                        if($dat->tabla == $tbl_csl){
-                            $is_present = true;
-                            break;
-                        }
-
+                    if($dat->function == 'true'){
+                        $rodal = $this->processFunctionQuery($dat);
+                        array_push($rodal_function, $rodal);
                     }
+                }
+                //Realizo un filtro de solo los rodales que fueron filtrados por las funciones
+                if(!empty($rodal_function)){
+                    $rodal_function_final = $this->clearArrayOfQuerys($rodal_function);
                 }
 
 
+                //Proceso los querys que no sean funciones
+                $tablas_rodales_query = $this->getRodalesByQuery($datos);
+                $tablas_rodales_query_clear = $this->clearArrayOfQuerysNoFunction($tablas_rodales_query);
 
-                if($is_present == false){
+                //Ya tengo los resultados de ambos ahora comparo quienes quedaros y realizo la consulta
+                $rodales_final = $this->getRodalesQueryFinal($rodal_function_final, $tablas_rodales_query_clear);
 
-                    if(strval($dat->tabla) != 'rodales'){
-                        array_push($tablas_consultas, strval($dat->tabla));
-                    }
+                //Ya esta okey, realizo la consulta a la base de datos
+                $modelRodales = $this->loadModel('Rodales');
+                $rodalTable = $modelRodales->find('all', [])
+                    ->contain(['Empresa'])
+                    ->where(['idrodales IN' => $rodales_final])->toArray();
 
 
-                }
+                return $this->json($rodalTable);
 
             }
 
-            //Verifico que las tablas se menciones solo una vez, porque o sino se duplica
-            $tablas_consultas_clear = array();
-            $i = 1;
-            foreach ($tablas_consultas as $tbl_con){
+
+
+        }
+    }
+
+    private function processFunctionQuery($dat)
+    {
+
+        if($dat->name_function == 'LAST'){
+
+            //Realizo la consulta y devuelvo un arreglo con los rodales que cumplieron la condicion
+            if($dat->tabla == 'Inventario'){
+
+                $query = 'SELECT idrodales FROM rodales INNER JOIN (SELECT * FROM inventario INNER JOIN 
+                            (SELECT MAX(idinventario) AS id_inv from inventario GROUP BY rodales_idrodales) 
+                            AS tbl_last ON inventario.idinventario = tbl_last.id_inv) AS inv_last 
+                        ON rodales.idrodales = inv_last.rodales_idrodales';
+
+                //Ejecuto el Query y devuelvo el arreglo
+                $conecction = ConnectionManager::get('default');
+                $tablaRodales = $conecction->execute($query)->fetchAll('assoc');
+
+                return $tablaRodales;
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+
+    private function clearArrayOfQuerys($array_rodales)
+    {
+
+        $array_rodal_clear = array();
+        $i = 1;
+        foreach ($array_rodales as $rol_a){
+
+            foreach ($rol_a as $rol){
 
                 if($i == 1){
-                    array_push($tablas_consultas_clear, $tbl_con);
+
+                    //array_push($array_rodal_clear, $rol);
+                    $array_rodal_clear[] = $rol['idrodales'];
+
                     $i++;
                 } else {
 
-                    $bool_pres = false;
-                    //Recorro el arreglo y busco coincidencia
-                    foreach ($tablas_consultas_clear as $tbl_con_clear){
+                    //Recorro el arreglo y pregunto si ya existe el valor del rodal pasado
+                    $boolean_present = false;
+                    foreach ($array_rodal_clear as $arr_clear){
 
-                        if($tbl_con_clear == $tbl_con){
-                            $bool_pres = true;
+                        if ($arr_clear == $rol['idrodales']){
+                            $boolean_present = true;
                         }
                     }
 
-                    if($bool_pres == false){
+                    if($boolean_present == false){
+                        //array_push($array_rodal_clear, $rol);
+                        $array_rodal_clear[] = $rol['idrodales'];
+                    }
+
+                }
+
+            }
+
+        }
+
+        return $array_rodal_clear;
+
+    }
+
+    private function clearArrayOfQuerysNoFunction($tablas_rodales_query){
+
+        $array_rodal_clear = array();
+        $i = 1;
+        foreach ($tablas_rodales_query as $rol){
+
+
+                if($i == 1){
+
+                    //array_push($array_rodal_clear, $rol);
+                    $array_rodal_clear[] = $rol['idrodales'];
+                    $i++;
+                } else {
+
+                    //Recorro el arreglo y pregunto si ya existe el valor del rodal pasado
+                    $boolean_present = false;
+                    foreach ($array_rodal_clear as $arr_clear){
+
+                        if ($arr_clear == $rol['idrodales']){
+                            $boolean_present = true;
+                        }
+                    }
+
+                    if($boolean_present == false){
+                        //array_push($array_rodal_clear, $rol);
+                        $array_rodal_clear[] = $rol['idrodales'];
+                    }
+
+                }
+        }
+        return $array_rodal_clear;
+
+    }
+
+    //Compara los dos arreglos el de las funciones y demas y obtiene uno solo
+    private function getRodalesQueryFinal($rodal_function_final, $rodal_query_final)
+    {
+        $rodales_final = array();
+        if(!empty($rodal_function_final)){
+            foreach ($rodal_function_final as $rod_function){
+
+                $bolean_present = false;
+
+                foreach ($rodal_query_final as $rod_query){
+
+                    if($rod_function == $rod_query){
+                        $bolean_present = true;
+                    }
+                }
+                if($bolean_present == true){
+                    array_push($rodales_final, $rod_function);
+                }
+            }
+            return $rodales_final;
+        } else {
+            return $rodal_query_final;
+        }
+    }
+
+    private function getRodalesByQuery($datos)
+    {
+
+
+                //Debo realizar las conexiones a las tablas
+                //1ro Obtengo todas las tablas que van a participar de la consulta
+                //Como es un arreglo lo recorro con un foreach y luego hago la consulta
+                //Obtengo todas las sentencias realizadas para la tabla rodales y creo un arreglo de referencias
+
+                $tablas_consultas = [];
+
+                //Creo 2 variables: $bolean_plantacion y $bolean_inventario y $bolean_intervencion y verifico desde donde hago la conexion
+                $boolean_inventario = false;
+                $boolean_plantaciones = false;
+                $boolean_intervencion = false;
+
+                //Al realizar la verificacion de las tablas busco una tabla que se llame false y no la incluyo
+                foreach ($datos as $dat){
+                    $is_present = false;
+
+                    if(!$dat->tabla === 'false'){
+
+                        foreach ($tablas_consultas as $tbl_csl){
+
+                            if($dat->tabla == $tbl_csl){
+                                $is_present = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if($is_present == false){
+
+                        if(strval($dat->tabla) != 'rodales'){
+                            array_push($tablas_consultas, strval($dat->tabla));
+                        }
+                    }
+                }
+
+                //Verifico que las tablas se menciones solo una vez, porque o sino se duplica
+                $tablas_consultas_clear = array();
+                $i = 1;
+                foreach ($tablas_consultas as $tbl_con){
+                    if($i == 1){
                         array_push($tablas_consultas_clear, $tbl_con);
+                        $i++;
+                    } else {
+                        $bool_pres = false;
+                        //Recorro el arreglo y busco coincidencia
+                        foreach ($tablas_consultas_clear as $tbl_con_clear){
+                            if($tbl_con_clear == $tbl_con){
+                                $bool_pres = true;
+                            }
+                        }
+                        if($bool_pres == false){
+                            array_push($tablas_consultas_clear, $tbl_con);
+                        }
+                    }
+                }
+
+
+
+                //Verifico la presencia de las tablas que se relacionan con emsefor
+                foreach ($datos as $dat){
+                    if($dat->tabla === 'Plantaciones' && $dat->emsefor === 'true'){
+                        $boolean_plantaciones = true;
+                    } elseif ($dat->tabla === 'Intervenciones' && $dat->emsefor === 'true'){
+                        $boolean_intervencion = true;
+                    } elseif ($dat->tabla === 'Inventario' && $dat->emsefor === 'true'){
+                        $boolean_inventario = true;
+                    }
+                }
+
+                //VERIFICO QUE LA TABLA EMSEFOR PARTICIPE AL MENOS UNA VEZ
+                //VERIFICAR SI LA UNION SE REALIZA POR PLANTACIONES O POR INTERVENCIONES
+                $boolean_emsefor_present = false;
+                foreach ($datos as $dat){
+
+                    if($dat->emsefor === 'true'){
+                        $boolean_emsefor_present =  true;
+                    }
+                }
+                $stmt_emsefor_plant = '';
+                $stmt_emsefor_inter = '';
+                $stmt_emsefor_invent = '';
+
+                //Verifico cual de las Tabla que une a EMSEFOR ha participado de la UNION
+                if($boolean_emsefor_present == true){
+                    //Verifico en cual de tablas participo
+                    if($boolean_plantaciones == true){
+                        //Primero debo unir la tabla plantacion y luego emsefor
+                        $stmt_emsefor_plant = 'INNER JOIN plantaciones as plant1 ON rodales.idrodales = plant1.rodales_idrodales 
+                          INNER JOIN emsefor AS plan_ems ON plan_ems.idemsefor = plant1.emsefor_idemsefor';
+                    }
+
+                    if($boolean_intervencion == true){
+                        //Primero debo unir la tabla plantacion y luego emsefor
+                        $stmt_emsefor_inter = 'INNER JOIN intervenciones as inter1 ON rodales.idrodales = inter1.rodales_idrodales 
+                          INNER JOIN emsefor AS inter_ems ON inter_ems.idemsefor = inter1.emsefor_idemsefor';
+
+                    }
+
+                    if($boolean_inventario == true){
+                        //Primero debo unir la tabla plantacion y luego emsefor
+                        $stmt_emsefor_invent = 'INNER JOIN inventario as inven1 ON rodales.idrodales = inven1.rodales_idrodales 
+                          INNER JOIN emsefor AS inv_ems ON inv_ems.idemsefor = inven1.emsefor_idemsefor';
+
+                    }
+
+                }
+
+                $query = "";
+                $i = 0;
+                foreach ($datos as $dat){
+
+                    //Averiguo si llego un query con la notacion plantacion.emsefor
+                    //Averiguo que el QUERY no sea una FUNCION
+                    $boolean_emsefor_present = false;
+
+                    if($dat->function == 'false'){
+                        if($i == 0){
+                            $query = $query .'(' . $dat->query . ')';
+                            $i++;
+                        } else {
+                            $query = $query . ' AND (' . $dat->query . ')';
+                        }
                     }
 
                 }
 
 
+                //Evaluo las tablas presentes para agregar los INNER (la tabla_consultas es la que contiene las tablas que van a participar de llos INNER)
+                $stmn_query = 'SELECT DISTINCT idrodales FROM rodales as rodales';
 
-            }
+                //recorro el array de tablas que participan
+                foreach ($tablas_consultas_clear as $tbl_con){
 
+                    $stmn_query = $stmn_query . ' ' . $this->addInnerToQuery($tbl_con);
 
-
-
-
-            //Verifico la presencia de las tablas que se relacionan con emsefor
-            foreach ($datos as $dat){
-
-
-                if($dat->tabla === 'Plantaciones' && $dat->emsefor === 'true'){
-                    $boolean_plantaciones = true;
-                } elseif ($dat->tabla === 'Intervenciones' && $dat->emsefor === 'true'){
-                    $boolean_intervencion = true;
-                } elseif ($dat->tabla === 'Inventario' && $dat->emsefor === 'true'){
-                    $boolean_inventario = true;
-                }
-            }
-
-
-            //VERIFICO QUE LA TABLA EMSEFOR PARTICIPE AL MENOS UNA VEZ
-            //VERIFICAR SI LA UNION SE REALIZA POR PLANTACIONES O POR INTERVENCIONES
-            $boolean_emsefor_present = false;
-
-            foreach ($datos as $dat){
-
-                if($dat->emsefor === 'true'){
-                    $boolean_emsefor_present =  true;
                 }
 
-            }
+                //Realizo la Union de la tabla que se relaciona con EMSEFOR
 
-            $stmt_emsefor_plant = '';
-            $stmt_emsefor_inter = '';
-            $stmt_emsefor_invent = '';
-
-            //Verifico cual de las Tabla que une a EMSEFOR ha participado de la UNION
-
-            if($boolean_emsefor_present == true){
-
-
-                //Verifico en cual de tablas participo
                 if($boolean_plantaciones == true){
-                    //Primero debo unir la tabla plantacion y luego emsefor
-                    $stmt_emsefor_plant = 'INNER JOIN plantaciones as plant1 ON rodales.idrodales = plant1.rodales_idrodales 
-                          INNER JOIN emsefor AS plan_ems ON plan_ems.idemsefor = plant1.emsefor_idemsefor';
+                    $stmn_query = $stmn_query . ' ' . $stmt_emsefor_plant;
                 }
-
                 if($boolean_intervencion == true){
-                    //Primero debo unir la tabla plantacion y luego emsefor
-                    $stmt_emsefor_inter = 'INNER JOIN intervenciones as inter1 ON rodales.idrodales = inter1.rodales_idrodales 
-                          INNER JOIN emsefor AS inter_ems ON inter_ems.idemsefor = inter1.emsefor_idemsefor';
-
+                    $stmn_query = $stmn_query . ' ' . $stmt_emsefor_inter;
                 }
 
                 if($boolean_inventario == true){
-                    //Primero debo unir la tabla plantacion y luego emsefor
-                    $stmt_emsefor_invent = 'INNER JOIN inventario as inven1 ON rodales.idrodales = inven1.rodales_idrodales 
-                          INNER JOIN emsefor AS inv_ems ON inv_ems.idemsefor = inven1.emsefor_idemsefor';
+                    $stmn_query = $stmn_query . ' ' . $stmt_emsefor_invent;
+                }
+
+
+                //Debo evaluar el QUERY porque puede suceder que no se de o que venga vacio
+                if($query != ''){
+                    $stmn_query = $stmn_query . ' WHERE ' . $query;
 
                 }
 
-            }
+                $conecction = ConnectionManager::get('default');
+                $tablaRodales = $conecction->execute($stmn_query)->fetchAll('assoc');
 
-
-
-            //La tabla empresa siempre se va a agregar debido a que es utilizada en la Tabla de resultados
-            //Como no todas las tablas tienen referencia en Rodales, realizo un filtro a partir de la variable global definido el en AppController
-
-            $query = "";
-            $i = 0;
-            foreach ($datos as $dat){
-
-                //Averiguo si llego un query con la notacion plantacion.emsefor
-                $boolean_emsefor_present = false;
-                if($i == 0){
-                    $query = $query .'(' . $dat->query . ')';
-                    $i++;
-                } else {
-                    $query = $query . ' AND (' . $dat->query . ')';
-                }
-
-            }
-
-            //Evaluo las tablas presentes para agregar los INNER (la tabla_consultas es la que contiene las tablas que van a participar de llos INNER)
-            $stmn_query = 'SELECT * FROM rodales INNER JOIN (SELECT DISTINCT idrodales FROM rodales as rodales ';
-
-            //recorro el array de tablas que participan
-            foreach ($tablas_consultas_clear as $tbl_con){
-
-                $stmn_query = $stmn_query . ' ' . $this->addInnerToQuery($tbl_con);
-
-            }
-
-            //Realizo la Union de la tabla que se relaciona con EMSEFOR
-
-            if($boolean_plantaciones == true){
-                $stmn_query = $stmn_query . ' ' . $stmt_emsefor_plant;
-            }
-            if($boolean_intervencion == true){
-                $stmn_query = $stmn_query . ' ' . $stmt_emsefor_inter;
-            }
-
-            if($boolean_inventario == true){
-                $stmn_query = $stmn_query . ' ' . $stmt_emsefor_invent;
-            }
-
-
-            $stmn_query = $stmn_query . ' WHERE ' . $query . ') AS tbl ON rodales.idrodales = tbl.idrodales INNER JOIN empresa empresa ON rodales.empresa_idempresa = empresa.idempresa';
-
-
-
-            $conecction = ConnectionManager::get('default');
-
-            $tablaRodales = $conecction->execute($stmn_query)->fetchAll('assoc');
-
-            return $this->json($tablaRodales);
-
-
-
-        }
+                return $tablaRodales;
 
     }
 
-    private function evalExistRelations($tabla)
-    {
-
-        $array_res = [];
-
-        //Evalua si esta pertenece a alguna referencia de la tabla rodales
-        //Compruebo si esta relacionada con alguna referencia de rodales
-        foreach ($this->RODALES_RELATIONS as $tbl_rol_rlts){
-
-           if($tbl_rol_rlts == 'empresa'){
-
-           } else if($tbl_rol_rlts == 'sagpyas'){
-
-               if($tbl_rol_rlts == $tabla){
-                   $array_res = $array_res + [$tabla];
-               }
-
-
-           } else if($tbl_rol_rlts == 'plantaciones'){
-               //Evaluo el arreglo para comprobar si pertenece a esta tabla la relacion
-               foreach ($this->plantaciones_rel as $plant_rel){
-
-                   if($plant_rel == $tabla ){
-                       $array_res = [$tbl_rol_rlts => [$tabla]];
-                   }
-
-               }
-
-
-           } else if($tbl_rol_rlts == 'intervenciones'){
-
-           } else if($tbl_rol_rlts == 'inventario'){
-
-           } else if($tbl_rol_rlts == 'parcelas_rel'){
-
-           }
-
-        }
-
-        return $array_res;
-
-
-    }
-
-
+    
     private function addInnerToQuery($tabla)
     {
 
