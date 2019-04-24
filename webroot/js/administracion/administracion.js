@@ -206,8 +206,8 @@ function buttonOperatorPut(button) {
     //LA FUNCION LAST SOLO SE APLICA A INTERVENCIONES E INVENTARIO
     //Para ello verifico la tabla seleccionada y devuelvo un mensaje
 
-    if(oper === 'LAST' && table_select !== 'Inventario'){
-        alert("El Operador solo puede emplearse con la Tabla Inventario");
+    if(oper === 'LAST' && (table_select !== 'Inventario' && table_select !== 'Intervenciones')){
+        alert("El Operador solo puede emplearse con la Tabla Inventario e Intervenciones");
     } else {
 
         for (var i = 0; i < FUNCIONES.length; i++){
@@ -318,12 +318,12 @@ function applyFiltro()
 
     var option_select = $("#FormSelectCategory option:selected").text();
     var div = '';
-
+    var boolean_function = false;
     //Si es -1 significa que no encontro la cadena como query
     //Pregunto que tabla es la que participa y agreog la query como un attr3 y cambios los atributos alli
     if(val_text_area.toString().indexOf('emsefor') === -1){
         //No se utilia emsefor, verifico que no se use una funcion
-        var boolean_function = false;
+
         var funcion_find = false;
         for (var i = 0; i < FUNCIONES.length; i++){
 
@@ -356,20 +356,60 @@ function applyFiltro()
     }
 
 
+    //Antes de agregar al panel de query general consulto si ya no existe una clausula de Funcion Similar
+    var panel_filtros = $("#panel_filtros");
 
+    if(boolean_function === true){
 
+        if(verifiedFunctionExists(val_text_area) === true){
 
-    if ($.trim($("#text_area_query").val())) {
-        // textarea is empty or contains only white-space
-        $("#panel_filtros").append(div);
-        $("#text_area_query").val('');
+            //Alert informando que ya existe la funcion agregada
+            alert("La Función ya ha sido agregada al Panel de Consultas");
+
+        } else {
+            if ($.trim($("#text_area_query").val())) {
+                // textarea is empty or contains only white-space
+                panel_filtros.append(div);
+                $("#text_area_query").val('');
+            }
+
+        }
+
+    } else {
+
+        if ($.trim($("#text_area_query").val())) {
+            // textarea is empty or contains only white-space
+            panel_filtros.append(div);
+            $("#text_area_query").val('');
+        }
     }
+
+
 
 
     $("#example2").remove();
 
 
 }
+
+function verifiedFunctionExists(query_to_add)
+{
+    var divParent = $("#panel_filtros > div");
+    var boolean_function_exist = false;
+    //val_text_area.toString().indexOf(FUNCIONES[i]) !== -1
+
+    for (var i = 0; i < divParent.length; i++){
+        var query = $(divParent[i]).attr('query').toString();
+
+        if(query.toString() === query_to_add.toString()){
+            boolean_function_exist = true;
+        }
+    }
+
+    return boolean_function_exist;
+
+}
+
 
 function eliminarFiltro(div) {
     $(div).remove();
@@ -461,8 +501,8 @@ function createTableResult(data) {
     var array_data = [];
 
     for(var i = 0; i < data.length; i++){
-        var empresa = '<a href="/pindo_project/empresa/view?Accion=Ver+Empresa&amp;Categoria=Empresa&amp;id='+ data[i].empresa['idempresa'].toString()
-            + '" target="_blank">' + data[i].empresa['nombre'].toString() + '</a>';
+        var empresa = '<a href="/pindo_project/empresa/view?Accion=Ver+Empresa&amp;Categoria=Empresa&amp;id='+ data[i]['idempresa'].toString()
+            + '" target="_blank">' + data[i]['nombre'].toString() + '</a>';
 
         var rodales = ' <a href="/pindo_project/rodales/view?Accion=Ver+Rodales&amp;Categoria=Rodales&amp;id=' + data[i]['idrodales'].toString() + '" target="_blank" '
             + 'class="btn btn-success"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> ';
