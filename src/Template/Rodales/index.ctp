@@ -7,6 +7,7 @@
 <?= $this->element('header')?>
 <?= $this->element('sidebar')?>
 
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
       <?= $this->element('panel_header')?>

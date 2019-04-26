@@ -20,7 +20,6 @@ class IndexController extends AppController
 
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            debug('entreo como usuario');
             if(in_array($this->request->action, ['index']))
             {
                 return true;

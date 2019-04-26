@@ -234,10 +234,6 @@
                 </ul>
 
 
-
-
-
-
             </li>
 
             <li class="header">CONFIG. GENERALES</li>
@@ -340,6 +336,29 @@
 
 
             </li>
+
+
+            <!--Recupero las cookies y verifico que el rol sea ADMIN-->
+            <?php
+
+                $session = $this->request->session();
+                $datos_sitio = $session->read('Auth.User.role');
+
+                if($datos_sitio === 'admin') {
+                    ?>
+
+                    <li class="header">USUARIOS</li>
+
+                    <li id="li_Usuarios">
+
+                        <?= $this->Html->link('<i class="fa fa-users"></i> Ver Usuarios', ['controller' => 'AdministracionUsuarios', 'action' => 'index', '?' =>
+                            ['Accion' => 'Administrar Usuarios', 'Categoria' => 'AdministracionUsuarios']], ['escape' => false]) ?>
+                    </li>
+
+                    <?php
+                }
+            ?>
+
 
 
         </ul>

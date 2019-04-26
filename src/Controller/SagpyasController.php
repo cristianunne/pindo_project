@@ -19,7 +19,7 @@ class SagpyasController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['index', 'add', 'edit', 'delete']))
+            if(in_array($this->request->action, ['index', 'add', 'view', 'edit', 'delete']))
             {
                 return true;
             }

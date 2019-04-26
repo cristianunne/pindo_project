@@ -187,6 +187,20 @@
 
     <?php endif ?>
 
+    <?php if($categoria == 'AdministracionUsuarios'):  ?>
+
+        <h1>
+            Administracion
+            <small>Usuarios</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i> Administracion de Usuarios</a></li>
+
+            <li class="active"><?php echo $action ?></li>
+        </ol>
+
+    <?php endif ?>
+
 
 
 </section>

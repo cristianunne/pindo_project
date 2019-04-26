@@ -46,7 +46,12 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+
+                                <?= $this->Html->link("Perfil",
+                                    ['controller' => 'AdministracionUsuarios', 'action' => 'viewProfile', '?' =>
+                                        ['Accion' => 'Ver Perfil', 'Categoria' => 'AdministracionUsuarios', 'id' => $current_user['id']]],
+                                        ['class' => 'btn btn-default btn-flat', 'escape' => false]) ?>
+
                             </div>
                             <div class="pull-right">
                                 <?= $this->Html->link("Salir", ['controller' => 'Users', 'action' => 'logout'], ['class' => 'btn btn-default btn-flat']) ?>
