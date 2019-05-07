@@ -108,12 +108,15 @@
 
                                     <td align="center" valign="middle">
 
-                                        <?= $this->Html->link(__('Editar'), ['action' => 'editInfoIntervencion','?' => ['Accion' => 'Editar Empresas', 'Categoria' => 'Empresa', 'id' => $info->intervencion_idintervencion,
+                                        <?= $this->Html->link(__('Editar'), ['action' => 'editInfoIntervencion','?' => ['Accion' => 'Editar Intervencion', 'Categoria' => 'Rodales', 'id' => $info->intervencion_idintervencion,
                                             'id_rodal' => $id_rodal]],
                                             ['class' => 'btn btn-warning']) ?>
 
-                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $info->intervencion_idintervencion],
-                                            ['confirm' => __('Eliminar la Empresa: {0}?', $info->intervencion_idintervencion), 'class' => 'btn btn-danger']) ?>
+                                        <?= $this->Form->postLink(__('Eliminar'),
+                                            ['action' => 'delete', $info->intervencion_idintervencion, '?' =>
+                                                ['Accion' => 'Eliminar InfoIntervencion', 'Categoria' => 'Rodales', 'id' => $info->intervencion_idintervencion, 'id_rodal' => $id_rodal]],
+                                            ['confirm' => __('Eliminar la Información de la intervención: {0}?',
+                                                $info->intervencion_idintervencion), 'class' => 'btn btn-danger']) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

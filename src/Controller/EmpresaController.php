@@ -21,7 +21,7 @@ class EmpresaController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['index', 'add', 'edit', 'delete']))
+            if(in_array($this->request->action, ['index', 'add']))
             {
                 return true;
             }
@@ -38,7 +38,11 @@ class EmpresaController extends AppController
     public function index()
     {
         $empresa = $this->paginate($this->Empresa);
-        
+
+        //extraigo el rol de usuario
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+
         
         //Recupero los datos de la URL
         $data_url = $this->request->query;
@@ -51,6 +55,7 @@ class EmpresaController extends AppController
         $this->set('_serialize', ['empresa']);
         $this->set('action', $action);
         $this->set('categoria', $categoria);
+        $this->set('user_rol', $user_rol);
     }
 
     /**

@@ -20,7 +20,7 @@ class RodalesController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['index', 'add', 'edit', 'view']))
+            if(in_array($this->request->action, ['index', 'view', 'edit']))
             {
                 return true;
             }
@@ -37,7 +37,9 @@ class RodalesController extends AppController
     {
         $rodales = $this->Rodales->find('all')->contain(['Empresa'])->order(['idrodales' => 'ASC']);
 
-        //debug($rodales);
+        //extraigo el rol de usuario
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
 
 
         //Recupero los datos de la URL
@@ -48,14 +50,10 @@ class RodalesController extends AppController
 
         $this->set(compact('rodales'));
 
-
         $this->set('action', $action);
         $this->set('categoria', $categoria);
+        $this->set('user_rol', $user_rol);
     }
-
-
-
-
 
     /**
      * View method
@@ -68,6 +66,9 @@ class RodalesController extends AppController
     {
 
         $data_url = $this->request->query;
+        //extraigo el rol de usuario
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
 
         $action = $data_url['Accion'];
         $categoria = $data_url['Categoria'];
@@ -76,31 +77,20 @@ class RodalesController extends AppController
         $this->set('action', $action);
         $this->set('categoria', $categoria);
         $this->set('id_rodal', $id);
+        $this->set('user_rol', $user_rol);
 
-
-
-
-        /*$rodale = $this->Rodales->find('all', [
-        ])->where(['idrodales' => $id]);*/
 
         $rodale = $this->Rodales->get($id, []);
-
         $empresa = $this->Rodales->Empresa->get($rodale->empresa_idempresa, [
             'contain' => []
         ]);
 
 
-
         $this->set('rodale', $rodale);
         $this->set('_serialize', ['rodale']);
-
         $this->set('empresa', $empresa);
 
         //Plantación debo condicionar si existe para traer las demas
-
-        /*$plantaciones = $this->Rodales->Plantaciones->find('all', [
-            'contain' => []
-        ])->toArray();*/
 
         try{
             $plantaciones = $this->Rodales->get($id, [
@@ -110,13 +100,6 @@ class RodalesController extends AppController
             $plantaciones = null;
         }
 
-
-        /*$plantaciones = $this->Rodales->find('all', [])
-            ->where(['idrodales' => $id])
-            ->contain(['Plantaciones'])->toArray();*/
-
-
-
         $plant_count = 0;
         if (isset($plantaciones->plantacione)) {
             $array = (array) $plantaciones->plantacione;
@@ -124,16 +107,12 @@ class RodalesController extends AppController
             $plant_count = count($array);
         }
 
-
         $this->set('plant_count', $plant_count);
-
-
         $this->set('plantaciones', $plantaciones);
         $this->set('_serialize', ['plantaciones']);
 
         if($plant_count > 0)
         {
-
              //Recupero los datos de las procedencias
              //Ingreso al primer objeto para obtener los resultados
             $procedencias = $this->Rodales->Plantaciones->Procedencias->get($plantaciones->plantacione->procedencias_idprocedencias, [
@@ -163,26 +142,18 @@ class RodalesController extends AppController
                 'conditions' => ['Intervenciones.rodales_idrodales' => $id]])
             ->contain('Emsefor');
 
-
-
             $this->set('intervencion', $intervencion);
-
             $this->set('_serialize', ['intervencion']);
 
             //Traer los Inventarios del actual Rodal
-
             //Obtengo las Intervenciones y se la mando
             $inventario = $this->Rodales->get($id, [
                 'contain' => ['Inventario' => ['Emsefor', 'Intervenciones']]
             ]);
 
-            //debug($inventario);
-
             $this->set('inventario', $inventario);
 
             $this->set('_serialize', ['inventario']);
-
-
 
         } else {
             $intervencion = null;
@@ -195,17 +166,6 @@ class RodalesController extends AppController
 
         }
 
-
-
-
-
-
-
-       // debug($emsefor);
-
-        //Con el COUNT puedo saber si el arreglo no esta vacio
-        //debug(count($plantaciones));
-        //debug($plantaciones);
 
     }
 
@@ -315,23 +275,5 @@ class RodalesController extends AppController
 
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Rodale id.
-     * @return \Cake\Network\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $rodale = $this->Rodales->get($id);
-        if ($this->Rodales->delete($rodale)) {
-            $this->Flash->success(__('The rodale has been deleted.'));
-        } else {
-            $this->Flash->error(__('The rodale could not be deleted. Please, try again.'));
-        }
 
-        return $this->redirect(['action' => 'index']);
-    }
 }

@@ -43,14 +43,21 @@
                                 <td><?= h($emp->email) ?></td>
                                 <td align="center" valign="middle">
 
-                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Empresas', 'Categoria' => 'Empresa', 'id' => $emp->idempresa]],
-                                    ['class' => 'btn btn-warning']) ?>
+                                    <?= $this->Html->link(__('Ver'), ['action' => 'view','?' => ['Accion' => 'Editar Empresas', 'Categoria' => 'Empresa', 'id' => $emp->idempresa]],
+                                        ['class' => 'btn btn-info']) ?>
 
-                                     <?= $this->Html->link(__('Ver'), ['action' => 'view','?' => ['Accion' => 'Editar Empresas', 'Categoria' => 'Empresa', 'id' => $emp->idempresa]],
-                                    ['class' => 'btn btn-info']) ?>
+                                        <!--Consulto si se trata de un Usuario Admin y muestro estas opciones-->
 
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $emp->idempresa],
-                                    ['confirm' => __('Eliminar la Empresa: {0}?', $emp->nombre), 'class' => 'btn btn-danger']) ?>
+                                    <?php  if($user_rol == 'admin'): ?>
+
+                                            <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Empresas', 'Categoria' => 'Empresa', 'id' => $emp->idempresa]],
+                                            ['class' => 'btn btn-warning']) ?>
+
+                                            <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $emp->idempresa],
+                                            ['confirm' => __('Eliminar la Empresa: {0}?', $emp->nombre), 'class' => 'btn btn-danger']) ?>
+
+                                    <?php endif; ?>
+
                                 </td>
                             </tr>
                             <?php endforeach; ?>

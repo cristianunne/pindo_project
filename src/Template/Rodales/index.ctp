@@ -57,10 +57,16 @@
                                 </td>
                                 <td align="center" valign="middle">
 
-                                   	<?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-search', 'aria-hidden' => 'true']),
-  							    	['controller' => 'Rodales', 'action' => 'view', '?' => ['Accion' => 'Ver Rodales', 'Categoria' => 'Rodales', 'id' => $rodal->idrodales]], ['class' => 'btn btn-success', 'escape' => false]) ?>
-  							    	<?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
-  							    	['controller' => 'Rodales', 'action' => 'edit','?' => ['Accion' => 'Editar Rodales', 'Categoria' => 'Rodales', 'id' => $rodal->idrodales]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
+                                    <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-search', 'aria-hidden' => 'true']),
+                                        ['controller' => 'Rodales', 'action' => 'view', '?' => ['Accion' => 'Ver Rodales', 'Categoria' => 'Rodales', 'id' => $rodal->idrodales]], ['class' => 'btn btn-success', 'escape' => false]) ?>
+
+                                    <?php  if($user_rol == 'admin'): ?>
+
+                                        <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
+                                        ['controller' => 'Rodales', 'action' => 'edit','?' => ['Accion' => 'Editar Rodales', 'Categoria' => 'Rodales', 'id' => $rodal->idrodales]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
+
+                                    <?php endif; ?>
+
                                 </td>
                             </tr>
                             <?php endforeach; ?>

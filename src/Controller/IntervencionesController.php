@@ -12,6 +12,19 @@ use Cake\I18n\Time;
 class IntervencionesController extends AppController
 {
 
+    public function isAuthorized($user)
+    {
+        if(isset($user['role']) and $user['role'] === 'user')
+        {
+            if(in_array($this->request->action, ['view', 'edit', 'verInfoIntervencion', 'editInfoIntervencion', 'delete']))
+            {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
+
     /**
      * Index method
      *
@@ -168,23 +181,19 @@ class IntervencionesController extends AppController
      * Delete method
      *
      * @param string|null $id Intervencione id.
-     * @return \Cake\Network\Response|null Redirects to index.
+     * @return \Cake\Http\Response
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
-
         $data_url = $this->request->query;
-
         $action = $data_url['Accion'];
         $categoria= $data_url['Categoria'];
-        //$id = $data_url['id'];
         $id_rodal = $data_url['id_rodal'];
 
         $this->set('action', $action);
         $this->set('categoria', $categoria);
         $this->set('id_rodal', $id_rodal);
-
 
         $this->request->allowMethod(['post', 'delete', 'get']);
         $intervencione = $this->Intervenciones->get($id);
@@ -199,9 +208,6 @@ class IntervencionesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
-
-
 
     public function addInfoIntervencion()
     {

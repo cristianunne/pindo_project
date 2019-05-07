@@ -32,7 +32,7 @@
                                 <b>Telefono: </b> <a><?= h($rodale->campo) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Email: </b> <a><?= h($rodale->uso) ?></a>
+                                <b>Uso: </b> <a><?= h($rodale->uso) ?></a>
                             </li>
                             <li class="list-group-item">
                                 <b>Finalizado: </b>
@@ -113,23 +113,21 @@
                                                         <?= $this->Html->link(__('Asignar'), ['controller' => 'Plantaciones', 'action' => 'asignar','?' => ['Accion' => 'Asignar Plantación a Rodal', 'Categoria' => 'Rodal', 'id' => $rodale->idrodales]],
                                                             ['class' => 'btn btn-success']) ?>
 
-
                                             </td>
                                 <?php }  else {
 
                                         $id_platnacion = $plantaciones->plantacione->toArray()['nro_plantacion'];
                                         ?>
-
-                                        <td style="vertical-align: middle;" ><i class="fas fa-times"></i></td>
+                                        <?php  if($user_rol == 'admin'): ?>
+                                            <td style="vertical-align: middle;" ><i class="fas fa-times"></i></td>
                                             <td style="vertical-align: middle;">Eliminar la actual Plantación</td>
                                             <td style="vertical-align: middle;">
 
-                                                     <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'Plantaciones', 'action' => 'delete', $id_platnacion, '?' => ['Accion' => 'Eliminar Plantación',
-                                                        'Categoria' => 'Rodales', 'id' => $rodale->idrodales]], ['confirm' => __('Eliminar la Plantación'), 'class' => 'btn btn-block btn-danger']) ?>
-
-
+                                                <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'Plantaciones', 'action' => 'delete', $id_platnacion, '?' => ['Accion' => 'Eliminar Plantación',
+                                                                'Categoria' => 'Rodales', 'id' => $rodale->idrodales]], ['confirm' => __('Eliminar la Plantación'), 'class' => 'btn btn-block btn-danger']) ?>
 
                                             </td>
+                                        <?php endif; ?>
 
                                 <?php } ?>
 
@@ -363,9 +361,14 @@
   							    	['controller' => 'Intervenciones', 'action' => 'addInfoIntervencion','?' => ['Accion' => 'Editar Intervención', 'Categoria' => 'Rodales', 'id' => $inter->idintervencion,
                                         'id_rodal' => $id_rodal]], ['class' => 'btn btn-success', 'escape' => false]) ?>
 
+                                    <!-- TIENE QUE SER UN POSTLINK -->
 
-  							    	<?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true']),
-  							    	['controller' => 'Intervenciones', 'action' => 'delete', $inter->idintervencion, '?' => ['Accion' => 'Eliminar Intervención', 'Categoria' => 'Rodales', 'id' => $inter->idintervencion, 'id_rodal' => $id_rodal]], ['class' => 'btn btn-danger', 'escape' => false]) ?>
+                                    <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])),
+                                        ['controller' => 'Intervenciones', 'action' => 'delete', $inter->idintervencion, '?' =>
+                                            ['Accion' => 'Eliminar Intervención', 'Categoria' => 'Rodales', $inter->idintervencion, 'id_rodal' => $id_rodal]],
+                                        ['confirm' => __('Eliminar la intervención: {0}?',
+                                            $inter->idintervencion), 'class' => 'btn btn-danger','escape' => false]) ?>
+
                                 </td>
 
 
@@ -460,12 +463,17 @@
 
                                 <td align="center" valign="middle">
 
+
+
   							    	<?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
   							    	['controller' => 'Inventario', 'action' => 'edit','?' => ['Accion' => 'Editar Inventario', 'Categoria' => 'Rodales', 'id' => $inv->idinventario, 'id_rodal' => $id_rodal, 'cod_sap' => $rodale->cod_sap]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
+                                    <?php  if($user_rol == 'admin'): ?>
 
-                                    <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true']),
-                                        ['controller' => 'Inventario', 'action' => 'delete', $inv->idinventario, '?' => ['Accion' => 'Eliminar Inventario', 'Categoria' => 'Rodales',
-                                            'id_rodal' => $id_rodal]], ['class' => 'btn btn-danger', 'escape' => false]) ?>
+                                        <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true']),
+                                            ['controller' => 'Inventario', 'action' => 'delete', $inv->idinventario, '?' => ['Accion' => 'Eliminar Inventario', 'Categoria' => 'Rodales',
+                                                'id_rodal' => $id_rodal]], ['class' => 'btn btn-danger', 'escape' => false]) ?>
+
+                                    <?php endif; ?>
 
 
                                 </td>
