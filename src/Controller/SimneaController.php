@@ -20,7 +20,8 @@ class SimneaController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['simular',]))
+            if(in_array($this->request->action, ['simular', 'sitio', 'sistemaCosecha', 'emseforSelect', 'maquinaSelectCut', 'maquinaSelectFull', 'modeloSelect',
+                'simularCut', 'simularFull', 'saved']))
             {
                 return true;
             }

@@ -67,17 +67,20 @@
 
                                         <td style="vertical-align: middle; text-align: center;">
 
-                                            <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
-                                                ['controller' => 'Relevamientos', 'action' => 'editArboles','?' => ['Accion' => 'Editar Árbol', 'Categoria' => 'Relevamientos',
-                                                    'id_arbol' => $arbol->idarbol, 'id' => $id, 'id_rodal' => $id_rodal, 'sap' => h($sap)]],
-                                                ['class' => 'btn btn-warning', 'escape' => false]) ?>
+                                             <?php  if($user_rol == 'admin'): ?>
 
+                                                <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
+                                                    ['controller' => 'Relevamientos', 'action' => 'editArboles','?' => ['Accion' => 'Editar Árbol', 'Categoria' => 'Relevamientos',
+                                                        'id_arbol' => $arbol->idarbol, 'id' => $id, 'id_rodal' => $id_rodal, 'sap' => h($sap)]],
+                                                    ['class' => 'btn btn-warning', 'escape' => false]) ?>
 
-                                            <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])),
-                                                ['controller' => 'Relevamientos', 'action' => 'deleteArboles',
-                                                    '?' => ['Accion' => 'Ver Árboles', 'Categoria' => 'Relevamientos', 'id_arbol' => $arbol->idarbol,
-                                                        'id' => $id, 'id_rodal' => $id_rodal, 'sap' => h($sap)]],
-                                                ['confirm' => __('Eliminar el Árbol: {0}?', $arbol->idarbol), 'class' => 'btn btn-danger', 'escape' => false]) ?>
+                                                <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])),
+                                                    ['controller' => 'Relevamientos', 'action' => 'deleteArboles',
+                                                        '?' => ['Accion' => 'Ver Árboles', 'Categoria' => 'Relevamientos', 'id_arbol' => $arbol->idarbol,
+                                                            'id' => $id, 'id_rodal' => $id_rodal, 'sap' => h($sap)]],
+                                                    ['confirm' => __('Eliminar el Árbol: {0}?', $arbol->idarbol), 'class' => 'btn btn-danger', 'escape' => false]) ?>
+
+                                             <?php endif; ?>
 
 
                                         </td>

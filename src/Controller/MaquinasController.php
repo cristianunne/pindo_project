@@ -13,6 +13,18 @@ use Cake\Filesystem\File;
 class MaquinasController extends AppController
 {
 
+    public function isAuthorized($user)
+    {
+        if(isset($user['role']) and $user['role'] === 'user')
+        {
+            if(in_array($this->request->action, ['index', 'view']))
+            {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
     /**
      * Index method
      *
@@ -26,6 +38,10 @@ class MaquinasController extends AppController
 
         $action = $data_url['Accion'];
         $categoria= $data_url['Categoria'];
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
         $maquinas = $this->paginate($this->Maquinas);
 

@@ -17,7 +17,8 @@ class AdministracionController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['getColumnsTableSelect']))
+            if(in_array($this->request->action, ['index', 'config', 'selectColumns', 'viewColumnsFiltros', 'getColumnsTableSelect', 'getListValuesUniques',
+                'applyFiltro']))
             {
                 return true;
             }

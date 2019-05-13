@@ -43,7 +43,7 @@
                 </div>
               <!-- /.box -->
 
-
+                <?php  if($user_rol == 'admin'): ?>
                 <div class="callout callout-warning">
                     <h4>Acciones</h4>
                     <p>Acciones de Sagpya a Rodales</p>
@@ -66,14 +66,19 @@
                                 <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
                                 <td style="vertical-align: middle;">Asignar Sagpya a Rodal</td>
                                 <td style="vertical-align: middle;">
-                                    <?= $this->Html->link(__('Asignar'), ['controller' => 'RodalSagpya', 'action' => 'asignar','?' => ['Accion' => 'Asignar Sagpya', 'Categoria' => 'Sagpya', 'id' => $sagpya->idsagpya]],
-                                    ['class' => 'btn btn-warning']) ?>
+
+
+                                        <?= $this->Html->link(__('Asignar'), ['controller' => 'RodalSagpya', 'action' => 'asignar','?' => ['Accion' => 'Asignar Sagpya', 'Categoria' => 'Sagpya', 'id' => $sagpya->idsagpya]],
+                                        ['class' => 'btn btn-warning']) ?>
+
                                 </td>
                             </tr>
                         </table>
                     </div>
+
                     <!-- /.box-body -->
                   </div>
+                <?php endif; ?>
             </div> <!--DIV MD3-->
             <div class="col-md-9">
 
@@ -130,9 +135,10 @@
 
                                          <?= $this->Html->link(__('Ver'), ['controller' => 'Rodales', 'action' => 'view','?' => ['Accion' => 'ver Rodales', 'Categoria' => 'Rodales', 'id' => $rodal->idrodales]],
                                         ['class' => 'btn btn-warning']) ?>
-
-                                        <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'RodalSagpya', 'action' => 'delete', '?' => ['id_sagpya' => $sagpya->idsagpya,'id_rodal' => $rodal->idrodales]],
-                                        ['confirm' => __('Eliminar el Sagpya del Rodal: {0}?', $rodal->idrodales), 'class' => 'btn btn-danger']) ?>
+                                         <?php  if($user_rol == 'admin'): ?>
+                                            <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'RodalSagpya', 'action' => 'delete', '?' => ['id_sagpya' => $sagpya->idsagpya,'id_rodal' => $rodal->idrodales]],
+                                            ['confirm' => __('Eliminar el Sagpya del Rodal: {0}?', $rodal->idrodales), 'class' => 'btn btn-danger']) ?>
+                                         <?php endif; ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

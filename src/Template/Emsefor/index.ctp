@@ -46,14 +46,21 @@
                                 <td><?= h($emp->email) ?></td>
                                 <td align="center" valign="middle">
 
-                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Emsefor', 'Categoria' => 'Emsefor', 'id' => $emp->idemsefor]],
-                                    ['class' => 'btn btn-warning']) ?>
 
-                                     <?= $this->Html->link(__('Ver'), ['action' => 'view','?' => ['Accion' => 'Ver Emsefor', 'Categoria' => 'Emsefor', 'id_ems' => $emp->idemsefor]],
-                                    ['class' => 'btn btn-info']) ?>
+                                    <?= $this->Html->link(__('Ver'), ['action' => 'view','?' => ['Accion' => 'Ver Emsefor', 'Categoria' => 'Emsefor', 'id_ems' => $emp->idemsefor]],
+                                        ['class' => 'btn btn-info']) ?>
 
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $emp->idemsefor],
-                                    ['confirm' => __('Eliminar la Emsefor: {0}?', $emp->nombre), 'class' => 'btn btn-danger']) ?>
+                                <?php  if($user_rol == 'admin'): ?>
+                                        <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Emsefor', 'Categoria' => 'Emsefor', 'id' => $emp->idemsefor]],
+                                            ['class' => 'btn btn-warning']) ?>
+
+
+                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $emp->idemsefor],
+                                            ['confirm' => __('Eliminar la Emsefor: {0}?', $emp->nombre), 'class' => 'btn btn-danger']) ?>
+
+                                <?php endif; ?>
+
+
                                 </td>
                             </tr>
                             <?php endforeach; ?>

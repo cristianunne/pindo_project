@@ -32,7 +32,9 @@
                                 <th scope="col"><?= $this->Paginator->sort('Tarea') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Ecuación') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Estado') ?></th>
-                                <th scope="col"><?= __('Acciones') ?></th>
+                                <?php  if($user_rol == 'admin'): ?>
+                                    <th scope="col"><?= __('Acciones') ?></th>
+                                <?php endif; ?>
 
                             </tr>
                             </thead>
@@ -58,11 +60,15 @@
 
                                     <td align="center" valign="middle">
 
-                                        <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])), ['action' => 'delete', $model->idmodelos],
-                                            ['confirm' => __('Eliminar el Modelo: {0}?', $model->idmodelos), 'class' => 'btn btn-danger','escape' => false]) ?>
+                                        <?php  if($user_rol == 'admin'): ?>
 
-                                        <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
-                                            ['controller' => 'Modelos', 'action' => 'edit','?' => ['Accion' => 'Editar SIMNEA', 'Categoria' => 'SIMNEA', 'id' => $model->idmodelos]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
+                                            <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])), ['action' => 'delete', $model->idmodelos],
+                                                ['confirm' => __('Eliminar el Modelo: {0}?', $model->idmodelos), 'class' => 'btn btn-danger','escape' => false]) ?>
+
+                                            <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
+                                                ['controller' => 'Modelos', 'action' => 'edit','?' => ['Accion' => 'Editar SIMNEA', 'Categoria' => 'SIMNEA', 'id' => $model->idmodelos]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

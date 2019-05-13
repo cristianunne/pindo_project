@@ -49,11 +49,15 @@
 
                                 <td align="center" valign="middle">
 
-                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Procedencias', 'Categoria' => 'Procedencias', 'id' => $procedencia->idprocedencias]],
-                                    ['class' => 'btn btn-warning']) ?>
+                                    <?php  if($user_rol == 'admin'): ?>
 
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $procedencia->idprocedencias],
-                                    ['confirm' => __('Eliminar la Procedencia: {0}?', $procedencia->idprocedencias), 'class' => 'btn btn-danger']) ?>
+                                        <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Procedencias', 'Categoria' => 'Procedencias', 'id' => $procedencia->idprocedencias]],
+                                        ['class' => 'btn btn-warning']) ?>
+
+                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $procedencia->idprocedencias],
+                                        ['confirm' => __('Eliminar la Procedencia: {0}?', $procedencia->idprocedencias), 'class' => 'btn btn-danger']) ?>
+
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

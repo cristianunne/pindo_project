@@ -11,6 +11,18 @@ use App\Controller\AppController;
 class ProcedenciasController extends AppController
 {
 
+    public function isAuthorized($user)
+    {
+        if(isset($user['role']) and $user['role'] === 'user')
+        {
+            if(in_array($this->request->action, ['index', 'view']))
+            {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
     /**
      * Index method
      *
@@ -30,6 +42,10 @@ class ProcedenciasController extends AppController
 
         $this->set('action', $action);
         $this->set('categoria', $categoria);
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
 
     }

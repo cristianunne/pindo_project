@@ -46,15 +46,17 @@
                                  <td><?= h($sagpya->expediente) ?></td>
                                 <td><?= h($sagpya->turno_minimo) ?></td>
                                 <td align="center" valign="middle">
+                                    <?= $this->Html->link(__('Ver'), ['action' => 'view','?' => ['Accion' => 'Ver Sagpya', 'Categoria' => 'Sagpya', 'id' => $sagpya->idsagpya]],
+                                        ['class' => 'btn btn-info']) ?>
 
-                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Sagpya', 'Categoria' => 'Sagpya', 'id' => $sagpya->idsagpya]],
-                                    ['class' => 'btn btn-warning']) ?>
+                                    <?php  if($user_rol == 'admin'): ?>
+                                        <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Sagpya', 'Categoria' => 'Sagpya', 'id' => $sagpya->idsagpya]],
+                                            ['class' => 'btn btn-warning']) ?>
+                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $sagpya->idsagpya],
+                                            ['confirm' => __('Eliminar el Sagpya: {0}?', $sagpya->idsagpya), 'class' => 'btn btn-danger']) ?>
+                                    <?php endif; ?>
 
-                                     <?= $this->Html->link(__('Ver'), ['action' => 'view','?' => ['Accion' => 'Ver Sagpya', 'Categoria' => 'Sagpya', 'id' => $sagpya->idsagpya]],
-                                    ['class' => 'btn btn-info']) ?>
 
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $sagpya->idsagpya],
-                                    ['confirm' => __('Eliminar el Sagpya: {0}?', $sagpya->idsagpya), 'class' => 'btn btn-danger']) ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

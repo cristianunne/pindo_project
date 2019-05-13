@@ -37,13 +37,16 @@
 
   								<?php echo $this->Html->image('../'. $maquina->photo_dir . '/' . $maquina->photo, ['class' => 'img-responsive img-rounded center-img ']) ?>
 
-  								<div style="padding-top:5px;">
-  								    <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
-  							    	['controller' => 'Maquinas', 'action' => 'edit', '?' => ['Accion' => 'Editar Maquinas', 'Categoria' => 'Maquinas', 'id' => $maquina->idmaquinas]], ['class' => 'btn btn-block bg-purple', 'escape' => false]) ?>
+                              <?php  if($user_rol == 'admin'): ?>
 
-  								    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $maquina->idmaquinas],
-                                    ['confirm' => __('Eliminar la Maquina: {0}?', $maquina->marca. ' '.$maquina->modelo), 'class' => 'btn btn-block btn-danger', 'style' => 'margin-top: 5px']) ?>
-                                </div>
+                                    <div style="padding-top:5px;">
+                                        <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
+                                        ['controller' => 'Maquinas', 'action' => 'edit', '?' => ['Accion' => 'Editar Maquinas', 'Categoria' => 'Maquinas', 'id' => $maquina->idmaquinas]], ['class' => 'btn btn-block bg-purple', 'escape' => false]) ?>
+
+                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $maquina->idmaquinas],
+                                        ['confirm' => __('Eliminar la Maquina: {0}?', $maquina->marca. ' '.$maquina->modelo), 'class' => 'btn btn-block btn-danger', 'style' => 'margin-top: 5px']) ?>
+                                    </div>
+                              <?php endif; ?>
 
 
 

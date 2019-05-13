@@ -14,7 +14,7 @@ class RelevamientosController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['simular',]))
+            if(in_array($this->request->action, ['simular', 'index', 'parcelasView', 'viewArboles']))
             {
                 return true;
             }
@@ -58,6 +58,10 @@ class RelevamientosController extends AppController
         $categoria= $data_url['Categoria'];
         $id = $data_url['id'];
         $sap = $data_url['sap'];
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
         $parcelasRelModel = $this->loadModel('ParcelasRel');
 
@@ -157,6 +161,10 @@ class RelevamientosController extends AppController
         $id = $data_url['id'];
         $id_rodal = $data_url['id_rodal'];
         $sap = $data_url['sap'];
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
         $this->set('action', $action);
         $this->set('categoria', $categoria);

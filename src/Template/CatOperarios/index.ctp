@@ -31,15 +31,18 @@
                             <?php foreach ($categorias_ as $cat): ?>
                                 <tr>
                                     <td><?= h($cat->categoria) ?></td>
+                                    <?php  if($user_rol == 'admin'): ?>
 
-                                    <td align="center" valign="middle">
+                                        <td align="center" valign="middle">
 
-                                        <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Categorías', 'Categoria' => 'Categorias', 'id' => $cat->idcat_operarios]],
-                                            ['class' => 'btn btn-warning']) ?>
+                                            <?= $this->Html->link(__('Editar'), ['action' => 'edit','?' => ['Accion' => 'Editar Categorías', 'Categoria' => 'Categorias', 'id' => $cat->idcat_operarios]],
+                                                ['class' => 'btn btn-warning']) ?>
 
-                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $cat->idcat_operarios],
-                                            ['confirm' => __('Eliminar la Categoría: {0}?', $cat->categoria), 'class' => 'btn btn-danger']) ?>
-                                    </td>
+                                            <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $cat->idcat_operarios],
+                                                ['confirm' => __('Eliminar la Categoría: {0}?', $cat->categoria), 'class' => 'btn btn-danger']) ?>
+
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>

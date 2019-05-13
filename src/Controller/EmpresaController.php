@@ -21,7 +21,7 @@ class EmpresaController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['index', 'add']))
+            if(in_array($this->request->action, ['index', 'view']))
             {
                 return true;
             }

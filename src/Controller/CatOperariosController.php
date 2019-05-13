@@ -42,6 +42,10 @@ class CatOperariosController extends AppController
         $this->set(compact('categorias_'));
         $this->set('_serialize', ['categorias_']);
 
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
+
 
     }
 

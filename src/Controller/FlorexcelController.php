@@ -17,7 +17,7 @@ class FlorexcelController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['simular',]))
+            if(in_array($this->request->action, ['index', 'downloadAsExcel', 'parcelasSelect', 'preparedExcel']))
             {
                 return true;
             }

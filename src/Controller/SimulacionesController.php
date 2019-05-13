@@ -21,7 +21,7 @@ class SimulacionesController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['simular',]))
+            if(in_array($this->request->action, ['index', 'view', 'downloadAsExcel', 'delete']))
             {
                 return true;
             }

@@ -49,6 +49,10 @@ class SagpyasController extends AppController
 
         $this->set(compact('sagpyas'));
         $this->set('_serialize', ['sagpyas']);
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
     }
 
     /**
@@ -68,6 +72,10 @@ class SagpyasController extends AppController
 
         $this->set('action', $action);
         $this->set('categoria', $categoria);
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
         $sagpya = $this->Sagpyas->get($this->id, [
             'contain' => []

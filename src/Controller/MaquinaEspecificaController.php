@@ -13,6 +13,19 @@ class MaquinaEspecificaController extends AppController
 {
 
 
+    public function isAuthorized($user)
+    {
+        if(isset($user['role']) and $user['role'] === 'user')
+        {
+            if(in_array($this->request->action, ['view']))
+            {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
+
 
     public function insertarMaquinaEspecifica()
     {

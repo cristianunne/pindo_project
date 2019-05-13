@@ -79,96 +79,97 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
+                <?php  if($user_rol == 'admin'): ?>
+                    <div class="callout callout-success">
+                        <h4>Acciones</h4>
 
-                <div class="callout callout-success">
-                    <h4>Acciones</h4>
-
-                    <p>Realice una serie de acciones a modo de completar la información del rodal.</p>
-                </div>
-
-               <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title text-green">Acciones del Rodal</h3>
+                        <p>Realice una serie de acciones a modo de completar la información del rodal.</p>
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <table class="table table-condensed">
-                            <tr>
-                                <th style="width: 10px">#</th>
-                                <th>Acción</th>
-                                <th></th>
 
-                            </tr>
-                            <tr>
-                                 <?php
+                   <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title text-green">Acciones del Rodal</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Acción</th>
+                                    <th></th>
 
-                                    if(!isset($plantaciones->plantacione)){
+                                </tr>
+                                <tr>
+                                     <?php
 
-                                        ?>
-                                            <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
-                                            <td style="vertical-align: middle;">Asignar Plantación al Rodal</td>
-                                            <td style="vertical-align: middle;">
+                                        if(!isset($plantaciones->plantacione)){
+
+                                            ?>
+                                                <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
+                                                <td style="vertical-align: middle;">Asignar Plantación al Rodal</td>
+                                                <td style="vertical-align: middle;">
 
 
-                                                        <?= $this->Html->link(__('Asignar'), ['controller' => 'Plantaciones', 'action' => 'asignar','?' => ['Accion' => 'Asignar Plantación a Rodal', 'Categoria' => 'Rodal', 'id' => $rodale->idrodales]],
-                                                            ['class' => 'btn btn-success']) ?>
+                                                            <?= $this->Html->link(__('Asignar'), ['controller' => 'Plantaciones', 'action' => 'asignar','?' => ['Accion' => 'Asignar Plantación a Rodal', 'Categoria' => 'Rodal', 'id' => $rodale->idrodales]],
+                                                                ['class' => 'btn btn-success']) ?>
 
-                                            </td>
-                                <?php }  else {
+                                                </td>
+                                    <?php }  else {
 
-                                        $id_platnacion = $plantaciones->plantacione->toArray()['nro_plantacion'];
-                                        ?>
-                                        <?php  if($user_rol == 'admin'): ?>
-                                            <td style="vertical-align: middle;" ><i class="fas fa-times"></i></td>
-                                            <td style="vertical-align: middle;">Eliminar la actual Plantación</td>
-                                            <td style="vertical-align: middle;">
+                                            $id_platnacion = $plantaciones->plantacione->toArray()['nro_plantacion'];
+                                            ?>
+                                            <?php  if($user_rol == 'admin'): ?>
+                                                <td style="vertical-align: middle;" ><i class="fas fa-times"></i></td>
+                                                <td style="vertical-align: middle;">Eliminar la actual Plantación</td>
+                                                <td style="vertical-align: middle;">
 
-                                                <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'Plantaciones', 'action' => 'delete', $id_platnacion, '?' => ['Accion' => 'Eliminar Plantación',
-                                                                'Categoria' => 'Rodales', 'id' => $rodale->idrodales]], ['confirm' => __('Eliminar la Plantación'), 'class' => 'btn btn-block btn-danger']) ?>
+                                                    <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'Plantaciones', 'action' => 'delete', $id_platnacion, '?' => ['Accion' => 'Eliminar Plantación',
+                                                                    'Categoria' => 'Rodales', 'id' => $rodale->idrodales]], ['confirm' => __('Eliminar la Plantación'), 'class' => 'btn btn-block btn-danger']) ?>
 
-                                            </td>
-                                        <?php endif; ?>
+                                                </td>
+                                            <?php endif; ?>
 
-                                <?php } ?>
+                                    <?php } ?>
 
-                            </tr>
+                                </tr>
 
-                            <tr>
+                                <tr>
 
-                                <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
-                                <td style="vertical-align: middle;">Agregar Intervención</td>
-                                <td style="vertical-align: middle;">
-                                    <?php
-                                    $res = isset($plantaciones->plantacione);
+                                    <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
+                                    <td style="vertical-align: middle;">Agregar Intervención</td>
+                                    <td style="vertical-align: middle;">
+                                        <?php
+                                        $res = isset($plantaciones->plantacione);
 
-                                    if($res){ ?>
+                                        if($res){ ?>
 
-                                    <?= $this->Html->link(__('Intervención'), ['controller' => 'Intervenciones', 'action' => 'add','?' => ['Accion' => 'Asignar Intervención a Rodal', 'Categoria' => 'Rodal', 'id' => $rodale->idrodales]],
-                                                            ['class' => 'btn btn-block btn-success']) ?>
-                                    <?php }?>
-                                </td>
+                                        <?= $this->Html->link(__('Intervención'), ['controller' => 'Intervenciones', 'action' => 'add','?' => ['Accion' => 'Asignar Intervención a Rodal', 'Categoria' => 'Rodal', 'id' => $rodale->idrodales]],
+                                                                ['class' => 'btn btn-block btn-success']) ?>
+                                        <?php }?>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                            <tr>
+                                <tr>
 
-                                <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
-                                <td style="vertical-align: middle;">Realizar Inventario</td>
-                                <td style="vertical-align: middle;">
-                                    <?php
-                                    if (isset($plantaciones->plantacione)){ ?>
+                                    <td style="vertical-align: middle;" ><i class="fa fa-fw fa-tasks"></i></td>
+                                    <td style="vertical-align: middle;">Realizar Inventario</td>
+                                    <td style="vertical-align: middle;">
+                                        <?php
+                                        if (isset($plantaciones->plantacione)){ ?>
 
-                                    <?= $this->Html->link(__('Inventario'), ['controller' => 'Inventario', 'action' => 'add','?' => ['Accion' => 'Realizar Inventario del Rodal', 'Categoria' => 'Rodal',
-                                            'id' => $rodale->idrodales, 'cod_sap' => $rodale->cod_sap]], ['class' => 'btn btn-block btn-success']) ?>
-                                    <?php }?>
-                                </td>
+                                        <?= $this->Html->link(__('Inventario'), ['controller' => 'Inventario', 'action' => 'add','?' => ['Accion' => 'Realizar Inventario del Rodal', 'Categoria' => 'Rodal',
+                                                'id' => $rodale->idrodales, 'cod_sap' => $rodale->cod_sap]], ['class' => 'btn btn-block btn-success']) ?>
+                                        <?php }?>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                  </div>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                   </div>
+                <?php endif; ?>
 
             </div> <!-- /div de md-3 -->
 
@@ -354,6 +355,9 @@
                                     <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-eye-open', 'aria-hidden' => 'true']),
   							    	['controller' => 'Intervenciones', 'action' => 'verInfoIntervencion','?' => ['Accion' => 'Ver Intervención', 'Categoria' => 'Rodales', 'id' => $inter->idintervencion, 'id_rodal' => $id_rodal]], ['class' => 'btn btn-default', 'escape' => false]) ?>
 
+                                    <!-- Verifico el rol de usuario -->
+                                    <?php  if($user_rol == 'admin'): ?>
+
   							    	<?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
   							    	['controller' => 'Intervenciones', 'action' => 'edit','?' => ['Accion' => 'Editar Intervención', 'Categoria' => 'Rodales', 'id' => $inter->idintervencion,  'id_rodal' => $id_rodal]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
 
@@ -361,13 +365,14 @@
   							    	['controller' => 'Intervenciones', 'action' => 'addInfoIntervencion','?' => ['Accion' => 'Editar Intervención', 'Categoria' => 'Rodales', 'id' => $inter->idintervencion,
                                         'id_rodal' => $id_rodal]], ['class' => 'btn btn-success', 'escape' => false]) ?>
 
-                                    <!-- TIENE QUE SER UN POSTLINK -->
+
 
                                     <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])),
                                         ['controller' => 'Intervenciones', 'action' => 'delete', $inter->idintervencion, '?' =>
                                             ['Accion' => 'Eliminar Intervención', 'Categoria' => 'Rodales', $inter->idintervencion, 'id_rodal' => $id_rodal]],
                                         ['confirm' => __('Eliminar la intervención: {0}?',
                                             $inter->idintervencion), 'class' => 'btn btn-danger','escape' => false]) ?>
+                                    <?php endif; ?>
 
                                 </td>
 
@@ -426,7 +431,10 @@
                                 <!--Estas son las claves de las demas tablas-->
                                 <th scope="col"><?= $this->Paginator->sort('Intervención') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Emsefor') ?></th>
-                                <th scope="col"><?= __('Acciones') ?></th>
+
+                                <?php  if($user_rol == 'admin'): ?>
+                                    <th scope="col"><?= __('Acciones') ?></th>
+                                <?php endif; ?>
 
                             </tr>
                         </thead>
@@ -458,18 +466,19 @@
                                 <?php }?>
 
                                 <td style="vertical-align: middle;">
-                                    <?= $this->Html->link($inv->emsefor->nombre, ['controller' => 'Emsefor', 'action' => 'view','?' => ['Accion' => 'Ver Emsefor', 'Categoria' => 'Emsefor', 'id_ems' => $inter->emsefor->idemsefor]]) ?>
+                                    <?= $this->Html->link($inv->emsefor->nombre, ['controller' => 'Emsefor', 'action' => 'view','?' => ['Accion' => 'Ver Emsefor', 'Categoria' => 'Emsefor', 'id_ems' => $inv->emsefor_idemsefor]]) ?>
                                 </td>
 
                                 <td align="center" valign="middle">
 
 
 
-  							    	<?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
-  							    	['controller' => 'Inventario', 'action' => 'edit','?' => ['Accion' => 'Editar Inventario', 'Categoria' => 'Rodales', 'id' => $inv->idinventario, 'id_rodal' => $id_rodal, 'cod_sap' => $rodale->cod_sap]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
-                                    <?php  if($user_rol == 'admin'): ?>
+  							    	  <?php  if($user_rol == 'admin'): ?>
+                                          <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
+                                              ['controller' => 'Inventario', 'action' => 'edit','?' => ['Accion' => 'Editar Inventario', 'Categoria' => 'Rodales', 'id' => $inv->idinventario, 'id_rodal' => $id_rodal, 'cod_sap' => $rodale->cod_sap]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
 
-                                        <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true']),
+
+                                          <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true']),
                                             ['controller' => 'Inventario', 'action' => 'delete', $inv->idinventario, '?' => ['Accion' => 'Eliminar Inventario', 'Categoria' => 'Rodales',
                                                 'id_rodal' => $id_rodal]], ['class' => 'btn btn-danger', 'escape' => false]) ?>
 

@@ -63,16 +63,17 @@
                                             ['controller' => 'Relevamientos', 'action' => 'viewArboles','?' => ['Accion' => 'Ver Arboles', 'Categoria' => 'Relevamientos',
                                                 'id' => $parcelas->id_parcelas_rel, 'id_rodal' => $id_rodal, 'sap' => h($sap)]], ['class' => 'btn btn-success', 'escape' => false]) ?>
 
+                                        <?php  if($user_rol == 'admin'): ?>
+                                            <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
+                                                ['controller' => 'Relevamientos', 'action' => 'editParcelas','?' => ['Accion' => 'Editar Relevamientos', 'Categoria' => 'Relevamientos',
+                                                    'id' => $parcelas->id_parcelas_rel, 'id_rodal' => $id_rodal, 'sap' => h($sap)]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
 
-                                        <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-edit', 'aria-hidden' => 'true']),
-                                            ['controller' => 'Relevamientos', 'action' => 'editParcelas','?' => ['Accion' => 'Editar Relevamientos', 'Categoria' => 'Relevamientos',
-                                                'id' => $parcelas->id_parcelas_rel, 'id_rodal' => $id_rodal, 'sap' => h($sap)]], ['class' => 'btn btn-warning', 'escape' => false]) ?>
-
-                                        <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])),
-                                            ['controller' => 'Relevamientos', 'action' => 'deleteParcelas',
-                                            '?' => ['Accion' => 'Ver Relevamientos', 'Categoria' => 'Relevamientos',
-                                                'id' => $parcelas->id_parcelas_rel, 'id_rodal' => $id_rodal, 'sap' => h($sap)]],
-                                            ['confirm' => __('Eliminar la Parcela: {0}?', $parcelas->id_parcelas_rel), 'class' => 'btn btn-danger', 'escape' => false]) ?>
+                                            <?= $this->Form->postLink(__($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true'])),
+                                                ['controller' => 'Relevamientos', 'action' => 'deleteParcelas',
+                                                '?' => ['Accion' => 'Ver Relevamientos', 'Categoria' => 'Relevamientos',
+                                                    'id' => $parcelas->id_parcelas_rel, 'id_rodal' => $id_rodal, 'sap' => h($sap)]],
+                                                ['confirm' => __('Eliminar la Parcela: {0}?', $parcelas->id_parcelas_rel), 'class' => 'btn btn-danger', 'escape' => false]) ?>
+                                        <?php endif; ?>
 
                                     </td>
 

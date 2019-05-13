@@ -15,7 +15,7 @@ class EmseforController extends AppController
     {
         if(isset($user['role']) and $user['role'] === 'user')
         {
-            if(in_array($this->request->action, ['index', 'add', 'edit', 'delete']))
+            if(in_array($this->request->action, ['index', 'view']))
             {
                 return true;
             }
@@ -33,6 +33,9 @@ class EmseforController extends AppController
     {
           //Recupero los datos de la URL
         $data_url = $this->request->query;
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
         $action = $data_url['Accion'];
         $categoria= $data_url['Categoria'];
@@ -64,6 +67,10 @@ class EmseforController extends AppController
         $this->set('action', $action);
         $this->set('categoria', $categoria);
         $this->set('id_ems', $id);
+
+        $session = $this->request->session();
+        $user_rol = $session->read('Auth.User.role');
+        $this->set('user_rol', $user_rol);
 
         //Debo obtener los datos de la relacion con VariablesGenerales
         $emsefor = $this->Emsefor->get($id, [

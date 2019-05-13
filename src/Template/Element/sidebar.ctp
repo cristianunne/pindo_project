@@ -35,9 +35,24 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active">
-                         <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Empresas', ['controller' => 'Empresa', 'action' => 'add', '?' => ['Accion' => 'Agregar Empresas', 'Categoria' => 'Empresa']], ['escape' => false]) ?>
-                     </li>
+
+                    <?php
+
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+
+                        if($datos_sitio === 'admin') {
+                            ?>
+
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Empresas', ['controller' => 'Empresa', 'action' => 'add', '?' => ['Accion' => 'Agregar Empresas', 'Categoria' => 'Empresa']], ['escape' => false]) ?>
+                            </li>
+
+                            <?php
+                        }
+                    ?>
+
+
                     <li class="active">
                          <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Empresas', ['controller' => 'Empresa', 'action' => 'index', '?' => ['Accion' => 'Ver Empresas', 'Categoria' => 'Empresa']], ['escape' => false]) ?>
                      </li>
@@ -53,9 +68,23 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                     <li class="active">
-                         <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Rodales', ['controller' => 'Rodales', 'action' => 'add', '?' => ['Accion' => 'Agregar Rodales', 'Categoria' => 'Rodales']], ['escape' => false]) ?>
-                     </li>
+
+                    <?php
+
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+
+                        if($datos_sitio === 'admin') {
+                            ?>
+
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Rodales', ['controller' => 'Rodales', 'action' => 'add', '?' => ['Accion' => 'Agregar Rodales', 'Categoria' => 'Rodales']], ['escape' => false]) ?>
+                            </li>
+
+                            <?php
+                        }
+                    ?>
+
 
                     <li class="active">
                          <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Rodales', ['controller' => 'Rodales', 'action' => 'index', '?' => ['Accion' => 'Ver Rodales', 'Categoria' => 'Rodales']], ['escape' => false]) ?>
@@ -73,9 +102,22 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                     <li class="active">
-                         <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Emsefor', ['controller' => 'Emsefor', 'action' => 'add', '?' => ['Accion' => 'Agregar Emsefor', 'Categoria' => 'Emsefor']], ['escape' => false]) ?>
-                     </li>
+
+                    <?php
+
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Emsefor', ['controller' => 'Emsefor', 'action' => 'add', '?' => ['Accion' => 'Agregar Emsefor', 'Categoria' => 'Emsefor']], ['escape' => false]) ?>
+                            </li>
+
+                            <?php
+                        }
+                    ?>
+
 
                       <li class="active">
                          <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Emsefor', ['controller' => 'Emsefor', 'action' => 'index', '?' => ['Accion' => 'Ver Emsefor', 'Categoria' => 'Emsefor']], ['escape' => false]) ?>
@@ -93,9 +135,18 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                     <li class="active">
-                         <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Maquinas', ['controller' => 'Maquinas', 'action' => 'add', '?' => ['Accion' => 'Agregar Maquinas', 'Categoria' => 'Maquinas']], ['escape' => false]) ?>
-                     </li>
+                    <?php
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Maquinas', ['controller' => 'Maquinas', 'action' => 'add', '?' => ['Accion' => 'Agregar Maquinas', 'Categoria' => 'Maquinas']], ['escape' => false]) ?>
+                            </li>
+                            <?php
+                        }
+                    ?>
+
 
                       <li class="active">
                          <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Maquinas', ['controller' => 'Maquinas', 'action' => 'index', '?' => ['Accion' => 'Ver Maquinas', 'Categoria' => 'Maquinas']], ['escape' => false]) ?>
@@ -113,9 +164,18 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                     <li class="active">
-                         <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Sagpya', ['controller' => 'Sagpyas', 'action' => 'add', '?' => ['Accion' => 'Agregar Sagpya', 'Categoria' => 'Sagpya']], ['escape' => false]) ?>
-                     </li>
+                    <?php
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Sagpya', ['controller' => 'Sagpyas', 'action' => 'add', '?' => ['Accion' => 'Agregar Sagpya', 'Categoria' => 'Sagpya']], ['escape' => false]) ?>
+                            </li>
+                            <?php
+                        }
+                    ?>
+
 
                       <li class="active">
                          <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Sagpya', ['controller' => 'Sagpyas', 'action' => 'index', '?' => ['Accion' => 'Ver Sagpya', 'Categoria' => 'Sagpya']], ['escape' => false]) ?>
@@ -133,9 +193,19 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                     <li class="active">
-                         <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Procedencias', ['controller' => 'Procedencias', 'action' => 'add', '?' => ['Accion' => 'Agregar Procedencias', 'Categoria' => 'Procedencias']], ['escape' => false]) ?>
-                     </li>
+
+                    <?php
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Procedencias', ['controller' => 'Procedencias', 'action' => 'add', '?' => ['Accion' => 'Agregar Procedencias', 'Categoria' => 'Procedencias']], ['escape' => false]) ?>
+                            </li>
+                            <?php
+                        }
+                    ?>
+
 
                       <li class="active">
                          <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Procedencias', ['controller' => 'Procedencias', 'action' => 'index', '?' => ['Accion' => 'Ver Procedencias', 'Categoria' => 'Procedencias']], ['escape' => false]) ?>
@@ -190,9 +260,19 @@
                             </span>
                         </a>
                         <ul>
-                            <li class="active">
-                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Modelo', ['controller' => 'Modelos', 'action' => 'add', '?' => ['Accion' => 'Agregar Modelo', 'Categoria' => 'SIMNEA']], ['escape' => false]) ?>
-                            </li>
+
+                            <?php
+                                $session = $this->request->session();
+                                $datos_sitio = $session->read('Auth.User.role');
+                                if($datos_sitio === 'admin') {
+                                    ?>
+                                    <li class="active">
+                                        <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Modelo', ['controller' => 'Modelos', 'action' => 'add', '?' => ['Accion' => 'Agregar Modelo', 'Categoria' => 'SIMNEA']], ['escape' => false]) ?>
+                                    </li>
+                                    <?php
+                                }
+                            ?>
+
                             <li class="active">
                                 <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Modelos', ['controller' => 'Modelos', 'action' => 'index', '?' => ['Accion' => 'Ver Modelos', 'Categoria' => 'SIMNEA']], ['escape' => false]) ?>
                             </li>
@@ -256,9 +336,18 @@
                             </span>
                         </a>
                         <ul>
-                            <li class="active">
-                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar/Editar', ['controller' => 'Laboral', 'action' => 'add', '?' => ['Accion' => 'Agregar Datos Laborales', 'Categoria' => 'Laboral']], ['escape' => false]) ?>
-                            </li>
+                            <?php
+                                $session = $this->request->session();
+                                $datos_sitio = $session->read('Auth.User.role');
+                                if($datos_sitio === 'admin') {
+                                    ?>
+                                    <li class="active">
+                                        <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar/Editar', ['controller' => 'Laboral', 'action' => 'add', '?' => ['Accion' => 'Agregar Datos Laborales', 'Categoria' => 'Laboral']], ['escape' => false]) ?>
+                                    </li>
+                                    <?php
+                                }
+                            ?>
+
 
                             <li class="active">
                                 <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Datos Laborales', ['controller' => 'Laboral', 'action' => 'index', '?' => ['Accion' => 'Ver Datos Laborales', 'Categoria' => 'Laboral']], ['escape' => false]) ?>
@@ -282,9 +371,19 @@
                 </a>
 
                 <ul class="treeview-menu">
-                    <li class="active">
-                        <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Operarios', ['controller' => 'CatOperarios', 'action' => 'add', '?' => ['Accion' => 'Agregar Categorías de Operarios', 'Categoria' => 'Operarios']], ['escape' => false]) ?>
-                    </li>
+
+                    <?php
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar Operarios', ['controller' => 'CatOperarios', 'action' => 'add', '?' => ['Accion' => 'Agregar Categorías de Operarios', 'Categoria' => 'Operarios']], ['escape' => false]) ?>
+                            </li>
+                            <?php
+                        }
+                    ?>
+
 
                     <li class="active">
                         <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Operarios', ['controller' => 'CatOperarios', 'action' => 'index', '?' => ['Accion' => 'Ver Categorias de Operarios', 'Categoria' => 'Operarios']], ['escape' => false]) ?>
@@ -302,9 +401,19 @@
                 </a>
 
                 <ul class="treeview-menu">
-                    <li class="active">
-                        <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar/Editar', ['controller' => 'Insumos', 'action' => 'add', '?' => ['Accion' => 'Agregar Precios de Insumos', 'Categoria' => 'Insumos']], ['escape' => false]) ?>
-                    </li>
+
+                    <?php
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-plus"></i> Agregar/Editar', ['controller' => 'Insumos', 'action' => 'add', '?' => ['Accion' => 'Agregar Precios de Insumos', 'Categoria' => 'Insumos']], ['escape' => false]) ?>
+                            </li>
+                            <?php
+                        }
+                    ?>
+
 
                     <li class="active">
                         <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Precios', ['controller' => 'Insumos', 'action' => 'index', '?' => ['Accion' => 'Ver Precios de Insumos', 'Categoria' => 'Insumos']], ['escape' => false]) ?>
@@ -328,9 +437,19 @@
                     <li class="active">
                         <?= $this->Html->link('<i class="fa fa-eye"></i> Ver', ['controller' => 'Administracion', 'action' => 'index', '?' => ['Accion' => 'Filtro de Rodales', 'Categoria' => 'Administracion']], ['escape' => false]) ?>
                     </li>
-                    <li class="active">
-                        <?= $this->Html->link('<i class="fa fa-fw fa-cog"></i> Configuración', ['controller' => 'Administracion', 'action' => 'config', '?' => ['Accion' => 'Filtro de Rodales', 'Categoria' => 'Administracion']], ['escape' => false]) ?>
-                    </li>
+
+                    <?php
+                        $session = $this->request->session();
+                        $datos_sitio = $session->read('Auth.User.role');
+                        if($datos_sitio === 'admin') {
+                            ?>
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-fw fa-cog"></i> Configuración', ['controller' => 'Administracion', 'action' => 'config', '?' => ['Accion' => 'Filtro de Rodales', 'Categoria' => 'Administracion']], ['escape' => false]) ?>
+                            </li>
+                            <?php
+                        }
+                    ?>
+
 
                 </ul>
 
