@@ -1197,4 +1197,9 @@ class AdministracionController extends AppController
 
     }
 
+    public function downloadFiltroAsExcel()
+    {
+
+    }
+
 }
