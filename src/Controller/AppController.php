@@ -117,9 +117,9 @@ class AppController extends Controller
 
     public function json($data){
 
-        $json_data = json_encode($data);
-        $response = $this->response->withType('json')->withStringBody($json_data);
-        return $response;
+        $this->response->type('json');
+        $this->response->body(json_encode($data));
+        return $this->response;
 
     }
 

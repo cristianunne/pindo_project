@@ -10,7 +10,7 @@
             <div class="pull-left image">
                 <?php echo $this->Html->image('avatar5.png', ["alt" => 'User Image' , "class" => 'img-circle user-image']) ?>
             </div>
-            <div class="pull-left info">
+            <div class="pull-left" id="info_user" style="padding: 5px 5px 5px 15px;line-height: 1;position: absolute;left: 55px; color: #ffffff;">
                 <p> <?= $current_user['firstname']. " ". $current_user['lastname']; ?></p>
                 <a href="#"><i class="fa fa-circle text-success"></i> En Línea</a>
             </div>
@@ -473,6 +473,57 @@
                         <?= $this->Html->link('<i class="fa fa-users"></i> Ver Usuarios', ['controller' => 'AdministracionUsuarios', 'action' => 'index', '?' =>
                             ['Accion' => 'Administrar Usuarios', 'Categoria' => 'AdministracionUsuarios']], ['escape' => false]) ?>
                     </li>
+
+                    <?php
+                }
+            ?>
+
+            <!--Recupero las cookies y verifico que el rol sea ADMIN-->
+            <?php
+
+                $session = $this->request->session();
+                $datos_sitio = $session->read('Auth.User.role');
+
+                if($datos_sitio === 'admin') {
+                    ?>
+
+                    <li id="li_Mapa" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-map"></i> <span>Mapa</span>
+                            <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+
+                            <?php
+                                $session = $this->request->session();
+                                $datos_sitio = $session->read('Auth.User.role');
+                                if($datos_sitio === 'admin') {
+                                    ?>
+                                    <li class="active">
+                                        <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Configuraciones', ['controller' => 'MapConfig', 'action' => 'index', '?' => ['Accion' => 'Ver Configuraciones de Mapa',
+                                            'Categoria' => 'Mapa']], ['escape' => false]) ?>
+                                    </li>
+                                    <?php
+                                }
+                            ?>
+
+
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fa fa-eye"></i> Editar Configuraciones', ['controller' => 'MapConfig', 'action' => 'add', '?' => ['Accion' => 'Editar Configuraciones de Mapa',
+                                    'Categoria' => 'Mapa']], ['escape' => false]) ?>
+                            </li>
+
+                            <li class="active">
+                                <?= $this->Html->link('<i class="fas fa-dot-circle"></i> Capas Base', ['controller' => 'Capasbase', 'action' => 'index', '?' => ['Accion' => 'Ver Capas Base',
+                                    'Categoria' => 'Mapa']], ['escape' => false]) ?>
+                            </li>
+
+                        </ul>
+                    </li>
+
 
                     <?php
                 }
