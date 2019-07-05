@@ -144,10 +144,14 @@ class PlantacionesController extends AppController implements \Countable
         $action = $data_url['Accion'];
         $categoria= $data_url['Categoria'];
         $id_ = $data_url['id'];
+        $id_plant = $data_url['id_plan'];
 
 
         $this->request->allowMethod(['post', 'delete', 'get']);
-        $plantacione = $this->Plantaciones->get($id);
+        $tabla_plantacion = $this->loadModel('Plantaciones');
+
+        $plantacione = $tabla_plantacion->get($id_plant);
+        debug($plantacione);
         if ($this->Plantaciones->delete($plantacione)) {
 
 

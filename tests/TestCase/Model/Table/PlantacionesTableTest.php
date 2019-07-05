@@ -24,19 +24,7 @@ class PlantacionesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.plantaciones',
-        'app.rodales',
-        'app.empresa',
-        'app.sagpyas',
-        'app.rodal_sagpya',
-        'app.intervenciones',
-        'app.emsefor',
-        'app.maquinas',
-        'app.ems_maq',
-        'app.variables_generales',
-        'app.info_intervencion',
-        'app.inventario',
-        'app.procedencias'
+        'app.plantaciones'
     ];
 
     /**

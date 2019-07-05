@@ -29,7 +29,7 @@
                                 <b>Código SAP: </b> <a><?= h($rodale->cod_sap) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Telefono: </b> <a><?= h($rodale->campo) ?></a>
+                                <b>Campo: </b> <a><?= h($rodale->campo) ?></a>
                             </li>
                             <li class="list-group-item">
                                 <b>Uso: </b> <a><?= h($rodale->uso) ?></a>
@@ -124,7 +124,7 @@
                                                 <td style="vertical-align: middle;">
 
                                                     <?= $this->Form->postLink(__('Eliminar'), ['controller' => 'Plantaciones', 'action' => 'delete', $id_platnacion, '?' => ['Accion' => 'Eliminar Plantación',
-                                                                    'Categoria' => 'Rodales', 'id' => $rodale->idrodales]], ['confirm' => __('Eliminar la Plantación'), 'class' => 'btn btn-block btn-danger']) ?>
+                                                                    'Categoria' => 'Rodales', 'id' => $rodale->idrodales, 'id_plan' => $id_platnacion]], ['confirm' => __('Eliminar la Plantación'), 'class' => 'btn btn-block btn-danger']) ?>
 
                                                 </td>
                                             <?php endif; ?>

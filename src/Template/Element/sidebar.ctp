@@ -512,7 +512,7 @@
 
 
                             <li class="active">
-                                <?= $this->Html->link('<i class="fa fa-eye"></i> Editar Configuraciones', ['controller' => 'MapConfig', 'action' => 'add', '?' => ['Accion' => 'Editar Configuraciones de Mapa',
+                                <?= $this->Html->link('<i class="fa fa-edit"></i> Editar Configuraciones', ['controller' => 'MapConfig', 'action' => 'add', '?' => ['Accion' => 'Editar Configuraciones de Mapa',
                                     'Categoria' => 'Mapa']], ['escape' => false]) ?>
                             </li>
 
@@ -520,6 +520,26 @@
                                 <?= $this->Html->link('<i class="fas fa-dot-circle"></i> Capas Base', ['controller' => 'Capasbase', 'action' => 'index', '?' => ['Accion' => 'Ver Capas Base',
                                     'Categoria' => 'Mapa']], ['escape' => false]) ?>
                             </li>
+
+                            <li class="active" >
+                                <a href="#">
+                                    <i class="fas fa-chess-board"></i></i> <span>Layers</span>
+                                    <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                                </a>
+                                <ul>
+
+
+                                    <li class="active">
+                                        <?= $this->Html->link('<i class="fa fa-eye"></i> Ver Configuración', ['controller' => 'Layersconfigstyle', 'action' => 'index', '?' => ['Accion' => 'Agregar Modelo', 'Categoria' => 'SIMNEA']], ['escape' => false]) ?>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+
+
 
                         </ul>
                     </li>

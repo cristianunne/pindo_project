@@ -59,6 +59,16 @@ class ConfigmapController extends AppController
             //Obtengo los Layers Overlay que corrsponde a la tabla gis
             $modelGis = $this->loadModel('Gis');
             $overlays = $this->getGisAsJson($modelGis);
+            $labels = $this->getLabelFromGisAsPoint($modelGis);
+
+            //Obtengo la configuracion inicial de las Capas
+            $modelLayerConfig = $this->loadModel('Layersconfigstyle');
+            $tablaLayersConfig = $modelLayerConfig->find('all', []);
+
+            //Obtengo la cantidad de layersadiciones
+            $layersadicionales = $this->loadModel('Layersconfigstyle');
+            $layersAdicionalesConf = $layersadicionales->find('all', []);
+            $layersAdCount = $layersAdicionalesConf->count();
 
 
             $res = [
@@ -66,7 +76,12 @@ class ConfigmapController extends AppController
                 'capasbase' => $capasbase,
                 'overlays' => $overlays,
                 'countcapasbase' => $countcapasbase,
-                'capabasedefault' =>$capabasedefault
+                'capabasedefault' =>$capabasedefault,
+                'capalabels' => $labels,
+                'layersconfig' => $tablaLayersConfig,
+                'layersAdicionalesConfig' => $layersAdicionalesConf,
+                'layerAdCount' => $layersAdCount,
+                'layersAdicionales' => $this->getLayersAdicionalesGisAsJson($modelGis)
             ];
 
 
@@ -82,7 +97,7 @@ class ConfigmapController extends AppController
         array_to_json(array_agg(f)) as "features"
         from (
             select ' . $feat . ' as "type",
-            idrodales as "id", cod_sap as "cod_sap",
+            idrodales as "id", cod_sap as "cod_sap", superficie as "superficie",
     
             (
             select json_strip_nulls(row_to_json(t)) 
@@ -101,8 +116,59 @@ class ConfigmapController extends AppController
 
     }
 
+    private function getLayersAdicionalesGisAsJson($model){
+
+        $feature = "'FeatureCollection'";
+        $feat = "'Feature'";
+        $query = 'SELECT row_to_json(fc) from (SELECT ' . $feature . '  as "type", 
+        array_to_json(array_agg(f)) as "features"
+        from (
+            select ' . $feat . ' as "type",
+            idrodales as "id", cod_sap as "cod_sap", superficie as "superficie", campo as "campo", uso as "uso", finalizado as "finalizado", 
+            idsagpya as "idsagpya", operaciones as "operaciones", expediente as "expediente",
+    
+            (
+            select json_strip_nulls(row_to_json(t)) 
+            from (select parcela) t
+            ) as "properties", 
+            ST_AsGeoJson(ST_Transform(geom, 4326)) :: json as "geometry" 
+            from gis INNER JOIN rodales ON gis.rodales_idrodales = rodales.idrodales left join rodal_sagpya as rd on rodales.idrodales = rd.rodales_idrodales left join sagpyas as sp on rd.sagpya_idsagpya = sp.idsagpya
+        ) as f 
+        ) as fc ';
+
+        //Ejecuto el Query de Muestra
+        $conecction = ConnectionManager::get('default');
+        $tablaRodales = $conecction->execute($query)->fetchAll('assoc');
+
+        return $tablaRodales;
+
+    }
+
     private function getLabelFromGisAsPoint($model)
     {
+
+        $feature = "'FeatureCollection'";
+        $feat = "'Feature'";
+        $query = 'SELECT row_to_json(fc) from (SELECT ' . $feature . '  as "type", 
+        array_to_json(array_agg(f)) as "features"
+        from (
+            select ' . $feat . ' as "type",
+            idrodales as "id", cod_sap as "cod_sap",
+    
+            (
+            select json_strip_nulls(row_to_json(t)) 
+            from (select parcela) t
+            ) as "properties", 
+            ST_AsGeoJson(ST_Transform(ST_centroid(geom), 4326)) :: json as "geometry" 
+            from gis INNER JOIN rodales ON gis.rodales_idrodales = rodales.idrodales
+        ) as f 
+        ) as fc ';
+
+        //Ejecuto el Query de Muestra
+        $conecction = ConnectionManager::get('default');
+        $tablaLabels = $conecction->execute($query)->fetchAll('assoc');
+
+        return $tablaLabels;
 
     }
 

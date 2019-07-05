@@ -17,10 +17,6 @@ use Cake\ORM\Entity;
  * @property float $sobrevivencia
  * @property int $emsefor_idemsefor
  * @property int $procedencias_idprocedencias
- *
- * @property \App\Model\Entity\Rodale $rodale
- * @property \App\Model\Entity\Procedencia $procedencia
- * @property \App\Model\Entity\Emsefor $emsefor
  */
 class Plantacione extends Entity
 {
@@ -44,9 +40,6 @@ class Plantacione extends Entity
         'num_arbol_plantado' => true,
         'sobrevivencia' => true,
         'emsefor_idemsefor' => true,
-        'procedencias_idprocedencias' => true,
-        'rodale' => true,
-        'procedencia' => true,
-        'emsefor' => true
+        'procedencias_idprocedencias' => true
     ];
 }

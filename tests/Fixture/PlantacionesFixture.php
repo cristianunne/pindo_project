@@ -37,7 +37,6 @@ class PlantacionesFixture extends TestFixture
             'primary' => ['type' => 'primary', 'columns' => ['nro_plantacion'], 'length' => []],
             'plantaciones_emsefor_idemsefor' => ['type' => 'foreign', 'columns' => ['emsefor_idemsefor'], 'references' => ['emsefor', 'idemsefor'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
             'plantaciones_procedencias_idprocedencias' => ['type' => 'foreign', 'columns' => ['procedencias_idprocedencias'], 'references' => ['procedencias', 'idprocedencias'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
-            'plantaciones_rodales_idrodales' => ['type' => 'foreign', 'columns' => ['rodales_idrodales'], 'references' => ['rodales', 'idrodales'], 'update' => 'noAction', 'delete' => 'cascade', 'length' => []],
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -51,7 +50,7 @@ class PlantacionesFixture extends TestFixture
         [
             'nro_plantacion' => 1,
             'rodales_idrodales' => 1,
-            'fecha' => '2018-04-09',
+            'fecha' => '2019-07-05',
             'superficie' => 1,
             'densidad' => 1,
             'dist_lineas' => 1,

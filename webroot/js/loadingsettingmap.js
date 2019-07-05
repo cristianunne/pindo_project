@@ -4,6 +4,11 @@ var mapconfig = null;
 var capasbase = null;
 var layersoverlay = null;
 var countcapasbase = null;
+var labelsrodales = null;
+var layersconfig = null;
+var layersAdCount = null;
+var layersAdicionalesConfig = null;
+var layersAdicionales = null;
 
 //Es la variable que genera el controlador de las capas bases
 var layerControl = new L.control.layers();
@@ -14,8 +19,12 @@ var mymap = null;
 var layercontrol;
 var overrodales = null;
 var rodal_ = null;
+var labelsrodal_ = null;
 var info = L.control();
-var geojson;
+var geojsonrodalunico;
+var geojsonrodalclasificado;
+var geojsonlabelrodal = null;
+var geojsonrodalesad = [];
 
 $(function()
 {
@@ -37,9 +46,13 @@ $(function()
                 mapconfig = data.dataconfig;
                 capasbase = data.capasbase;
                 layersoverlay = data.overlays;
-
+                labelsrodales = data.capalabels;
                 countcapasbase = data.countcapasbase;
                 capabasedefault = data.capabasedefault;
+                layersconfig = data.layersconfig;
+                layersAdCount = data.layerAdCount;
+                layersAdicionalesConfig = data.layersAdicionalesConfig;
+                layersAdicionales = data.layersAdicionales;
 
                 //Inicializo el Mapa
                 initMapIndex();
@@ -56,8 +69,6 @@ $(function()
 
 });
 
-
-
 function initMapIndex()
 {
 
@@ -68,6 +79,25 @@ function initMapIndex()
             //changeParametersLayerOverlay();
             loadCapasBase();
             loadCapasOverlays();
+            showLabelsFromLayersRodales();
+
+            //Metodos que se encargan de crear las Referencias
+
+            mymap.on('overlayadd', function (layer) {
+
+                createLegendByLayer(layer);
+
+            });
+
+            //Agrego el evento del mapa para el cambio de Legend
+            mymap.on('overlayremove', function (e) {
+
+                console.log(e);
+            });
+
+
+            //Inicializo el Legend
+            createLegendLayers();
 
 
 
@@ -133,8 +163,6 @@ function settingMapParmas()
 
 }
 
-
-
 function loadCapasBase()
 {
     if (countcapasbase != null){
@@ -184,7 +212,6 @@ function loadCapasBase()
 
 
                 }
-                console.log(baselayers);
                 layercontrol = L.control.layers(baselayers, null).addTo(mymap);
 
 
@@ -195,14 +222,152 @@ function loadCapasBase()
 }
 
 
-function loadCapasOverlays() {
+//uso este metodo para setear las configuraciones de los overlays antes de cargarlo.
+//Voy a cargar 3 rodales, 1 con colores Unicos, el segundo con colores clasificados y el 3ro con alguna varibale
 
-
+function loadCapasOverlays()
+{
     createVarCapaOverlay();
+
 }
 
 
+
+/*function loadCapasOverlays() {
+
+    var seccion = null;
+    var clasificacion = null;
+    var paleta = null;
+    //Recupero la información de arreglo obtenido
+    //Si no encuentro configuración alguna para el index u otro elijo una estandar
+    var index_conf = false;
+    if(layersconfig.length > 0){
+        //Verifico que exista una configuracion para el index
+        for (i = 0; i < layersconfig.length; i++){
+
+            if(layersconfig[i].seccion === 'index'){
+                index_conf = true;
+                seccion = layersconfig[i].seccion;
+                clasificacion = layersconfig[i].clasificacion;
+                paleta = layersconfig[i].paleta;
+
+            }
+
+
+        }
+
+        if(index_conf === true){
+
+            createVarCapaOverlay(seccion, clasificacion, paleta);
+
+        }
+
+
+    }
+
+    //createVarCapaOverlay();
+}*/
+
+//Este metodo me crea 3 geojson 1 para los rodales unicos, otro para los rodales clasificados y el ultimo para los rodales por atributo
 function createVarCapaOverlay()
+{
+    if(layersoverlay[0] != null){
+        var variable = "var rodales = " + layersoverlay[0].row_to_json;
+        overrodales = eval(variable);
+        //Agrega la capa rodales al Mapa
+        geojsonrodalunico = L.geoJson(rodales, {
+            style: styleUnico,
+            onEachFeature: onEachFeature
+        }).addTo(mymap);
+        //Agrega la capa rodales al la tabla de Contenidos
+        layercontrol.addOverlay(geojsonrodalunico, "Rodales");
+
+        //Agrego la Leyenda individual dado que no esta en un layer.. Se carga por default asiq ue agrego tmb
+        //Primero agrego el estilo a la lista
+        var style_add = {nombre: "Rodales", clasificacion : [] };
+        var clases = {clase: 'unico', style: styleUnico()};
+        style_add.clasificacion.push(clases);
+        array_clasificacion_capas.clases.push(style_add);
+
+
+
+
+
+        //Creo el geojson para el rodal clasificado
+        var variable_2 = "var rodales_clasi = " + layersoverlay[0].row_to_json;
+        overrodales_clasi = eval(variable_2);
+        //Agrega la capa rodales al Mapa
+        geojsonrodalclasificado = L.geoJson(rodales_clasi, {
+            style: styleClasificado,
+            onEachFeature: onEachFeatureClasificado
+        });
+        //Agrega la capa rodales al la tabla de Contenidos
+        layercontrol.addOverlay(geojsonrodalclasificado, "Rodales Clasificado");
+        info.addTo(mymap);
+
+        style_add = null;
+        clases = null;
+
+        style_add = {nombre: "Rodales Clasificado", clasificacion : [] , attr_class : "id"};
+        clases = {clase: array_clas.clasi, style: null};
+        style_add.clasificacion.push(clases);
+        array_clasificacion_capas.clases.push(style_add);
+
+        console.log(array_clasificacion_capas);
+
+        processLayersAd();
+
+    }
+
+}
+
+var  array_clas_other;
+
+function processLayersAd()
+{
+
+    //Voy a recorrer el arreglo y luego hacer las peticiones segun la variable
+    if(layersAdCount > 0){
+
+        for(var i = 0; i < layersAdCount; i++){
+            //Recorro las capas y consulto cada uno de sus atributos
+            paleta_class = layersAdicionalesConfig[i].paleta;
+
+            if(layersAdicionalesConfig[i].campo_clasified === 'sagpya'){
+                campo_class = 'idsagpya';
+            } else {
+                campo_class = layersAdicionalesConfig[i].campo_clasified;
+            }
+
+
+            array_clas_other = null;
+            array_clas_other = {clasi: []};
+
+
+            var variable = "var rodales = " + layersAdicionales[0].row_to_json;
+            overrodales = eval(variable);
+            //Agrega la capa rodales al Mapa
+            geojsonrodalunico = L.geoJson(rodales, {
+                style: getStyle,
+                onEachFeature: onEachFeature
+            });
+            //Agrega la capa rodales al la tabla de Contenidos
+            layercontrol.addOverlay(geojsonrodalunico, layersAdicionalesConfig[i].nombre);
+
+            console.log(geojsonrodalunico.options);
+
+
+
+        }
+
+    }
+
+
+
+}
+
+
+/*function createVarCapaOverlay(seccion, clasificacion, paleta)
 {
 
     if(layersoverlay[0] != null){
@@ -211,17 +376,49 @@ function createVarCapaOverlay()
         overrodales = eval(variable);
         rodal_ = rodales;
         //Agrega la capa rodales al Mapa
-        geojson = L.geoJson(rodales, {
-            style: style,
+        geojsonrodalunico = L.geoJson(rodales, {
+            style: styleUnico,
             onEachFeature: onEachFeature
         }).addTo(mymap);
 
+
         //Agrega la capa rodales al la tabla de Contenidos
-        layercontrol.addOverlay(geojson, "Rodales");
+        layercontrol.addOverlay(geojsonrodalunico, "Rodales");
 
         info.addTo(mymap);
     }
+
+
     
+}*/
+
+function showLabelsFromLayersRodales()
+{
+    if(labelsrodales[0] != null){
+
+        var varlabels = "var labelsrodales = " + labelsrodales[0].row_to_json;
+        var reslabels = eval(varlabels);
+
+        labelsrodal_ = labelsrodales;
+
+        //Agrego la capa labelrodal al Mapa
+        geojsonlabelrodal = L.geoJson(null, {
+
+            pointToLayer: function(feature,latlng){
+                label = String('<b>Parcela : </b>' + feature.properties.parcela) // .bindTooltip can't use straight 'feature.properties.attribute'
+                return new L.CircleMarker(latlng, {
+                    radius: 1,
+                }).bindTooltip(label, {permanent: true, direction: 'center', opacity: 0.9, className: 'tool-tip-rodal'}).openTooltip();
+            }
+        });
+
+        geojsonlabelrodal.addData(labelsrodal_);
+        //Agrega la capa rodales al la tabla de Contenidos
+        layercontrol.addOverlay(geojsonlabelrodal, "Etiquetas Parcelas");
+
+    }
+
+
 }
 
 
@@ -239,7 +436,8 @@ info.update = function (props) {
     {
         this._div.innerHTML = '<h4>Identificación del Rodal</h4>' +  ('<b>'  + '</b>');
     } else {
-        this._div.innerHTML = '<h4>Identificación del Rodal</h4>' +  ('<b>Id Rodal: </b>' + props.id + '<br>' + '<b>Código SAP: </b>' + props.cod_sap);
+        this._div.innerHTML = '<h4>Identificación del Rodal</h4>' +  ('<b>Id Rodal: </b>' + props.id + '<br>' + '<b>Código SAP: </b>' + props.cod_sap) +
+            '<br>' + '<br>' + '<h4>Datos de la Parcela</h4>' +  ('<b>Parcela N°: </b>' + props.id + '<br>' + '<b>Superficie (m2): </b>' + props.superficie);
 
     }
 
@@ -254,6 +452,17 @@ function onEachFeature(feature, layer) {
         click: zoomToFeature,
         contextmenu: viewInfoRodal
     });
+
+}
+
+function onEachFeatureClasificado(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlightClasificado,
+        click: zoomToFeature,
+        contextmenu: viewInfoRodal
+    });
+
 }
 
 
@@ -284,32 +493,20 @@ function highlightFeature(e) {
 }
 
 
-function showIdAndSap(layer)
-{
-    alert(layer.id + " sap: " + layer.cod_sap);
-
-}
-
 function resetHighlight(e) {
     info.update();
-    geojson.resetStyle(e.target);
+    geojsonrodalunico.resetStyle(e.target);
+
+}
+function resetHighlightClasificado(e) {
+    info.update();
+    geojsonrodalclasificado.resetStyle(e.target);
 }
 
 function zoomToFeature(e) {
     mymap.fitBounds(e.target.getBounds());
     //showIdAndSap(e.target.feature);
 }
-
-function style(feature) {
-    return {
-        fillColor: '#68afff',
-        color: '#040176',
-        dashArray: '3',
-        fillOpacity: 0.2
-    };
-}
-
-
 
 
 function transformToArray(data) {

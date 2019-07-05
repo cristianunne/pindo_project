@@ -36,8 +36,7 @@ class PlantacionesTable extends Table
 
         $this->hasOne('Rodales', [
 
-            'foreignKey' => 'idrodales',
-            'dependent' => true
+            'foreignKey' => 'idrodales'
         ]);
 
         $this->belongsTo('Procedencias', [

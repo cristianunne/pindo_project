@@ -7,6 +7,8 @@
  <?= $this->Html->script('leaflet/leaflet.js') ?>
 
  <?= $this->Html->script('loadingsettingmap.js') ?>
+ <?= $this->Html->script('maps/stylesmap.js') ?>
+ <?= $this->Html->script('maps/legend_map.js') ?>
 
  <?= $this->Html->css('maps/mapa.css') ?>
 
@@ -104,6 +106,11 @@
             <div class="col-xs-12 col-sm-12">
 
                 <div id="mapid" style="min-height: 85.5vh !important; height: 85.5vh;">
+
+                </div>
+
+
+                <div id="legend_container">
 
                 </div>
 
