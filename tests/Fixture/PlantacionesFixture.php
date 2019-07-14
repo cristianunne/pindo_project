@@ -35,6 +35,7 @@ class PlantacionesFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['nro_plantacion'], 'length' => []],
+            'unique_idrodal_plan' => ['type' => 'unique', 'columns' => ['rodales_idrodales'], 'length' => []],
             'plantaciones_emsefor_idemsefor' => ['type' => 'foreign', 'columns' => ['emsefor_idemsefor'], 'references' => ['emsefor', 'idemsefor'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
             'plantaciones_procedencias_idprocedencias' => ['type' => 'foreign', 'columns' => ['procedencias_idprocedencias'], 'references' => ['procedencias', 'idprocedencias'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
         ],
@@ -42,23 +43,27 @@ class PlantacionesFixture extends TestFixture
     // @codingStandardsIgnoreEnd
 
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'nro_plantacion' => 1,
-            'rodales_idrodales' => 1,
-            'fecha' => '2019-07-05',
-            'superficie' => 1,
-            'densidad' => 1,
-            'dist_lineas' => 1,
-            'dist_plantas' => 1,
-            'num_arbol_plantado' => 1,
-            'sobrevivencia' => 1,
-            'emsefor_idemsefor' => 1,
-            'procedencias_idprocedencias' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'nro_plantacion' => 1,
+                'rodales_idrodales' => 1,
+                'fecha' => '2019-07-12',
+                'superficie' => 1,
+                'densidad' => 1,
+                'dist_lineas' => 1,
+                'dist_plantas' => 1,
+                'num_arbol_plantado' => 1,
+                'sobrevivencia' => 1,
+                'emsefor_idemsefor' => 1,
+                'procedencias_idprocedencias' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

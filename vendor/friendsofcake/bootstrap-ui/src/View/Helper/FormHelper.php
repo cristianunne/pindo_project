@@ -267,7 +267,7 @@ class FormHelper extends Helper
                 if (isset($options['multiple']) && $options['multiple'] === 'checkbox') {
                     $options['type'] = 'multicheckbox';
                 } else {
-                    if ($options['label'] !== false && strpos($this->templates('label'), 'class=') === false) {
+                    if ($options['label'] !== false && strpos($this->getTemplates('label'), 'class=') === false) {
                         $options['label'] = $this->injectClasses('control-label', (array)$options['label']);
                     }
                 }
@@ -278,7 +278,7 @@ class FormHelper extends Helper
 
             case 'textarea':
             default:
-                if ($options['label'] !== false && strpos($this->templates('label'), 'class=') === false) {
+                if ($options['label'] !== false && strpos($this->getTemplates('label'), 'class=') === false) {
                     $options['label'] = $this->injectClasses('control-label', (array)$options['label']);
                 }
         }
@@ -469,7 +469,7 @@ class FormHelper extends Helper
             $this->_grid = $options['align'];
             $options['align'] = 'horizontal';
         } elseif ($options['align'] === 'horizontal') {
-            $this->_grid = $this->config('grid');
+            $this->_grid = $this->getConfig('grid');
         }
 
         if (!in_array($options['align'], ['default', 'horizontal', 'inline'])) {
@@ -549,11 +549,11 @@ class FormHelper extends Helper
     protected function _detectFormAlignment($options)
     {
         foreach (['horizontal', 'inline'] as $align) {
-            if ($this->checkClasses('form-' . $align, (array)$options['class'])) {
+            if ($this->checkClasses('form-' . $align, $options)) {
                 return $align;
             }
         }
 
-        return $this->config('align');
+        return $this->getConfig('align');
     }
 }

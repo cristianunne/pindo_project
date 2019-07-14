@@ -18,6 +18,8 @@ use Cake\Datasource\SchemaInterface;
 
 /**
  * An interface used by database TableSchema objects.
+ *
+ * Deprecated 3.5.0: Use Cake\Database\TableSchemaAwareInterface instead.
  */
 interface TableSchemaInterface extends SchemaInterface
 {
@@ -28,6 +30,13 @@ interface TableSchemaInterface extends SchemaInterface
      * @var string
      */
     const TYPE_BINARY = 'binary';
+
+    /**
+     * Binary UUID column type
+     *
+     * @var string
+     */
+    const TYPE_BINARY_UUID = 'binaryuuid';
 
     /**
      * Date column type

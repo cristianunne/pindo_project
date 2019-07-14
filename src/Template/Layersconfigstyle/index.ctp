@@ -34,7 +34,7 @@
                                 <th scope="col"><?= $this->Paginator->sort('N°') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Nombre') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Variable de Clasificación') ?></th>
-                                <th scope="col"><?= $this->Paginator->sort('Paleta de colores') ?></th>
+                                <th scope="col"><?= $this->Paginator->sort('¿Superposición?') ?></th>
                                 <th scope="col"><?= __('Acciones') ?></th>
 
                             </tr>
@@ -46,7 +46,14 @@
                                     <td style="font-weight: bold;"><?= h($i); $i++ ?></td>
                                     <td><?= h($tabla->nombre) ?></td>
                                     <td><?= h($tabla->campo_clasified) ?></td>
-                                    <td><?= h($tabla->paleta) ?></td>
+
+                                    <?php if($tabla->overlapslayer == true): ?>
+                                        <td><?= h('SI') ?></td>
+                                    <?php else: ?>
+                                        <td><?= h('NO') ?></td>
+                                    <?php endif; ?>
+
+
                                     <td align="center" valign="middle">
 
 

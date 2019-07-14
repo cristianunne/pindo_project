@@ -7,9 +7,10 @@ use Cake\ORM\Entity;
  * Layersconfigstyle Entity
  *
  * @property int $id
- * @property string $paleta
- * @property string $nombre
- * @property string $campo_clasified
+ * @property string|null $paleta
+ * @property string|null $nombre
+ * @property string|null $campo_clasified
+ * @property bool $overlapslayer
  */
 class Layersconfigstyle extends Entity
 {
@@ -26,6 +27,7 @@ class Layersconfigstyle extends Entity
     protected $_accessible = [
         'paleta' => true,
         'nombre' => true,
-        'campo_clasified' => true
+        'campo_clasified' => true,
+        'overlapslayer' => true
     ];
 }

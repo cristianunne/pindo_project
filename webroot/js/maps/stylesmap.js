@@ -111,7 +111,7 @@ function getStyle(layer)
         var num_r_3 = getRandomInt(0, 255);
         var rgb = "rgb(" + num_r_1.toString() + ', ' + num_r_2.toString() + ', ' + num_r_3.toString() + ")";
 
-        var elemento = {campo_class: layer[campo_class], attr : layer[campo_class], color: rgb};
+        var elemento = {campo_class: campo_class, attr : layer[campo_class], color: rgb};
 
         array_clas_other.clasi.push(elemento);
         //console.log(array_clas_other);
@@ -130,7 +130,7 @@ function getStyle(layer)
         var existe = false;
         for (var i = 0; i < array_clas_other.clasi.length; i++){
 
-            if(array_clas_other.clasi[i].campo_class === layer[campo_class]){
+            if(array_clas_other.clasi[i].attr === layer[campo_class]){
                 existe = true;
                 return {
                     fillColor: array_clas_other.clasi[i].color ,
@@ -151,7 +151,7 @@ function getStyle(layer)
             num_r_3 = getRandomInt(0, 255);
             rgb = "rgb(" + num_r_1.toString() + ', ' + num_r_2.toString() + ', ' + num_r_3.toString() + ")";
 
-            elemento = {campo_class : layer[campo_class], attr : layer[campo_class], color : rgb};
+            elemento = {campo_class : campo_class, attr : layer[campo_class], color : rgb};
 
             array_clas_other.clasi.push(elemento);
 

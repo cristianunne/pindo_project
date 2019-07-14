@@ -56,7 +56,7 @@ function init()
         if (settingMapParmas()){
             changeParametersBaseMaps();
             changeParametersLayerOverlay();
-            loadCapasBase();
+            //loadCapasBase();
             scaleControl();
 
             mapMinReferenceManager();
@@ -201,22 +201,22 @@ function loadCapasBase()
 
                 //recorro las capas bases y cargo segun el id
                 for (var j = 0; j < capasbase.length; j++){
-                   if(capasbase[j]['idcapasbase'] == id){
+                   if(capasbase[j]['idcapasbase'] === id){
                        var capa = capasbase[j];
 
                        //Carga los mapas chiquitos
-                       var capatomap = L.tileLayer(capasbase[j]['urlservice'], {
+                       /*var capatomap = L.tileLayer(capasbase[j]['urlservice'], {
                            capa
-                       }).addTo(mymap_2);
+                       }).addTo(mymap_2);*/
 
                        var capatomap_2 = L.tileLayer(capasbase[j]['urlservice'], {
                            capa,
                            'className' : capasbase[j]['nombre']
-                       })
+                       });
 
                        //Cargo el 1er base map al mapa
 
-                       if (capabasedefault[0].capabase_id == capasbase[j]['idcapasbase']){
+                       if (capabasedefault[0].capabase_id === capasbase[j]['idcapasbase']){
                             loadFirstCapaBase(capatomap_2, id);
                        }
 

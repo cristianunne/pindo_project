@@ -17,9 +17,10 @@ use Cake\Collection\CollectionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
@@ -39,7 +40,7 @@ class MailPreviewController extends Controller
      *
      * @param \Cake\Event\Event $event The beforeFilter event.
      * @return void
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
@@ -56,7 +57,7 @@ class MailPreviewController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()->layout('DebugKit.mailer');
+        $this->viewBuilder()->setLayout('DebugKit.mailer');
     }
 
     /**
@@ -93,7 +94,7 @@ class MailPreviewController extends Controller
         $email = $content['emails'][$number];
         $email = new SentMailResult(array_filter($email['headers']), $email['message']);
 
-        $partType = $this->request->query('part');
+        $partType = $this->request->getQuery('part');
         if ($partType) {
             return $this->respondWithPart($email, $partType);
         }
@@ -101,8 +102,8 @@ class MailPreviewController extends Controller
         $this->set('noHeader', true);
         $this->set('email', $email);
         $this->set('plugin', '');
-        $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
-        $this->viewBuilder()->template('email');
+        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
+        $this->viewBuilder()->setTemplate('email');
     }
 
     /**
@@ -114,11 +115,16 @@ class MailPreviewController extends Controller
      */
     public function email($name, $method)
     {
-        $plugin = $this->request->query('plugin');
-        $email = $this->findPreview($name, $method, $plugin);
-        $partType = $this->request->query('part');
+        // Clear the plugin attribute from the request instance
+        // Router is holding onto so that we can render mail previews
+        // in a plugin less request context.
+        Router::pushRequest($this->request->withParam('plugin', null));
 
-        $this->viewBuilder()->layout(false);
+        $plugin = $this->request->getQuery('plugin');
+        $email = $this->findPreview($name, $method, $plugin);
+        $partType = $this->request->getQuery('part');
+
+        $this->viewBuilder()->setLayout(false);
 
         if ($partType) {
             return $this->respondWithPart($email, $partType);
@@ -128,7 +134,7 @@ class MailPreviewController extends Controller
         $this->set('title', $humanName);
         $this->set('email', $email);
         $this->set('plugin', $plugin);
-        $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
     }
 
     /**
@@ -144,16 +150,16 @@ class MailPreviewController extends Controller
         $part = $this->findPart($email, $partType);
 
         if ($part === false) {
-            throw new NotFoundException(__d('debug_kit', "Email part '{0}' not found in email", $partType));
+            throw new NotFoundException(__d('debug_kit', "Email part ''{0}'' not found in email", $partType));
         }
 
-        $this->response->type($partType);
+        $response = $this->response->withType($partType);
         if ($part === 'text') {
             $part = '<pre>' . $part . "</pre>";
         }
-        $this->response->body($part);
+        $response = $response->withStringBody($part);
 
-        return $this->response;
+        return $response;
     }
 
     /**
@@ -173,7 +179,7 @@ class MailPreviewController extends Controller
      */
     protected function getMailPreviewClasses()
     {
-        $pluginPaths = collection(Plugin::loaded())
+        $pluginPaths = collection(CorePlugin::loaded())
             ->reject(function ($plugin) {
                 return $plugin === 'DebugKit';
             })
@@ -251,7 +257,7 @@ class MailPreviewController extends Controller
      * @param string $emailName The mailer preview method
      * @param string|null $plugin The plugin where the mailer preview should be found
      * @return \DebugKit\Mailer\PreviewResult The result of the email preview
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     protected function findPreview($previewName, $emailName, $plugin = null)
     {

@@ -10,6 +10,8 @@
  */
 namespace WyriHaximus\TwigView\Lib\Twig\Extension;
 
+use Cake\Utility\Text;
+
 /**
  * Class Strings
  * @package WyriHaximus\TwigView\Lib\Twig\Extension
@@ -37,7 +39,13 @@ class Strings extends \Twig_Extension
             new \Twig_SimpleFilter('truncate', 'Cake\Utility\Text::truncate'),
             new \Twig_SimpleFilter('excerpt', 'Cake\Utility\Text::excerpt'),
             new \Twig_SimpleFilter('toList', 'Cake\Utility\Text::toList'),
-            new \Twig_SimpleFilter('stripLinks', 'Cake\Utility\Text::stripLinks'),
+            new \Twig_SimpleFilter('stripLinks', function ($string) {
+                $previousrErrorHandler = set_error_handler(function () {
+                });
+                $strippedString = Text::stripLinks($string);
+                set_error_handler($previousrErrorHandler);
+                return $strippedString;
+            }),
             new \Twig_SimpleFilter('isMultibyte', 'Cake\Utility\Text::isMultibyte'),
             new \Twig_SimpleFilter('utf8', 'Cake\Utility\Text::utf8'),
             new \Twig_SimpleFilter('ascii', 'Cake\Utility\Text::ascii'),

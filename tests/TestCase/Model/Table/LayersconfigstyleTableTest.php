@@ -35,8 +35,8 @@ class LayersconfigstyleTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Layersconfigstyle') ? [] : ['className' => LayersconfigstyleTable::class];
-        $this->Layersconfigstyle = TableRegistry::get('Layersconfigstyle', $config);
+        $config = TableRegistry::getTableLocator()->exists('Layersconfigstyle') ? [] : ['className' => LayersconfigstyleTable::class];
+        $this->Layersconfigstyle = TableRegistry::getTableLocator()->get('Layersconfigstyle', $config);
     }
 
     /**
@@ -67,16 +67,6 @@ class LayersconfigstyleTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

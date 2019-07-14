@@ -13,6 +13,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Layersconfigstyle newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Layersconfigstyle[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Layersconfigstyle|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Layersconfigstyle|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Layersconfigstyle patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Layersconfigstyle[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Layersconfigstyle findOrCreate($search, callable $callback = null, $options = [])
@@ -61,6 +62,11 @@ class LayersconfigstyleTable extends Table
             ->scalar('campo_clasified')
             ->maxLength('campo_clasified', 30)
             ->allowEmpty('campo_clasified');
+
+        $validator
+            ->boolean('overlapslayer')
+            ->requirePresence('overlapslayer', 'create')
+            ->notEmpty('overlapslayer');
 
         return $validator;
     }

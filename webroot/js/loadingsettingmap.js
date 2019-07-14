@@ -23,13 +23,16 @@ var labelsrodal_ = null;
 var info = L.control();
 var geojsonrodalunico;
 var geojsonrodalclasificado;
+var geojsonrodalotros;
 var geojsonlabelrodal = null;
 var geojsonrodalesad = [];
+var array_geojson_class = {capas : []};
+var name_capa_current = null;
 
 $(function()
 {
     $.ajax({
-        url: 'Configmap/getConfigMap',
+        url: 'http://localhost/pindo_project/Configmap/getConfigMap',
         beforeSend: function(xhr)
         {
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -92,7 +95,7 @@ function initMapIndex()
             //Agrego el evento del mapa para el cambio de Legend
             mymap.on('overlayremove', function (e) {
 
-                console.log(e);
+                removeLegend();
             });
 
 
@@ -205,11 +208,14 @@ function loadCapasBase()
                     var nombre = capa['nombre']
                     baselayers[nombre] = capatomap;
 
-                    if(j == 0){
-                        mymap.addLayer(capatomap, capa['nombre']);
+                    try{
+
+                        if(capasbase[j]['idcapasbase'] === capabasedefault[0].capabase_id){
+                            mymap.addLayer(capatomap, capa['nombre']);
+                        }
+                    } catch(error){
+
                     }
-
-
 
                 }
                 layercontrol = L.control.layers(baselayers, null).addTo(mymap);
@@ -279,18 +285,23 @@ function createVarCapaOverlay()
             style: styleUnico,
             onEachFeature: onEachFeature
         }).addTo(mymap);
+
+        flyToGeoJsonInicial(geojsonrodalunico);
+
         //Agrega la capa rodales al la tabla de Contenidos
         layercontrol.addOverlay(geojsonrodalunico, "Rodales");
 
+        //Guardo el Geojson en un arreglo para traerlo despues dados que son muchas las capas
+        var elemento = {nombre : "Rodales", geojson: geojsonrodalunico};
+        array_geojson_class.capas.push(elemento);
+
+
         //Agrego la Leyenda individual dado que no esta en un layer.. Se carga por default asiq ue agrego tmb
         //Primero agrego el estilo a la lista
-        var style_add = {nombre: "Rodales", clasificacion : [] };
+       var style_add = {nombre: "Rodales", clasificacion : [] };
         var clases = {clase: 'unico', style: styleUnico()};
         style_add.clasificacion.push(clases);
         array_clasificacion_capas.clases.push(style_add);
-
-
-
 
 
         //Creo el geojson para el rodal clasificado
@@ -303,6 +314,12 @@ function createVarCapaOverlay()
         });
         //Agrega la capa rodales al la tabla de Contenidos
         layercontrol.addOverlay(geojsonrodalclasificado, "Rodales Clasificado");
+
+        //Guardo el Geojson en un arreglo para traerlo despues dados que son muchas las capas
+        var elemento_2 = {nombre : "Rodales Clasificado", geojson: geojsonrodalclasificado};
+        array_geojson_class.capas.push(elemento_2);
+
+
         info.addTo(mymap);
 
         style_add = null;
@@ -313,7 +330,8 @@ function createVarCapaOverlay()
         style_add.clasificacion.push(clases);
         array_clasificacion_capas.clases.push(style_add);
 
-        console.log(array_clasificacion_capas);
+
+        info.addTo(mymap);
 
         processLayersAd();
 
@@ -321,7 +339,20 @@ function createVarCapaOverlay()
 
 }
 
+function flyToGeoJsonInicial(geojson){
+
+    mymap.fitBounds(geojson.getBounds(), {
+        'animate' :  true,
+        'duration' : 10,
+        'easeLinearity' : 0.1
+
+    });
+}
+
 var  array_clas_other;
+var array_clases_other = {clases : []};
+
+
 
 function processLayersAd()
 {
@@ -335,30 +366,48 @@ function processLayersAd()
 
             if(layersAdicionalesConfig[i].campo_clasified === 'sagpya'){
                 campo_class = 'idsagpya';
+
             } else {
                 campo_class = layersAdicionalesConfig[i].campo_clasified;
             }
 
 
+
             array_clas_other = null;
             array_clas_other = {clasi: []};
+
+            //Se usa para agrear la attribution a la capa
+            name_capa_current = layersAdicionalesConfig[i].nombre;
 
 
             var variable = "var rodales = " + layersAdicionales[0].row_to_json;
             overrodales = eval(variable);
             //Agrega la capa rodales al Mapa
-            geojsonrodalunico = L.geoJson(rodales, {
+            geojsonrodalotros = L.geoJson(rodales, {
                 style: getStyle,
-                onEachFeature: onEachFeature
+                onEachFeature: onEachFeatureOtros,
+                attribution : layersAdicionalesConfig[i].nombre
             });
-            //Agrega la capa rodales al la tabla de Contenidos
-            layercontrol.addOverlay(geojsonrodalunico, layersAdicionalesConfig[i].nombre);
 
-            console.log(geojsonrodalunico.options);
+
+            //guardo los estilos de la capas
+            var elem = {capa : name_capa_current, style : array_clas_other.clasi}
+            array_clases_other.clases.push(elem);
+
+            //Agrega la capa rodales al la tabla de Contenidos
+            layercontrol.addOverlay(geojsonrodalotros, layersAdicionalesConfig[i].nombre);
+            //Guardo el Geojson en un arreglo para traerlo despues dados que son muchas las capas
+            var elemento = {nombre : layersAdicionalesConfig[i].nombre, geojson: geojsonrodalotros};
+            array_geojson_class.capas.push(elemento);
+
+
+
 
 
 
         }
+
+        console.log(array_clases_other);
 
     }
 
@@ -453,6 +502,8 @@ function onEachFeature(feature, layer) {
         contextmenu: viewInfoRodal
     });
 
+
+
 }
 
 function onEachFeatureClasificado(feature, layer) {
@@ -460,8 +511,23 @@ function onEachFeatureClasificado(feature, layer) {
         mouseover: highlightFeature,
         mouseout: resetHighlightClasificado,
         click: zoomToFeature,
+        contextmenu: viewInfoRodal,
+    });
+
+
+}
+
+function onEachFeatureOtros(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlightOtro,
+        click: zoomToFeature,
         contextmenu: viewInfoRodal
     });
+
+    layer.options.attribution =  name_capa_current;
+    //console.log(layer);
+
 
 }
 
@@ -501,6 +567,54 @@ function resetHighlight(e) {
 function resetHighlightClasificado(e) {
     info.update();
     geojsonrodalclasificado.resetStyle(e.target);
+}
+
+function resetHighlightOtro(e) {
+    info.update();
+
+    var name_geojson = e.target.options.attribution;
+
+    var geojson_Select = null;
+    for(var i = 0; i < array_geojson_class.capas.length; i++){
+
+        if(array_geojson_class.capas[i].nombre === name_geojson){
+
+            geojson_Select = array_geojson_class.capas[i].geojson;
+
+        }
+    }
+
+    //Tengo que recorrer el estilo inicial
+    for (var i = 0; i < array_clases_other.clases.length; i++){
+
+        if(array_clases_other.clases[i].capa === name_geojson){
+
+
+            for(var j = 0; j < array_clases_other.clases[i].style.length; j++){
+
+                var camp_class = array_clases_other.clases[i].style[j].campo_class;
+               // console.log(array_clases_other.clases[i].style[j].attr);
+                if(array_clases_other.clases[i].style[j].attr === e.target.feature[camp_class]){
+
+                    //Seteo el stilo
+                    e.target.setStyle({fillColor : array_clases_other.clases[i].style[j].color,
+                        color : array_clases_other.clases[i].style[j].color,
+                        dashArray: '3',
+                        fillOpacity: 0.5});
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    //e.target.setStyle({fillColor :'blue'});
+    //console.log(e.target.feature);
+    //console.log(array_clases_other);
+    //geojson_Select.resetStyle(e.target);
 }
 
 function zoomToFeature(e) {

@@ -36,6 +36,11 @@
                             'class' => 'form-control', 'placeholder' => 'Variable', 'required']) ?>
                         <br>
 
+                        <?= $this->Form->input('overlapslayer', ['options' => [0 => 'No', 1 => 'Si'], 'empty' => '(Elija una opción)',
+                            'class' => 'form-control', 'placeholder' => 'Paleta', 'label' => 'Overlaps?:', 'required']) ?>
+                        <br>
+
+
 
                     </div>
 

@@ -24,7 +24,10 @@ class PlantacionesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.plantaciones'
+        'app.plantaciones',
+        'app.rodales',
+        'app.procedencias',
+        'app.emsefor'
     ];
 
     /**
@@ -35,8 +38,8 @@ class PlantacionesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Plantaciones') ? [] : ['className' => PlantacionesTable::class];
-        $this->Plantaciones = TableRegistry::get('Plantaciones', $config);
+        $config = TableRegistry::getTableLocator()->exists('Plantaciones') ? [] : ['className' => PlantacionesTable::class];
+        $this->Plantaciones = TableRegistry::getTableLocator()->get('Plantaciones', $config);
     }
 
     /**

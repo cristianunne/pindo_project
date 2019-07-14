@@ -28,6 +28,7 @@ class LayersconfigstyleFixture extends TestFixture
         'paleta' => ['type' => 'string', 'length' => 40, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'nombre' => ['type' => 'string', 'length' => 15, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'campo_clasified' => ['type' => 'string', 'length' => 30, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'overlapslayer' => ['type' => 'boolean', 'length' => null, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -35,16 +36,21 @@ class LayersconfigstyleFixture extends TestFixture
     // @codingStandardsIgnoreEnd
 
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'id' => 1,
-            'paleta' => 'Lorem ipsum dolor sit amet',
-            'nombre' => 'Lorem ipsum d',
-            'campo_clasified' => 'Lorem ipsum dolor sit amet'
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'id' => 1,
+                'paleta' => 'Lorem ipsum dolor sit amet',
+                'nombre' => 'Lorem ipsum d',
+                'campo_clasified' => 'Lorem ipsum dolor sit amet',
+                'overlapslayer' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

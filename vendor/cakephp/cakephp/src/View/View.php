@@ -56,6 +56,7 @@ use RuntimeException;
  * `plugins/SuperHot/Template/Posts/index.ctp`. If a theme template
  * is not found for the current action the default app template file is used.
  *
+ * @property \Cake\View\Helper\BreadcrumbsHelper $Breadcrumbs
  * @property \Cake\View\Helper\FlashHelper $Flash
  * @property \Cake\View\Helper\FormHelper $Form
  * @property \Cake\View\Helper\HtmlHelper $Html
@@ -417,6 +418,11 @@ class View implements EventDispatcherInterface
      */
     public function templatePath($path = null)
     {
+        deprecationWarning(
+            'View::templatePath() is deprecated. ' .
+            'Use getTemplatePath()/setTemplatePath() instead.'
+        );
+
         if ($path === null) {
             return $this->templatePath;
         }
@@ -456,6 +462,11 @@ class View implements EventDispatcherInterface
      */
     public function layoutPath($path = null)
     {
+        deprecationWarning(
+            'View::layoutPath() is deprecated. ' .
+            'Use getLayoutPath()/setLayoutPath() instead.'
+        );
+
         if ($path === null) {
             return $this->layoutPath;
         }
@@ -500,6 +511,11 @@ class View implements EventDispatcherInterface
      */
     public function autoLayout($autoLayout = null)
     {
+        deprecationWarning(
+            'View::autoLayout() is deprecated. ' .
+            'Use isAutoLayoutEnabled()/enableAutoLayout() instead.'
+        );
+
         if ($autoLayout === null) {
             return $this->autoLayout;
         }
@@ -539,6 +555,11 @@ class View implements EventDispatcherInterface
      */
     public function theme($theme = null)
     {
+        deprecationWarning(
+            'View::theme() is deprecated. ' .
+            'Use getTheme()/setTheme() instead.'
+        );
+
         if ($theme === null) {
             return $this->theme;
         }
@@ -581,6 +602,11 @@ class View implements EventDispatcherInterface
      */
     public function template($name = null)
     {
+        deprecationWarning(
+            'View::template() is deprecated. ' .
+            'Use getTemplate()/setTemplate() instead.'
+        );
+
         if ($name === null) {
             return $this->template;
         }
@@ -626,6 +652,11 @@ class View implements EventDispatcherInterface
      */
     public function layout($name = null)
     {
+        deprecationWarning(
+            'View::layout() is deprecated. ' .
+            'Use getLayout()/setLayout() instead.'
+        );
+
         if ($name === null) {
             return $this->layout;
         }
@@ -1084,9 +1115,13 @@ class View implements EventDispatcherInterface
     public function __get($name)
     {
         if ($name === 'view') {
+            deprecationWarning('The `view` property is deprecated. Use View::getTemplate() instead.');
+
             return $this->template;
         }
         if ($name === 'viewPath') {
+            deprecationWarning('The `viewPath` property is deprecated. Use View::getTemplatePath() instead.');
+
             return $this->templatePath;
         }
 
@@ -1110,11 +1145,13 @@ class View implements EventDispatcherInterface
     public function __set($name, $value)
     {
         if ($name === 'view') {
+            deprecationWarning('The `view` property is deprecated. Use View::setTemplate() instead.');
             $this->template = $value;
 
             return;
         }
         if ($name === 'viewPath') {
+            deprecationWarning('The `viewPath` property is deprecated. Use View::setTemplatePath() instead.');
             $this->templatePath = $value;
 
             return;
@@ -1256,7 +1293,7 @@ class View implements EventDispatcherInterface
         if (strlen($this->subDir)) {
             $subDir = $this->subDir . DIRECTORY_SEPARATOR;
             // Check if templatePath already terminates with subDir
-            if ($templatePath != $subDir && substr($templatePath, -(strlen($subDir))) == $subDir) {
+            if ($templatePath != $subDir && substr($templatePath, -strlen($subDir)) == $subDir) {
                 $subDir = '';
             }
         }

@@ -104,7 +104,7 @@ class PaginatorHelper extends Helper
         unset($query['page'], $query['limit'], $query['sort'], $query['direction']);
         $this->setConfig(
             'options.url',
-            array_merge($this->request->getParam('pass'), ['?' => $query])
+            array_merge($this->request->getParam('pass', []), ['?' => $query])
         );
     }
 
@@ -153,19 +153,19 @@ class PaginatorHelper extends Helper
     public function options(array $options = [])
     {
         if (!empty($options['paging'])) {
-            if (!$this->request->getParam('paging')) {
-                $this->request->params['paging'] = [];
-            }
-            $this->request->params['paging'] = $options['paging'] + $this->request->getParam('paging');
+            $this->request = $this->request->withParam(
+                'paging',
+                $options['paging'] + $this->request->getParam('paging', [])
+            );
             unset($options['paging']);
         }
         $model = $this->defaultModel();
 
         if (!empty($options[$model])) {
-            if (!$this->request->getParam('paging.' . $model)) {
-                $this->request->params['paging'][$model] = [];
-            }
-            $this->request->params['paging'][$model] = $options[$model] + $this->request->getParam('paging.' . $model);
+            $this->request = $this->request->withParam(
+                'paging.' . $model,
+                $options[$model] + (array)$this->request->getParam('paging.' . $model, [])
+            );
             unset($options[$model]);
         }
         $this->_config['options'] = array_filter($options + $this->_config['options']);
@@ -436,6 +436,7 @@ class PaginatorHelper extends Helper
 
             $title = __(Inflector::humanize(preg_replace('/_id$/', '', $title)));
         }
+
         $defaultDir = isset($options['direction']) ? strtolower($options['direction']) : 'asc';
         unset($options['direction']);
 
@@ -471,7 +472,7 @@ class PaginatorHelper extends Helper
         }
 
         $url = array_merge(
-            ['sort' => $key, 'direction' => $dir],
+            ['sort' => $key, 'direction' => $dir, 'page' => 1],
             $url,
             ['order' => null]
         );
@@ -686,14 +687,6 @@ class PaginatorHelper extends Helper
         if (!$paging['pageCount']) {
             $paging['pageCount'] = 1;
         }
-        $start = 0;
-        if ($paging['count'] >= 1) {
-            $start = (($paging['page'] - 1) * $paging['perPage']) + 1;
-        }
-        $end = $start + $paging['perPage'] - 1;
-        if ($paging['count'] < $end) {
-            $end = $paging['count'];
-        }
 
         switch ($options['format']) {
             case 'range':
@@ -709,8 +702,8 @@ class PaginatorHelper extends Helper
             'pages' => $paging['pageCount'],
             'current' => $paging['current'],
             'count' => $paging['count'],
-            'start' => $start,
-            'end' => $end
+            'start' => $paging['start'],
+            'end' => $paging['end']
         ]);
 
         $map += [

@@ -16,8 +16,8 @@ namespace Cake\Http;
 use Cake\Core\App;
 use Cake\Core\Exception\Exception;
 use Cake\Core\InstanceConfigTrait;
-use Cake\Http\Client\CookieCollection;
 use Cake\Http\Client\Request;
+use Cake\Http\Cookie\CookieCollection;
 use Cake\Http\Cookie\CookieInterface;
 use Cake\Utility\Hash;
 use InvalidArgumentException;
@@ -122,7 +122,7 @@ class Client
      * Cookies are indexed by the cookie's domain or
      * request host name.
      *
-     * @var \Cake\Http\Client\CookieCollection
+     * @var \Cake\Http\Cookie\CookieCollection
      */
     protected $_cookies;
 
@@ -179,7 +179,7 @@ class Client
     /**
      * Get the cookies stored in the Client.
      *
-     * @return \Cake\Http\Client\CookieCollection
+     * @return \Cake\Http\Cookie\CookieCollection
      */
     public function cookies()
     {
@@ -610,5 +610,5 @@ class Client
         return new $class($this, $options);
     }
 }
-// @deprecated Backwards compatibility with earler 3.x versions.
+// @deprecated 3.4.0 Backwards compatibility with earler 3.x versions.
 class_alias('Cake\Http\Client', 'Cake\Network\Http\Client');

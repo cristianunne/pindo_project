@@ -13,6 +13,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Plantacione newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Plantacione[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Plantacione|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Plantacione|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Plantacione patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Plantacione[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Plantacione findOrCreate($search, callable $callback = null, $options = [])
@@ -36,7 +37,8 @@ class PlantacionesTable extends Table
 
         $this->hasOne('Rodales', [
 
-            'foreignKey' => 'idrodales'
+            'foreignKey' => 'idrodales',
+            'dependent' => true
         ]);
 
         $this->belongsTo('Procedencias', [
@@ -63,7 +65,8 @@ class PlantacionesTable extends Table
         $validator
             ->integer('rodales_idrodales')
             ->requirePresence('rodales_idrodales', 'create')
-            ->notEmpty('rodales_idrodales');
+            ->notEmpty('rodales_idrodales')
+            ->add('rodales_idrodales', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->date('fecha')
@@ -104,5 +107,19 @@ class PlantacionesTable extends Table
             ->notEmpty('procedencias_idprocedencias');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['rodales_idrodales']));
+
+        return $rules;
     }
 }
