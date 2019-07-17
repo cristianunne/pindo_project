@@ -62,6 +62,8 @@ $(function()
 
 
 
+
+
             }
         }, error:function () {
             //Muestro algun mensaje de error
@@ -87,15 +89,15 @@ function initMapIndex()
             //Metodos que se encargan de crear las Referencias
 
             mymap.on('overlayadd', function (layer) {
-
                 createLegendByLayer(layer);
 
             });
 
             //Agrego el evento del mapa para el cambio de Legend
-            mymap.on('overlayremove', function (e) {
+            mymap.on('overlayremove', function (layer) {
 
-                removeLegend();
+                removeLegendByLayer(layer);
+
             });
 
 
@@ -292,7 +294,7 @@ function createVarCapaOverlay()
         layercontrol.addOverlay(geojsonrodalunico, "Rodales");
 
         //Guardo el Geojson en un arreglo para traerlo despues dados que son muchas las capas
-        var elemento = {nombre : "Rodales", geojson: geojsonrodalunico};
+        var elemento = {nombre : "Rodales", geojson: geojsonrodalunico, clasified : false};
         array_geojson_class.capas.push(elemento);
 
 
@@ -316,7 +318,7 @@ function createVarCapaOverlay()
         layercontrol.addOverlay(geojsonrodalclasificado, "Rodales Clasificado");
 
         //Guardo el Geojson en un arreglo para traerlo despues dados que son muchas las capas
-        var elemento_2 = {nombre : "Rodales Clasificado", geojson: geojsonrodalclasificado};
+        var elemento_2 = {nombre : "Rodales Clasificado", geojson: geojsonrodalclasificado, clasified : false};
         array_geojson_class.capas.push(elemento_2);
 
 
@@ -356,7 +358,6 @@ var array_clases_other = {clases : []};
 
 function processLayersAd()
 {
-
     //Voy a recorrer el arreglo y luego hacer las peticiones segun la variable
     if(layersAdCount > 0){
 
@@ -371,14 +372,11 @@ function processLayersAd()
                 campo_class = layersAdicionalesConfig[i].campo_clasified;
             }
 
-
-
             array_clas_other = null;
             array_clas_other = {clasi: []};
 
             //Se usa para agrear la attribution a la capa
             name_capa_current = layersAdicionalesConfig[i].nombre;
-
 
             var variable = "var rodales = " + layersAdicionales[0].row_to_json;
             overrodales = eval(variable);
@@ -389,7 +387,6 @@ function processLayersAd()
                 attribution : layersAdicionalesConfig[i].nombre
             });
 
-
             //guardo los estilos de la capas
             var elem = {capa : name_capa_current, style : array_clas_other.clasi}
             array_clases_other.clases.push(elem);
@@ -397,22 +394,21 @@ function processLayersAd()
             //Agrega la capa rodales al la tabla de Contenidos
             layercontrol.addOverlay(geojsonrodalotros, layersAdicionalesConfig[i].nombre);
             //Guardo el Geojson en un arreglo para traerlo despues dados que son muchas las capas
-            var elemento = {nombre : layersAdicionalesConfig[i].nombre, geojson: geojsonrodalotros};
+            var elemento = {nombre : layersAdicionalesConfig[i].nombre, geojson: geojsonrodalotros, clasified : true};
             array_geojson_class.capas.push(elemento);
 
+            style_add = null;
+            clases = null;
 
-
-
-
+            style_add = {nombre: name_capa_current, clasificacion : [] , attr_class : campo_class};
+            clases = {clase: array_clas_other.clasi, style: null};
+            style_add.clasificacion.push(clases);
+            array_clasificacion_capas.clases.push(style_add);
 
         }
-
-        console.log(array_clases_other);
+        console.log(array_geojson_class);
 
     }
-
-
-
 }
 
 
@@ -583,6 +579,8 @@ function resetHighlightOtro(e) {
 
         }
     }
+
+
 
     //Tengo que recorrer el estilo inicial
     for (var i = 0; i < array_clases_other.clases.length; i++){

@@ -55,7 +55,7 @@
                                             ['class' => 'btn btn-warning']) ?>
 
 
-                                        <?= $this->Form->(__('Eliminar'), ['action' => 'delete', $emp->idemsefor],
+                                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $emp->idemsefor],
                                             ['confirm' => __('Eliminar la Emsefor: {0}?', $emp->nombre), 'class' => 'btn btn-danger']) ?>
 
                                 <?php endif; ?>

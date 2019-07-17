@@ -21,13 +21,10 @@ function styleClasificado(layer)
     //Este metodo clasifica por el ID del Rodal
 
     if(array_clas.clasi.length <= 0){
-
         var num_r_1 = getRandomInt(0, 255);
         var num_r_2 = getRandomInt(0, 255);
         var num_r_3 = getRandomInt(0, 255);
         var rgb = "rgb(" + num_r_1.toString() + ', ' + num_r_2.toString() + ', ' + num_r_3.toString() + ")";
-
-
 
         var stylo = {
             fillColor: rgb,
@@ -36,15 +33,11 @@ function styleClasificado(layer)
             fillOpacity: 0.5
         };
 
-
         var elemento = {attr : layer.id, color : rgb};
-
         array_clas.clasi.push(elemento);
-
         return stylo;
 
     } else {
-
         //Lo que hago es recorrer el array_clas y ver si existe el id para asignar no mas el color
         //Uso el id porque corresponde a IDRODALES
         var existe = false;
@@ -58,23 +51,16 @@ function styleClasificado(layer)
                     dashArray: '3',
                     fillOpacity: 0.5
                 };
-
-
             }
-
         }
 
         if(existe === false){
-
             num_r_1 = getRandomInt(0, 255);
             num_r_2 = getRandomInt(0, 255);
             num_r_3 = getRandomInt(0, 255);
             rgb = "rgb(" + num_r_1.toString() + ', ' + num_r_2.toString() + ', ' + num_r_3.toString() + ")";
-
             elemento = {attr : layer.id, color : rgb};
-
             array_clas.clasi.push(elemento);
-
             return {
                 fillColor: rgb ,
                 color: rgb,
