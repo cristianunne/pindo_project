@@ -70,6 +70,14 @@ class ConfigmapController extends AppController
             $layersAdicionalesConf = $layersadicionales->find('all', []);
             $layersAdCount = $layersAdicionalesConf->count();
 
+            //Traigo el resumen de los rodales en el gis
+            $query = 'SELECT rodales_idrodales, SUM(superficie) as superficie FROM gis GROUP BY rodales_idrodales ORDER BY rodales_idrodales ASC';
+            //Ejecuto el Query de Muestra
+            $conecction = ConnectionManager::get('default');
+            $rodalesGisResumen = $conecction->execute($query)->fetchAll('assoc');
+
+
+
 
             $res = [
                 'dataconfig' => $mapConfigData,
@@ -81,7 +89,8 @@ class ConfigmapController extends AppController
                 'layersconfig' => $tablaLayersConfig,
                 'layersAdicionalesConfig' => $layersAdicionalesConf,
                 'layerAdCount' => $layersAdCount,
-                'layersAdicionales' => $this->getLayersAdicionalesGisAsJson($modelGis)
+                'layersAdicionales' => $this->getLayersAdicionalesGisAsJson($modelGis),
+                'rodalesGisResumen' => $rodalesGisResumen
             ];
 
 

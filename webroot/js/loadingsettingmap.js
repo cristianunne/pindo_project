@@ -9,6 +9,7 @@ var layersconfig = null;
 var layersAdCount = null;
 var layersAdicionalesConfig = null;
 var layersAdicionales = null;
+var rodalesGisResumen = null;
 
 //Es la variable que genera el controlador de las capas bases
 var layerControl = new L.control.layers();
@@ -56,6 +57,7 @@ $(function()
                 layersAdCount = data.layerAdCount;
                 layersAdicionalesConfig = data.layersAdicionalesConfig;
                 layersAdicionales = data.layersAdicionales;
+                rodalesGisResumen = data.rodalesGisResumen;
 
                 //Inicializo el Mapa
                 initMapIndex();
@@ -477,12 +479,27 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
 
+
+
     if (props == null)
     {
         this._div.innerHTML = '<h4>Identificación del Rodal</h4>' +  ('<b>'  + '</b>');
     } else {
-        this._div.innerHTML = '<h4>Identificación del Rodal</h4>' +  ('<b>Id Rodal: </b>' + props.id + '<br>' + '<b>Código SAP: </b>' + props.cod_sap) +
-            '<br>' + '<br>' + '<h4>Datos de la Parcela</h4>' +  ('<b>Parcela N°: </b>' + props.id + '<br>' + '<b>Superficie (m2): </b>' + props.superficie);
+
+        //Recorro el rodalesGisResumen y obtengo el rodal
+        var datos_rodal = null;
+
+        for(var i = 0; i < rodalesGisResumen.length; i++){
+            if(rodalesGisResumen[i].rodales_idrodales == props.id){
+
+                datos_rodal = rodalesGisResumen[i].superficie;
+            }
+
+        }
+
+        this._div.innerHTML = '<h4>Identificación del Rodal</h4>' +  ('<b>Id Rodal: </b>' + props.id + '<br>' + '<b>Código SAP: </b>'
+             + props.cod_sap + '<br>' + '<b>Superficie (ha): </b>' + datos_rodal) +
+            '<br>' + '<br>' + '<h4>Datos de la Parcela</h4>' +  ('<b>Parcela N°: </b>' + props.id + '<br>' + '<b>Superficie (ha): </b>' + props.superficie);
 
     }
 
@@ -527,7 +544,6 @@ function onEachFeatureOtros(feature, layer) {
 
 }
 
-
 function viewInfoRodal(e) {
 
     var layer = e.target;
@@ -554,11 +570,9 @@ function highlightFeature(e) {
     info.update(layer.feature);
 }
 
-
 function resetHighlight(e) {
     info.update();
     geojsonrodalunico.resetStyle(e.target);
-
 }
 function resetHighlightClasificado(e) {
     info.update();
@@ -579,8 +593,6 @@ function resetHighlightOtro(e) {
 
         }
     }
-
-
 
     //Tengo que recorrer el estilo inicial
     for (var i = 0; i < array_clases_other.clases.length; i++){
@@ -608,11 +620,6 @@ function resetHighlightOtro(e) {
 
     }
 
-
-    //e.target.setStyle({fillColor :'blue'});
-    //console.log(e.target.feature);
-    //console.log(array_clases_other);
-    //geojson_Select.resetStyle(e.target);
 }
 
 function zoomToFeature(e) {

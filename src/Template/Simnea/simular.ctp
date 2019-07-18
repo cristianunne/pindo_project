@@ -134,3 +134,20 @@
 <?= $this->Html->script('simnea.js') ?>
 
 <?= $this->element('footer')?>
+
+<script>
+    $(function () {
+        $('#example1').DataTable({
+            'language' : {
+                'search': "Buscar:",
+
+                'paginate': {
+                    'first':      "Primer",
+                    'previous':   "Anterior",
+                    'next':       "Siguiente",
+                    'last':       "Anterior"
+                }}
+
+        });
+    })
+</script>
