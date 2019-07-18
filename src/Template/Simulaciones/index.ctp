@@ -1,6 +1,6 @@
 <?= $this->Html->script('index/index.js') ?>
-
 <?= $this->Html->script('li_change.js') ?>
+<?= $this->Html->script('simulaciones/simulaciones.js') ?>
 
 <?= $this->element('header')?>
 <?= $this->element('sidebar')?>
@@ -13,7 +13,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-
+            <?= $this->Form->create('sim', ['url' => ['action' => 'getSimulacionesAsSheets']]) ?>
             <div class="col-md-12">
 
                 <div class="callout bg-gray-active">
@@ -40,6 +40,7 @@
                                 <th scope="col"><?= $this->Paginator->sort('Sistema de Cosecha') ?></th>
                                 <th scope="col"><?= $this->Paginator->sort('Emsefor') ?></th>
                                 <th scope="col"><?= __('Acciones') ?></th>
+                                <th scope="col"><?= __('Selección') ?></th>
 
                             </tr>
                             </thead>
@@ -72,10 +73,18 @@
                                                 <?= $this->Html->link($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-search', 'aria-hidden' => 'true']),
                                                     ['controller' => 'Simulaciones', 'action' => 'view', '?' => ['Accion' => 'Ver Simulación', 'Categoria' => 'SIMNEA', 'id' => $sim->idsimulaciones]], ['class' => 'btn btn-success', 'escape' => false]) ?>
 
-                                                <?= $this->Form->postLink($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'true']), ['action' => 'delete', $sim->idsimulaciones],
+                                                <?= $this->Form->postLink($this->Html->tag('span', '', ['class' => 'glyphicon glyphicon-remove', 'aria-hidden' => 'false']), ['action' => 'delete', $sim->idsimulaciones],
                                                     ['confirm' => __('Eliminar la Simulación: {0}?', $sim->idsimulaciones), 'class' => 'btn btn-danger', 'escape' => false]) ?>
 
                                             </td>
+                                        <td>
+
+                                            <?=
+                                                $this->Form->checkbox($sim->idsimulaciones);
+                                            ?>
+
+
+                                        </td>
 
                                     </tr>
                                 <?php endforeach; ?>
@@ -83,11 +92,19 @@
                             </tbody>
                         </table>
 
-
                     </div>
+
+                </div>
+
+                <div class="col-md-12" style="background-color: inherit; border-top: inherit;">
+
+                    <?= $this->Form->button('Agregar', ['class' => 'btn btn-success pull-right']) ?>
+
+
+
                 </div>
             </div>
-
+            <?= $this->Form->end() ?>
         </div>
     </section>
 </div>
@@ -100,7 +117,7 @@
     $(function () {
 
         $('#example3').DataTable({
-            'paging'      : true,
+            'paging'      : false,
             'lengthChange': true,
             'searching'   : true,
             'ordering'    : true,
