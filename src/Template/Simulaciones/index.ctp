@@ -98,7 +98,7 @@
 
                 <div class="col-md-12" style="background-color: inherit; border-top: inherit;">
 
-                    <?= $this->Form->button('Agregar', ['class' => 'btn btn-success pull-right']) ?>
+                    <?= $this->Form->button('Descargar Simulaciones', ['class' => 'btn btn-success pull-right']) ?>
 
 
 
