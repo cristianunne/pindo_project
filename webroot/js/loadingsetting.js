@@ -73,11 +73,8 @@ function init()
            });
 
             removeEscalasSinCapas();
-
         }
-
     }
-
 
 }
 

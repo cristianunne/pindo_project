@@ -3,6 +3,16 @@
 <?= $this->Html->script('index/index.js') ?>
 <?= $this->Html->script('li_change.js') ?>
 
+<?= $this->Html->css('leaflet') ?>
+<?= $this->Html->script('leaflet/leaflet.js') ?>
+
+<?= $this->Html->script('loadingsettingmap_rodal.js') ?>
+<?= $this->Html->script('maps/stylesmap.js') ?>
+<?= $this->Html->script('maps/legend_map.js') ?>
+
+<?= $this->Html->css('maps/mapa.css') ?>
+
+
 
 <?= $this->element('header')?>
 <?= $this->element('sidebar')?>
@@ -506,8 +516,9 @@
                     <p>En el siguiente mapa se muestran las parcelas correspondiente al Actual Rodal.</p>
                 </div>
 
-                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56504.54157737542!2d-54.664945622972645!3d-26.41025081252591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f76e75d69d55cd%3A0x125744858e20bdca!2sEldorado%2C+Misi%C3%B3nes!5e1!3m2!1ses-419!2sar!4v1519943618230" width="100%" height="700" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <div id="mapid" style="min-height: 85.5vh !important; height: 85.5vh;">
 
+                </div>
 
             </div>
 

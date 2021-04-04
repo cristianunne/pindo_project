@@ -98,7 +98,99 @@ class ConfigmapController extends AppController
         }
     }
 
+    public function getConfigMapOnly()
+    {
+
+        $this->autoRender = false;
+
+        if ($this->request->is('ajax')) {
+            //Ingreso a la base de datos y traigo los parametro de configuracion
+            $tablaMapConfig = $this->loadModel('Mapconfig');
+            $mapConfigData = $tablaMapConfig->find('all')->first();
+
+            //En ambos casos deberia filtrar por el campo activo
+            $tablaCapasBase = $this->loadModel('Capasbase');
+            $capasbase = $tablaCapasBase->find('all', [
+                'conditions' => ['active' => true]
+            ]);
+            $countcapasbase = $capasbase->count();
+
+            //Obtengo la capabase default
+            $capabasedefaultTable = $this->loadModel('Capabasedefault');
+            $capabasedefault = $capabasedefaultTable->find('all', []);
+            //Recorro los nombres de las capas base y creo un arreglo
+
+
+            //Obtengo los Layers Overlay que corrsponde a la tabla gis
+            $modelGis = $this->loadModel('Gis');
+            $overlays = $this->getGisAsJsonNotFin($modelGis);
+            $labels = $this->getLabelFromGisAsPoint($modelGis);
+
+            //Obtengo la configuracion inicial de las Capas
+            $modelLayerConfig = $this->loadModel('Layersconfigstyle');
+            $tablaLayersConfig = $modelLayerConfig->find('all', []);
+
+            //Obtengo la cantidad de layersadiciones
+            $layersadicionales = $this->loadModel('Layersconfigstyle');
+            $layersAdicionalesConf = $layersadicionales->find('all', []);
+            $layersAdCount = $layersAdicionalesConf->count();
+
+            //Traigo el resumen de los rodales en el gis
+            $query = 'SELECT rodales_idrodales, SUM(superficie) as superficie FROM gis GROUP BY rodales_idrodales ORDER BY rodales_idrodales ASC';
+            //Ejecuto el Query de Muestra
+            $conecction = ConnectionManager::get('default');
+            $rodalesGisResumen = $conecction->execute($query)->fetchAll('assoc');
+
+
+
+
+            $res = [
+                'dataconfig' => $mapConfigData,
+                'capasbase' => $capasbase,
+                'overlays' => $overlays,
+                'countcapasbase' => $countcapasbase,
+                'capabasedefault' =>$capabasedefault,
+                'capalabels' => $labels,
+                'layersconfig' => $tablaLayersConfig,
+                'layersAdicionalesConfig' => $layersAdicionalesConf,
+                'layerAdCount' => $layersAdCount,
+                'layersAdicionales' => $this->getLayersAdicionalesGisAsJson($modelGis),
+                'rodalesGisResumen' => $rodalesGisResumen
+            ];
+
+
+            return $this->json($res);
+        }
+    }
+
     private function getGisAsJson($model){
+
+        $feature = "'FeatureCollection'";
+        $feat = "'Feature'";
+        $query = 'SELECT row_to_json(fc) from (SELECT ' . $feature . '  as "type", 
+        array_to_json(array_agg(f)) as "features"
+        from (
+            select ' . $feat . ' as "type",
+            idrodales as "id", cod_sap as "cod_sap", superficie as "superficie",
+    
+            (
+            select json_strip_nulls(row_to_json(t)) 
+            from (select parcela) t
+            ) as "properties", 
+            ST_AsGeoJson(ST_Transform(geom, 4326)) :: json as "geometry" 
+            from gis INNER JOIN rodales ON gis.rodales_idrodales = rodales.idrodales WHERE finalizado = false
+        ) as f 
+        ) as fc ';
+
+        //Ejecuto el Query de Muestra
+        $conecction = ConnectionManager::get('default');
+        $tablaRodales = $conecction->execute($query)->fetchAll('assoc');
+
+        return $tablaRodales;
+
+    }
+
+    private function getGisAsJsonNotFin($model){
 
         $feature = "'FeatureCollection'";
         $feat = "'Feature'";

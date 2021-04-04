@@ -24,6 +24,8 @@
 
                             <?= $this->Form->input('email', ['class' => 'form-control', 'placeholder' => 'Email', 'label' => 'Email:', 'required']) ?>
                             <br>
+                            <?= $this->Form->input('password', ['class' => 'form-control', 'placeholder' => 'Email', 'label' => 'Contraseña:', 'required']) ?>
+                            <br>
                             <?= $this->Form->input('firstname', ['class' => 'form-control', 'placeholder' => 'Nombre', 'label' => 'Nombre:', 'required']) ?>
                             <br>
                             <?= $this->Form->input('lastname', ['class' => 'form-control', 'placeholder' => 'Apellido', 'label' => 'Apellido:', 'required']) ?>

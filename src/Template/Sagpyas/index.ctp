@@ -41,7 +41,7 @@
                             <tr>
                                 <td><?= h($sagpya->idsagpya) ?></td>
                                 <td><?= h($sagpya->operaciones) ?></td>
-                                <td><?= h($sagpya->fecha ->format('d-m-Y')) ?></td>
+                                <td><?= h($sagpya->fecha->format('d-m-Y')) ?></td>
                                 <td><?= h($sagpya->sup_aprobada) ?></td>
                                  <td><?= h($sagpya->expediente) ?></td>
                                 <td><?= h($sagpya->turno_minimo) ?></td>
@@ -79,17 +79,25 @@
 
 <?= $this->element('footer')?>
 
-
 <script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
+    $(function () {
+        $('#example2').DataTable({
+            'language' : {
+                'search': "Buscar:",
+                'paginate': {
+                    'first':      "Primer",
+                    'previous':   "Anterior",
+                    'next':       "Siguiente",
+                    'last':       "Anterior"
+                }},
+            "pageLength": 50,
+            'lengthChange': true,
+            'searching'   : true,
+            'ordering'    : true,
+            'paging'      : true
+
+        });
+
+
     })
-  })
 </script>

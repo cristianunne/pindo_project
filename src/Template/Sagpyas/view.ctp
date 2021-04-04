@@ -161,15 +161,22 @@
 <?= $this->element('footer')?>
 
 <script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
+    $(function () {
+        $('#example2').DataTable({
+            'language' : {
+                'search': "Buscar:",
+                'paginate': {
+                    'first':      "Primer",
+                    'previous':   "Anterior",
+                    'next':       "Siguiente",
+                    'last':       "Anterior"
+                }},
+            "pageLength": 40,
+            'lengthChange': true,
+            'searching'   : true,
+            'ordering'    : true
+
+        });
+
     })
-  })
 </script>

@@ -38,7 +38,7 @@ class SagpyasController extends AppController
 
         $sagpyas = $this->Sagpyas->find()->order(['idsagpya' => 'ASC']);
 
-        $sagpyas = $this->paginate($sagpyas);
+
          //Recupero los datos de la URL
         $data_url = $this->request->query;
 

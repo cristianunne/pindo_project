@@ -37,7 +37,8 @@
                             <?= $this->Form->input('cosechado', ['options' => [0 => 'No', 1 => 'Si'], 'empty' => '(Elija una opción)', 'class' => 'form-control', 'placeholder' => 'Finalizado', 'label' => 'Cosechado?', 'required']) ?>
                             <br>
 
-                            <?= $this->Form->input('fecha_rel', ['class' => 'form-control', 'placeholder' => 'Fecha', 'label' => 'Fecha:']) ?>
+                            <?= $this->Form->input('fecha_rel', ['class' => 'form-control', 'placeholder' => 'Fecha: YYYY-MM-DD', 'minYear' => date('Y') - 20, 'maxYear' => date('Y') + 50, 'label' => false, 'required']) ?>
+
                             <br>
 
 

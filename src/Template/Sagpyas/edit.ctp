@@ -26,7 +26,8 @@
                         <div class="box-body">
                             <?= $this->Form->input('operaciones', ['class' => 'form-control', 'placeholder' => 'Operaciones', 'label' => false, 'required']) ?>
                             <br>
-                            <?= $this->Form->input('fecha', ['class' => 'form-control', 'placeholder' => 'Fecha: YYYY-MM-DD', 'label' => false, 'required']) ?>
+                            <?= $this->Form->input('fecha', ['class' => 'form-control', 'placeholder' => 'Fecha: YYYY-MM-DD', 'minYear' => date('Y') - 70, 'maxYear' => date('Y') + 50, 'label' => false, 'required']) ?>
+
                             <br>
                             <?= $this->Form->input('sup_aprobada', ['class' => 'form-control', 'placeholder' => 'Superficie Aprobada', 'label' => false, 'required']) ?>
                             <br>

@@ -64,8 +64,6 @@ $(function()
 
 
 
-
-
             }
         }, error:function () {
             //Muestro algun mensaje de error
